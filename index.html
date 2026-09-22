@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>By The Weigh</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Lora:ital,wght@1,500;1,600;1,700&display=swap');
   :root {
     --bg: #FFFFFF;
     --ink: #1C1C1C;
@@ -13,6 +13,7 @@
     --muted: #767066;
     --line: #E3E0D8;
     --accent: #1F4B3F;
+    --navy: #1B2A4A;
     padding-top: env(safe-area-inset-top, 0px);
     padding-bottom: env(safe-area-inset-bottom, 0px);
   }
@@ -25,7 +26,15 @@
   }
   .wrap { max-width: 620px; margin: 0 auto; padding: 48px 24px; text-align: center; }
   .kicker { font-size: 14px; font-weight: 500; letter-spacing: 0.01em; color: var(--muted); margin-bottom: 16px; }
-  h1 { font-size: 48px; font-weight: 700; margin: 0 0 20px; line-height: 1.08; }
+  h1 {
+    font-family: 'Lora', Georgia, 'Times New Roman', serif;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 50px;
+    color: var(--navy);
+    margin: 0 0 20px;
+    line-height: 1.1;
+  }
   p.lead { font-size: 17px; color: var(--ink-soft); line-height: 1.65; margin: 0 auto 32px; max-width: 460px; }
   .cta-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
   .btn { display: inline-block; background: var(--accent); color: var(--bg); padding: 13px 26px; border-radius: 6px; text-decoration: none; font-size: 15px; font-weight: 600; }
@@ -37,7 +46,7 @@
   <div class="wrap">
     <div class="kicker">An executive metabolic care program</div>
     <h1>By The Weigh</h1>
-    <p class="lead">Six months of integrated endocrinologist and dietitian care, built for people who are serious about their weight and health goals and want sustainable results, not a quick fix.</p>
+    <p class="lead">Six months of integrated endocrinologist and dietitian care, built for people who are serious about their weight and health goals and want sustainable results.</p>
     <div class="cta-row">
       <a class="btn" href="https://calendly.com/k-symphoneats/30min" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/k-symphoneats/30min'}); return false;">Schedule a Call</a>
     </div>
