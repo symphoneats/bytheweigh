@@ -21,6 +21,13 @@
   .rail-link.active { color: #FFFFFF; border-left-color: #0E6E86; }
   input, label { font-family: 'Libre Franklin', sans-serif; }
 
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.is-visible { opacity: 1; transform: translateY(0); }
+  .reveal .tile, .reveal > div { transition: opacity 0.7s ease, transform 0.7s ease; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+
   .page { width: 100%; min-height: 100vh; box-sizing: border-box; background: #FAFAF8; display: flex; }
   .rail { flex: 0 0 258px; background: #1B1E23; position: sticky; top: 0; align-self: flex-start; height: 100vh; box-sizing: border-box; padding: 40px 30px; display: flex; flex-direction: column; justify-content: space-between; }
   .main { flex: 1; min-width: 0; box-sizing: border-box; }
@@ -89,7 +96,7 @@
     </div>
 
     <!-- MODEL: hormone specialty + integration, bento -->
-    <div id="model" style="padding: 20px 72px 48px;">
+    <div id="model" class="reveal" style="padding: 20px 72px 48px;">
       <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 16px;">
         <div class="tile">
           <div class="eyebrow" style="margin-bottom: 14px;">The hormone specialists</div>
@@ -126,7 +133,7 @@
     </div>
 
     <!-- TIMELINE: zigzag -->
-    <div id="timeline" style="padding: 20px 72px 48px;">
+    <div id="timeline" class="reveal" style="padding: 20px 72px 48px;">
       <div class="eyebrow" style="margin-bottom: 14px;">The arc of the program</div>
       <h2 style="font-size: 26px; margin-bottom: 36px;">Your six months.</h2>
       <div style="position: relative;">
@@ -165,7 +172,7 @@
     </div>
 
     <!-- FIT + LABS + INCLUDED: single bento wall -->
-    <div id="fit" style="padding: 20px 72px 48px;">
+    <div id="fit" class="reveal" style="padding: 20px 72px 48px;">
       <div class="eyebrow" style="margin-bottom: 14px;">Everything else you'd ask</div>
       <h2 style="font-size: 26px; margin-bottom: 24px;">Fit, fine print, and value — at a glance.</h2>
       <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;">
@@ -191,7 +198,7 @@
     </div>
 
     <!-- CARE TEAM -->
-    <div id="team" style="padding: 20px 72px 48px;">
+    <div id="team" class="reveal" style="padding: 20px 72px 48px;">
       <div class="eyebrow" style="margin-bottom: 14px;">Your care team</div>
       <h2 style="font-size: 26px; margin-bottom: 24px;">Two clinicians. One plan.</h2>
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
@@ -215,7 +222,7 @@
     </div>
 
     <!-- PRICING + APPLY split -->
-    <div id="pricing" style="padding: 20px 72px 64px; display: grid; grid-template-columns: 1fr 1.3fr; gap: 20px;">
+    <div id="pricing" class="reveal" style="padding: 20px 72px 64px; display: grid; grid-template-columns: 1fr 1.3fr; gap: 20px;">
       <div class="tile" style="background: #14161A; border: none; display: flex; flex-direction: column; justify-content: space-between;">
         <div>
           <div class="eyebrow" style="margin-bottom: 10px; color: #9AA0A7;">Six-month program</div>
