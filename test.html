@@ -4,17 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>By The Weigh — Executive Metabolic Care</title>
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700;800&display=swap');
   * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
   body { margin: 0; background: #FAFAF8; font-family: 'Libre Franklin', system-ui, sans-serif; color: #14161A; }
   a { color: #0E6E86; text-decoration: none; }
   h1, h2, h3 { font-family: 'Libre Franklin', sans-serif; margin: 0; font-weight: 800; letter-spacing: -0.01em; }
   .eyebrow { font-weight: 700; font-size: 12px; letter-spacing: 0.09em; text-transform: uppercase; color: #0E6E86; }
   .tile { background: #FFFFFF; border: 1px solid rgba(20,22,26,0.09); border-radius: 12px; padding: 24px; }
   .btn-primary { display: inline-flex; align-items: center; background: #0E6E86; color: #FFFFFF; padding: 15px 28px; border-radius: 8px; font-weight: 700; font-size: 15px; border: none; cursor: pointer; }
-  .rail-link { color: #C7CDD3; font-size: 14px; font-weight: 600; padding: 10px 0; display: block; }
+  .rail-link { color: #C7CDD3; font-size: 14px; font-weight: 600; padding: 10px 0 10px 14px; display: block; border-left: 2px solid transparent; transition: color 0.15s ease, border-color 0.15s ease; }
   .rail-link:hover { color: #FFFFFF; }
+  .rail-link.active { color: #FFFFFF; border-left-color: #0E6E86; }
   input, label { font-family: 'Libre Franklin', sans-serif; }
 
   .page { width: 100%; min-height: 100vh; box-sizing: border-box; background: #FAFAF8; display: flex; }
@@ -46,15 +50,15 @@
   <div class="rail">
     <div>
       <div style="font-size: 19px; font-weight: 800; color: #FFFFFF; margin-bottom: 44px;">By The Weigh</div>
-      <a href="#program" class="rail-link">Program</a>
-      <a href="#model" class="rail-link">How it works</a>
-      <a href="#timeline" class="rail-link">Timeline</a>
-      <a href="#fit" class="rail-link">Fit &amp; details</a>
-      <a href="#team" class="rail-link">Care team</a>
-      <a href="#pricing" class="rail-link">Pricing</a>
+      <a href="#program" class="rail-link" data-section="program">Program</a>
+      <a href="#model" class="rail-link" data-section="model">How it works</a>
+      <a href="#timeline" class="rail-link" data-section="timeline">Timeline</a>
+      <a href="#fit" class="rail-link" data-section="fit">Fit &amp; details</a>
+      <a href="#team" class="rail-link" data-section="team">Care team</a>
+      <a href="#pricing" class="rail-link" data-section="pricing">Pricing</a>
     </div>
     <div>
-      <a href="https://calendly.com/k-symphoneats/30min" target="_blank" rel="noopener" class="btn-primary" style="width: 100%; box-sizing: border-box; justify-content: center; margin-bottom: 18px;">Book a call</a>
+      <a href="https://calendly.com/k-symphoneats/30min" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/k-symphoneats/30min'}); return false;" class="btn-primary" style="width: 100%; box-sizing: border-box; justify-content: center; margin-bottom: 18px;">Book a call</a>
       <div style="font-size: 12px; line-height: 1.6; color: #7C838C;">Symphoneats &amp; Endocrine Specialty Consultants<br>626.828.9333</div>
     </div>
   </div>
@@ -64,10 +68,9 @@
 
     <!-- HERO / PROGRAM -->
     <div id="program" style="padding: 72px 72px 40px;">
-      <div class="eyebrow" style="margin-bottom: 18px;">Symphoneats × Endocrine Specialty Consultants</div>
       <h1 style="font-size: 50px; line-height: 1.1; max-width: 780px; margin-bottom: 24px;">Executive metabolic care, coordinated end to end.</h1>
       <div style="font-size: 17px; line-height: 1.6; color: #454A52; max-width: 620px; margin-bottom: 30px;">Six months of integrated physician and dietitian care, built for people who are serious about their weight and health goals and want sustainable results, not a quick fix.</div>
-      <a href="https://calendly.com/k-symphoneats/30min" target="_blank" rel="noopener" class="btn-primary">Schedule Your Discovery Call</a>
+      <a href="https://calendly.com/k-symphoneats/30min" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/k-symphoneats/30min'}); return false;" class="btn-primary">Schedule Your Discovery Call</a>
 
       <div style="margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr 1.2fr; gap: 16px;">
         <div class="tile">
@@ -76,7 +79,7 @@
         </div>
         <div class="tile">
           <div class="eyebrow" style="margin-bottom: 8px;">Your team</div>
-          <div style="font-size: 22px; font-weight: 800;">MD + RD</div>
+          <div style="font-size: 22px; font-weight: 800;">Endocrinologist + Dietitian</div>
         </div>
         <div class="tile" style="background: #0E6E86; border: none;">
           <div class="eyebrow" style="margin-bottom: 8px; color: rgba(255,255,255,0.75);">Investment</div>
@@ -219,7 +222,7 @@
           <div style="font-size: 46px; font-weight: 800; color: #FFFFFF; margin-bottom: 14px;">$5,000</div>
           <div style="font-size: 13.5px; line-height: 1.6; color: #9AA0A7; margin-bottom: 26px;">Cash-pay, all-inclusive of physician visits, dietitian visits, and standard labs. Medication billed separately.</div>
         </div>
-        <a href="https://calendly.com/k-symphoneats/30min" target="_blank" rel="noopener" class="btn-primary" style="justify-content: center;">Book a Discovery Call</a>
+        <a href="https://calendly.com/k-symphoneats/30min" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/k-symphoneats/30min'}); return false;" class="btn-primary" style="justify-content: center;">Book a Discovery Call</a>
       </div>
 
       <div class="tile">
@@ -254,12 +257,38 @@
       </div>
     </div>
 
-    <!-- FOOTER -->
-    <div style="padding: 24px 72px; border-top: 1px solid rgba(20,22,26,0.08); font-size: 12.5px; color: #7C838C;">
-      A collaboration between Symphoneats and Endocrine Specialty Consultants
-    </div>
-
   </div>
 </div>
+
+<script>
+  (function () {
+    var sections = ['program', 'model', 'timeline', 'fit', 'team', 'pricing']
+      .map(function (id) { return document.getElementById(id); })
+      .filter(Boolean);
+    var links = Array.prototype.slice.call(document.querySelectorAll('.rail-link'));
+
+    function setActive(id) {
+      links.forEach(function (link) {
+        link.classList.toggle('active', link.getAttribute('data-section') === id);
+      });
+    }
+
+    if (!('IntersectionObserver' in window) || !sections.length) {
+      if (links[0]) links[0].classList.add('active');
+      return;
+    }
+
+    var observer = new IntersectionObserver(function (entries) {
+      // Pick the entry closest to the top of the viewport among those visible.
+      var visible = entries.filter(function (e) { return e.isIntersecting; });
+      if (!visible.length) return;
+      visible.sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top; });
+      setActive(visible[0].target.id);
+    }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+
+    sections.forEach(function (section) { observer.observe(section); });
+    setActive(sections[0].id);
+  })();
+</script>
 </body>
 </html>
