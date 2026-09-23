@@ -18,6 +18,7 @@
   @media (prefers-reduced-motion: reduce) {
     .reveal { opacity: 1; transform: none; transition: none; }
   }
+  .card { background: #FAF8F4; border: 1px solid #D6D2BF; border-radius: 12px; padding: 28px; box-shadow: 0 4px 14px rgba(22,34,46,0.07); }
 </style>
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
@@ -65,7 +66,9 @@
     <div style="max-width: 780px; margin: 0 auto;">
       <h2 style="font-size: 30px; color: #16222E; margin-bottom: 24px;">The hormone specialists.</h2>
       <div style="font-size: 17px; line-height: 1.7; color: #3A382E; margin-bottom: 24px;">Endocrinologists are physicians who specialize specifically in the body's hormone systems, the same systems that regulate metabolism, appetite, and blood sugar. That expertise starts with diagnosis: your endocrinologist can assess whether an underlying condition, such as a thyroid disorder, hormonal imbalance, or pituitary issue, is contributing to your weight. GLP-1 medications work by mimicking a hormone the body already produces, precisely the territory endocrinology has specialized in for decades, and endocrinologists were among the first physicians to understand how they work, and among the first to prescribe them.</div>
-      <div style="font-family: 'Fraunces', serif; font-style: italic; font-size: 24px; line-height: 1.5; color: #7C4F16; border-left: 3px solid #A9701F; padding-left: 24px; margin-bottom: 8px;">A GLP-1 medication is one option your endocrinologist may consider, and only when it's medically appropriate.</div>
+      <div class="card" style="border-top: 4px solid #A9701F; margin-top: 8px;">
+        <div style="font-family: 'Fraunces', serif; font-style: italic; font-size: 24px; line-height: 1.5; color: #7C4F16;">A GLP-1 medication is one option your endocrinologist may consider, and only when it's medically appropriate.</div>
+      </div>
     </div>
   </div>
 
@@ -76,18 +79,18 @@
     <div style="font-size: 18px; line-height: 1.7; color: #3A382E; max-width: 680px; margin-bottom: 16px;">Weight is a medical and a metabolic question. That's why By The Weigh pairs a board-certified endocrinologist with a Registered Dietitian in one coordinated plan.</div>
     <div style="font-size: 18px; line-height: 1.7; color: #3A382E; max-width: 680px; margin-bottom: 56px;">Your physician oversees your labs, hormones, and medication. Your dietitian provides ongoing, month-to-month medical nutrition therapy, continually evaluating your nutrition status and adjusting your plan, not just coaching you through it. Nutrition strategy is built around your medical plan, not bolted on after the fact. That care does two things at once: it makes the medical plan work in real life, and it protects your nutritional adequacy, so losing weight never comes at the cost of the nutrients your body still needs.</div>
 
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0;">
-      <div style="padding-right: 40px;">
-        <div class="tag" style="margin-bottom: 20px;">Your physician</div>
-        <div class="rule" style="padding: 18px 0;">Comprehensive initial assessment of your hormonal and metabolic drivers</div>
-        <div class="rule" style="padding: 18px 0;">Follow-up visits approximately every three months to reassess your labs, hormones, and progress</div>
-        <div class="rule" style="padding: 18px 0;">Additional visits added if you're experiencing moderate to severe side effects</div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+      <div class="card">
+        <div class="tag" style="margin-bottom: 18px;">Your physician</div>
+        <div class="rule" style="padding: 16px 0 0;">Comprehensive initial assessment of your hormonal and metabolic drivers</div>
+        <div class="rule" style="padding: 16px 0 0; margin-top: 16px;">Follow-up visits approximately every three months to reassess your labs, hormones, and progress</div>
+        <div class="rule" style="padding: 16px 0 0; margin-top: 16px;">Additional visits added if you're experiencing moderate to severe side effects</div>
       </div>
-      <div style="padding-left: 40px; border-left: 1px solid #D6D2BF;">
-        <div class="tag" style="margin-bottom: 20px;">Your dietitian</div>
-        <div class="rule" style="padding: 18px 0;">Comprehensive nutrition assessment built around your schedule and goals</div>
-        <div class="rule" style="padding: 18px 0;">Monthly follow-ups to adjust your plan and keep momentum</div>
-        <div class="rule" style="padding: 18px 0;">A dedicated 2-week check-in after any new medication, such as a GLP-1</div>
+      <div class="card">
+        <div class="tag" style="margin-bottom: 18px;">Your dietitian</div>
+        <div class="rule" style="padding: 16px 0 0;">Comprehensive nutrition assessment built around your schedule and goals</div>
+        <div class="rule" style="padding: 16px 0 0; margin-top: 16px;">Monthly follow-ups to adjust your plan and keep momentum</div>
+        <div class="rule" style="padding: 16px 0 0; margin-top: 16px;">A dedicated 2-week check-in after any new medication, such as a GLP-1</div>
       </div>
     </div>
 
@@ -99,11 +102,11 @@
   <div class="reveal" style="width: 100%; box-sizing: border-box; padding: 8px 64px 72px; max-width: 780px; margin: 0 auto;">
     <div class="tag" style="margin-bottom: 16px;">Who this is for</div>
     <h2 style="font-size: 30px; color: #16222E; margin-bottom: 24px;">Is this you?</h2>
-    <div>
-      <div class="rule" style="padding: 18px 0;">You want efficient, coordinated care rather than spending your own time stitching two separate providers together</div>
-      <div class="rule" style="padding: 18px 0;">You're currently on, or considering, a GLP-1 or similar medication and want a nutrition plan built around it from the start</div>
-      <div class="rule" style="padding: 18px 0;">You've tried medical weight management or dietitian care separately, and found the disconnect between them frustrating</div>
-      <div class="rule" style="padding: 18px 0;">You'd rather have a straightforward cash-pay relationship than navigate insurance authorizations and network limits</div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+      <div class="card" style="padding: 22px 24px;">You want efficient, coordinated care rather than spending your own time stitching two separate providers together</div>
+      <div class="card" style="padding: 22px 24px;">You're currently on, or considering, a GLP-1 or similar medication and want a nutrition plan built around it from the start</div>
+      <div class="card" style="padding: 22px 24px;">You've tried medical weight management or dietitian care separately, and found the disconnect between them frustrating</div>
+      <div class="card" style="padding: 22px 24px;">You'd rather have a straightforward cash-pay relationship than navigate insurance authorizations and network limits</div>
     </div>
   </div>
 
@@ -129,21 +132,22 @@
   </div>
 
   <!-- LABS & MEDICATION -->
-  <div class="reveal" style="width: 100%; box-sizing: border-box; padding: 72px 64px;">
-    <div style="max-width: 780px; margin: 0 auto;">
+    <div style="max-width: 980px; margin: 0 auto;">
       <h2 style="font-size: 34px; color: #16222E; margin-bottom: 40px;">Labs &amp; medication.</h2>
 
-      <div class="rule" style="display: grid; grid-template-columns: 220px 1fr; gap: 24px; padding: 24px 0;">
-        <div class="tag">Included</div>
-        <div style="font-size: 16px; line-height: 1.65; color: #3A382E;">Standard labs at no extra cost: cortisol, TSH, lipid panel, A1c, CBC, and metabolic chemistry panel. [Drawn once at program start / repeated during the program &mdash; confirm cadence]</div>
-      </div>
-      <div class="rule" style="display: grid; grid-template-columns: 220px 1fr; gap: 24px; padding: 24px 0;">
-        <div class="tag">If advanced testing is needed</div>
-        <div style="font-size: 16px; line-height: 1.65; color: #3A382E;">Complex or advanced labs, such as 24-hour urine cortisol or tumor markers, are ordered only if clinically indicated, and are the patient's responsibility.</div>
-      </div>
-      <div style="display: grid; grid-template-columns: 220px 1fr; gap: 24px; padding: 24px 0;">
-        <div class="tag">Medication</div>
-        <div style="font-size: 16px; line-height: 1.65; color: #3A382E;">GLP-1 and other prescribed medications are not included in the program price. Our team will assist with insurance billing for any prescribed medications.</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+        <div class="card">
+          <div class="tag" style="margin-bottom: 10px;">Included</div>
+          <div style="font-size: 15px; line-height: 1.6; color: #3A382E;">Standard labs at no extra cost: cortisol, TSH, lipid panel, A1c, CBC, and metabolic chemistry panel. [Drawn once at program start / repeated during the program &mdash; confirm cadence]</div>
+        </div>
+        <div class="card">
+          <div class="tag" style="margin-bottom: 10px;">If advanced testing is needed</div>
+          <div style="font-size: 15px; line-height: 1.6; color: #3A382E;">Complex or advanced labs, such as 24-hour urine cortisol or tumor markers, are ordered only if clinically indicated, and are the patient's responsibility.</div>
+        </div>
+        <div class="card">
+          <div class="tag" style="margin-bottom: 10px;">Medication</div>
+          <div style="font-size: 15px; line-height: 1.6; color: #3A382E;">GLP-1 and other prescribed medications are not included in the program price. Our team will assist with insurance billing for any prescribed medications.</div>
+        </div>
       </div>
     </div>
   </div>
@@ -168,41 +172,41 @@
   </div>
 
   <!-- WHAT'S INCLUDED (VALUE BREAKDOWN) -->
-  <div class="reveal" style="width: 100%; box-sizing: border-box; padding: 72px 64px 40px; max-width: 780px; margin: 0 auto;">
+  <div class="reveal" style="width: 100%; box-sizing: border-box; padding: 72px 64px 40px; max-width: 980px; margin: 0 auto;">
     <div class="tag" style="margin-bottom: 16px;">What's included</div>
     <h2 style="font-size: 30px; color: #16222E; margin-bottom: 32px;">What you're getting.</h2>
 
-    <div class="rule" style="padding: 22px 0;">
-      <div style="font-size: 17px; font-weight: 600; color: #16222E; margin-bottom: 6px;">A coordinated care team, not a solo provider</div>
-      <div style="font-size: 16px; line-height: 1.6; color: #3A382E;">You'll work with both an endocrinologist and a Registered Dietitian who are actively communicating about your case, not a single provider juggling both roles, and not a dietitian working in isolation from your prescriber.</div>
-    </div>
-    <div class="rule" style="padding: 22px 0;">
-      <div style="font-size: 17px; font-weight: 600; color: #16222E; margin-bottom: 6px;">Visits included, no surprise billing</div>
-      <div style="font-size: 16px; line-height: 1.6; color: #3A382E;">Visits with both your endocrinologist and your dietitian throughout the six months, all included in your program fee. No per-visit billing, no surprise charges as you go.</div>
-    </div>
-    <div class="rule" style="padding: 22px 0;">
-      <div style="font-size: 17px; font-weight: 600; color: #16222E; margin-bottom: 6px;">In-person access, always available</div>
-      <div style="font-size: 16px; line-height: 1.6; color: #3A382E;">Most programs at this price point default to virtual check-ins between a handful of in-person milestones. Ours doesn't. You can be seen in person whenever it's needed.</div>
-    </div>
-    <div class="rule" style="padding: 22px 0;">
-      <div style="font-size: 17px; font-weight: 600; color: #16222E; margin-bottom: 6px;">Real medication, prescribed and monitored, never sold to you</div>
-      <div style="font-size: 16px; line-height: 1.6; color: #3A382E;">We prescribe FDA-approved GLP-1 medications, not compounded versions from an unidentified source. You always know exactly what you're taking and where it came from.</div>
-    </div>
-    <div class="rule" style="padding: 22px 0;">
-      <div style="font-size: 17px; font-weight: 600; color: #16222E; margin-bottom: 6px;">A defined bridge, not an open-ended subscription</div>
-      <div style="font-size: 16px; line-height: 1.6; color: #3A382E;">Six months with a clear start and finish, built to get you to a stable, sustainable place, not a recurring monthly charge with no end in sight.</div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+      <div class="card">
+        <div style="font-size: 17px; font-weight: 600; color: #16222E; margin-bottom: 8px;">A coordinated care team, not a solo provider</div>
+        <div style="font-size: 15px; line-height: 1.6; color: #3A382E;">You'll work with both an endocrinologist and a Registered Dietitian who are actively communicating about your case, not a single provider juggling both roles, and not a dietitian working in isolation from your prescriber.</div>
+      </div>
+      <div class="card">
+        <div style="font-size: 17px; font-weight: 600; color: #16222E; margin-bottom: 8px;">Visits included, no surprise billing</div>
+        <div style="font-size: 15px; line-height: 1.6; color: #3A382E;">Visits with both your endocrinologist and your dietitian throughout the six months, all included in your program fee. No per-visit billing, no surprise charges as you go.</div>
+      </div>
+      <div class="card">
+        <div style="font-size: 17px; font-weight: 600; color: #16222E; margin-bottom: 8px;">In-person access, always available</div>
+        <div style="font-size: 15px; line-height: 1.6; color: #3A382E;">Most programs at this price point default to virtual check-ins between a handful of in-person milestones. Ours doesn't. You can be seen in person whenever it's needed.</div>
+      </div>
+      <div class="card">
+        <div style="font-size: 17px; font-weight: 600; color: #16222E; margin-bottom: 8px;">Real medication, prescribed and monitored, never sold to you</div>
+        <div style="font-size: 15px; line-height: 1.6; color: #3A382E;">We prescribe FDA-approved GLP-1 medications, not compounded versions from an unidentified source. You always know exactly what you're taking and where it came from.</div>
+      </div>
+      <div class="card" style="grid-column: span 2; border-top: 4px solid #16222E;">
+        <div style="font-size: 17px; font-weight: 600; color: #16222E; margin-bottom: 8px;">A defined bridge, not an open-ended subscription</div>
+        <div style="font-size: 15px; line-height: 1.6; color: #3A382E;">Six months with a clear start and finish, built to get you to a stable, sustainable place, not a recurring monthly charge with no end in sight.</div>
+      </div>
     </div>
   </div>
 
   <!-- PRICING -->
   <div class="reveal" style="width: 100%; box-sizing: border-box; padding: 40px 64px 40px;">
     <div style="max-width: 640px; margin: 0 auto;">
-      <div class="rule" style="padding-top: 24px; display: flex; justify-content: space-between; align-items: baseline;">
-        <div class="tag" style="font-size: 17px;">Six-month program</div>
-        <div style="font-family: 'Fraunces', serif; font-size: 44px; color: #16222E;">$5,000</div>
-      </div>
-      <div style="border-top: 1px solid #D6D2BF; padding-top: 20px; margin-top: 4px; font-size: 15px; line-height: 1.6; color: #6E6558;">Cash-pay, all-inclusive of physician visits, dietitian visits, and standard labs. Medication is billed separately.</div>
-      <div style="display: flex; align-items: center; gap: 20px; margin-top: 32px;">
+      <div class="card" style="border-top: 4px solid #16222E; text-align: center;">
+        <div class="tag" style="font-size: 15px; margin-bottom: 8px;">Six-month program</div>
+        <div style="font-family: 'Fraunces', serif; font-size: 52px; color: #16222E; margin-bottom: 16px;">$5,000</div>
+        <div style="font-size: 15px; line-height: 1.6; color: #6E6558; margin-bottom: 28px;">Cash-pay, all-inclusive of physician visits, dietitian visits, and standard labs. Medication is billed separately.</div>
         <a href="https://calendly.com/k-symphoneats/30min" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/k-symphoneats/30min'}); return false;" class="btn-primary">Book a Discovery Call</a>
       </div>
     </div>
@@ -256,7 +260,6 @@
   </div>
 
 </div>
-
 <script>
   (function () {
     var els = document.querySelectorAll('.reveal');
@@ -275,6 +278,5 @@
     els.forEach(function (el) { observer.observe(el); });
   })();
 </script>
-
 </body>
 </html>
