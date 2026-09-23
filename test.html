@@ -39,7 +39,7 @@
   /* ===== Tablet / stacked layout ===== */
   @media (max-width: 900px) {
     .page { flex-direction: column; }
-    .rail { flex: 0 0 auto; position: sticky; top: 0; z-index: 40; height: auto; flex-direction: row; align-items: center; justify-content: space-between; padding: 16px 20px; }
+    .rail { flex: 0 0 auto; align-self: stretch; position: sticky; top: 0; z-index: 40; height: auto; flex-direction: row; align-items: center; justify-content: space-between; padding: 16px 20px; }
     .rail-nav-group { display: flex; align-items: center; }
     .rail-top { display: flex; align-items: center; gap: 16px; }
     .rail-logo { margin-bottom: 0 !important; font-size: 17px !important; }
@@ -65,7 +65,7 @@
     .fact-grid, .model-top, .model-compare, .team-grid, .pricing-grid, .timeline-grid {
       grid-template-columns: minmax(0, 1fr) !important;
     }
-    .model-divider { display: none; }
+    .model-divider { display: none !important; }
     .model-compare { gap: 14px !important; }
     .timeline-line { display: none !important; }
     .tl-node { margin-top: 0 !important; }
@@ -160,7 +160,7 @@
       <div class="model-top" style="display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 16px;">
         <div class="tile">
           <div class="eyebrow" style="margin-bottom: 14px;">The hormone specialists</div>
-          <h2 style="font-size: 24px; margin-bottom: 14px;">Weight is governed by hormones, not willpower.</h2>
+          <h2 style="font-size: 24px; margin-bottom: 14px;">Weight has as much to do with hormones as it does with willpower.</h2>
           <div style="font-size: 15px; line-height: 1.65; color: #454A52;">Endocrinologists specialize specifically in the body's hormone systems, the same systems that regulate metabolism, appetite, and blood sugar. Your endocrinologist can assess whether a thyroid disorder, hormonal imbalance, or pituitary issue is contributing to your weight — and GLP-1 medications, which mimic a hormone the body already produces, sit squarely in the territory endocrinology has specialized in for decades.</div>
         </div>
         <div class="tile" style="background: #14161A; border: none; display: flex; align-items: center;">
