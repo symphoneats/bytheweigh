@@ -3,280 +3,263 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>By The Weigh | Executive Metabolic Care</title>
+<title>By The Weigh — Executive Metabolic Care</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Libre+Franklin:wght@400;500;600;700&display=swap');
-  body { margin: 0; background: #EEEDE2; font-family: 'Libre Franklin', sans-serif; color: #2A2A22; }
-  a { color: #16222E; text-decoration: none; }
-  h1, h2, h3 { font-family: 'Fraunces', serif; margin: 0; font-weight: 500; }
-  .tag { font-family: 'Fraunces', serif; font-style: italic; font-size: 15px; color: #7C4F16; }
-  .rule { border-top: 1px solid #D6D2BF; }
-  .btn-primary { display: inline-block; background: #16222E; color: #F3EEE0; padding: 15px 30px; border-radius: 6px; font-family: 'Libre Franklin', sans-serif; font-weight: 600; font-size: 15px; }
-  .btn-secondary { display: inline-block; background: transparent; color: #7C4F16; border: 1.5px solid #A9701F; padding: 13px 28px; border-radius: 6px; font-family: 'Libre Franklin', sans-serif; font-weight: 600; font-size: 15px; }
-  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
-  .reveal.is-visible { opacity: 1; transform: translateY(0); }
-  @media (prefers-reduced-motion: reduce) {
-    .reveal { opacity: 1; transform: none; transition: none; }
+  @import url('https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700;800&display=swap');
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #FAFAF8; font-family: 'Libre Franklin', system-ui, sans-serif; color: #14161A; }
+  a { color: #0E6E86; text-decoration: none; }
+  h1, h2, h3 { font-family: 'Libre Franklin', sans-serif; margin: 0; font-weight: 800; letter-spacing: -0.01em; }
+  .eyebrow { font-weight: 700; font-size: 12px; letter-spacing: 0.09em; text-transform: uppercase; color: #0E6E86; }
+  .tile { background: #FFFFFF; border: 1px solid rgba(20,22,26,0.09); border-radius: 12px; padding: 24px; }
+  .btn-primary { display: inline-flex; align-items: center; background: #0E6E86; color: #FFFFFF; padding: 15px 28px; border-radius: 8px; font-weight: 700; font-size: 15px; border: none; cursor: pointer; }
+  .rail-link { color: #C7CDD3; font-size: 14px; font-weight: 600; padding: 10px 0; display: block; }
+  .rail-link:hover { color: #FFFFFF; }
+  input, label { font-family: 'Libre Franklin', sans-serif; }
+
+  .page { width: 100%; min-height: 100vh; box-sizing: border-box; background: #FAFAF8; display: flex; }
+  .rail { flex: 0 0 258px; background: #1B1E23; position: sticky; top: 0; align-self: flex-start; height: 100vh; box-sizing: border-box; padding: 40px 30px; display: flex; flex-direction: column; justify-content: space-between; }
+  .main { flex: 1; min-width: 0; box-sizing: border-box; }
+
+  @media (max-width: 900px) {
+    .page { flex-direction: column; }
+    .rail { position: relative; height: auto; flex-direction: row; align-items: center; justify-content: space-between; padding: 20px 24px; }
+    .rail > div:first-child { display: flex; align-items: center; gap: 20px; }
+    .rail-link { display: none; }
+    .rail a.btn-primary { padding: 11px 18px; font-size: 13px; }
+    .rail > div:last-child > div { display: none; }
+    #program, #model, #timeline, #fit, #team, #pricing { padding-left: 24px !important; padding-right: 24px !important; }
+    #model > div[style*="grid-template-columns: 2fr 1fr"],
+    #model > div[style*="grid-template-columns: 1fr 48px 1fr"],
+    #timeline div[style*="grid-template-columns: repeat(4"],
+    #fit div[style*="grid-template-columns: repeat(4"],
+    #team div[style*="grid-template-columns: 1fr 1fr"],
+    #pricing { grid-template-columns: 1fr !important; }
+    #program div[style*="grid-template-columns: 1fr 1fr 1.2fr"] { grid-template-columns: 1fr !important; }
   }
-  .card { background: #FAF8F4; border: 1px solid #D6D2BF; border-radius: 12px; padding: 28px; box-shadow: 0 4px 14px rgba(22,34,46,0.07); }
 </style>
-<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
 </head>
 <body>
+<div class="page">
 
-<div style="width: 100%; min-height: 100vh; box-sizing: border-box; background: #EEEDE2;">
-
-  <!-- NAV -->
-  <div style="width: 100%; box-sizing: border-box; padding: 22px 64px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #D6D2BF;">
-    <div style="font-family: 'Fraunces', serif; font-style: italic; font-size: 22px; color: #16222E;">By The Weigh</div>
-    <div style="display: flex; align-items: center; gap: 28px;">
-      <a href="https://calendly.com/k-symphoneats/30min" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/k-symphoneats/30min'}); return false;" class="btn-primary" style="padding: 11px 22px; font-size: 14px;">Schedule a Discovery Call</a>
-    </div>
-  </div>
-
-  <!-- HERO -->
-  <div style="width: 100%; box-sizing: border-box; padding: 88px 64px; display: grid; grid-template-columns: 1.6fr 1fr; gap: 64px; max-width: 1280px; margin: 0 auto;">
+  <!-- RAIL -->
+  <div class="rail">
     <div>
-      <div style="font-size: 17px; color: #6E6558; margin-bottom: 18px;">An executive metabolic care program from Symphoneats and Endocrine Specialty Consultants</div>
-      <h1 style="font-size: 68px; color: #16222E; line-height: 1.05; margin-bottom: 28px;">By The Weigh</h1>
-      <div style="font-size: 19px; line-height: 1.6; color: #3A382E; max-width: 520px; margin-bottom: 36px;">Six months of integrated physician and dietitian care, built for people who are serious about their weight and health goals and want sustainable results, not a quick fix.</div>
-      <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-        <a href="https://calendly.com/k-symphoneats/30min" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/k-symphoneats/30min'}); return false;" class="btn-primary">Schedule Your Discovery Call</a>
-      </div>
+      <div style="font-size: 19px; font-weight: 800; color: #FFFFFF; margin-bottom: 44px;">By The Weigh</div>
+      <a href="#program" class="rail-link">Program</a>
+      <a href="#model" class="rail-link">How it works</a>
+      <a href="#timeline" class="rail-link">Timeline</a>
+      <a href="#fit" class="rail-link">Fit &amp; details</a>
+      <a href="#team" class="rail-link">Care team</a>
+      <a href="#pricing" class="rail-link">Pricing</a>
     </div>
-    <div style="padding-top: 8px;">
-      <div class="rule" style="padding-top: 16px;">
-        <div class="tag">Duration</div>
-        <div style="font-family: 'Fraunces', serif; font-size: 26px; color: #16222E; margin-top: 4px;">Six months</div>
-      </div>
-      <div class="rule" style="padding-top: 16px; margin-top: 24px;">
-        <div class="tag">Your team</div>
-        <div style="font-family: 'Fraunces', serif; font-size: 26px; color: #16222E; margin-top: 4px;">Endocrinologist + Registered Dietitian</div>
-      </div>
-      <div class="rule" style="padding-top: 16px; margin-top: 24px;">
-        <div class="tag">Investment</div>
-        <div style="font-family: 'Fraunces', serif; font-size: 26px; color: #16222E; margin-top: 4px;">$5,000</div>
-      </div>
+    <div>
+      <a href="https://calendly.com/k-symphoneats/30min" target="_blank" rel="noopener" class="btn-primary" style="width: 100%; box-sizing: border-box; justify-content: center; margin-bottom: 18px;">Book a call</a>
+      <div style="font-size: 12px; line-height: 1.6; color: #7C838C;">Symphoneats &amp; Endocrine Specialty Consultants<br>626.828.9333</div>
     </div>
   </div>
 
-  <!-- WHY AN ENDOCRINOLOGIST -->
-  <div class="reveal" style="width: 100%; box-sizing: border-box; padding: 64px 64px 8px; background: #E6E2D2;">
-    <div style="max-width: 780px; margin: 0 auto;">
-      <h2 style="font-size: 30px; color: #16222E; margin-bottom: 24px;">The hormone specialists.</h2>
-      <div style="font-size: 17px; line-height: 1.7; color: #3A382E; margin-bottom: 24px;">Endocrinologists are physicians who specialize specifically in the body's hormone systems, the same systems that regulate metabolism, appetite, and blood sugar. That expertise starts with diagnosis: your endocrinologist can assess whether an underlying condition, such as a thyroid disorder, hormonal imbalance, or pituitary issue, is contributing to your weight. GLP-1 medications work by mimicking a hormone the body already produces, precisely the territory endocrinology has specialized in for decades, and endocrinologists were among the first physicians to understand how they work, and among the first to prescribe them.</div>
-      <div class="card" style="border-top: 4px solid #A9701F; margin-top: 8px;">
-        <div style="font-family: 'Fraunces', serif; font-style: italic; font-size: 24px; line-height: 1.5; color: #7C4F16;">A GLP-1 medication is one option your endocrinologist may consider, and only when it's medically appropriate.</div>
-      </div>
-    </div>
-  </div>
+  <!-- MAIN -->
+  <div class="main">
 
-  <!-- TRUE INTEGRATION -->
-  <div class="reveal" style="width: 100%; box-sizing: border-box; padding: 72px 64px; max-width: 1100px; margin: 0 auto;">
-    <h2 style="font-size: 34px; color: #16222E; margin-bottom: 20px;">True integration, not just a referral.</h2>
-    <div style="font-size: 18px; line-height: 1.7; color: #3A382E; max-width: 680px; margin-bottom: 16px;">Most patients are left to coordinate their own care, going between a prescriber and a dietitian who rarely speak to each other directly. By The Weigh closes that gap.</div>
-    <div style="font-size: 18px; line-height: 1.7; color: #3A382E; max-width: 680px; margin-bottom: 16px;">Weight is a medical and a metabolic question. That's why By The Weigh pairs a board-certified endocrinologist with a Registered Dietitian in one coordinated plan.</div>
-    <div style="font-size: 18px; line-height: 1.7; color: #3A382E; max-width: 680px; margin-bottom: 56px;">Your physician oversees your labs, hormones, and medication. Your dietitian provides ongoing, month-to-month medical nutrition therapy, continually evaluating your nutrition status and adjusting your plan, not just coaching you through it. Nutrition strategy is built around your medical plan, not bolted on after the fact. That care does two things at once: it makes the medical plan work in real life, and it protects your nutritional adequacy, so losing weight never comes at the cost of the nutrients your body still needs.</div>
+    <!-- HERO / PROGRAM -->
+    <div id="program" style="padding: 72px 72px 40px;">
+      <div class="eyebrow" style="margin-bottom: 18px;">Symphoneats × Endocrine Specialty Consultants</div>
+      <h1 style="font-size: 50px; line-height: 1.1; max-width: 780px; margin-bottom: 24px;">Executive metabolic care, coordinated end to end.</h1>
+      <div style="font-size: 17px; line-height: 1.6; color: #454A52; max-width: 620px; margin-bottom: 30px;">Six months of integrated physician and dietitian care, built for people who are serious about their weight and health goals and want sustainable results, not a quick fix.</div>
+      <a href="https://calendly.com/k-symphoneats/30min" target="_blank" rel="noopener" class="btn-primary">Schedule Your Discovery Call</a>
 
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
-      <div class="card">
-        <div class="tag" style="margin-bottom: 18px;">Your physician</div>
-        <div class="rule" style="padding: 16px 0 0;">Comprehensive initial assessment of your hormonal and metabolic drivers</div>
-        <div class="rule" style="padding: 16px 0 0; margin-top: 16px;">Follow-up visits approximately every three months to reassess your labs, hormones, and progress</div>
-        <div class="rule" style="padding: 16px 0 0; margin-top: 16px;">Additional visits added if you're experiencing moderate to severe side effects</div>
-      </div>
-      <div class="card">
-        <div class="tag" style="margin-bottom: 18px;">Your dietitian</div>
-        <div class="rule" style="padding: 16px 0 0;">Comprehensive nutrition assessment built around your schedule and goals</div>
-        <div class="rule" style="padding: 16px 0 0; margin-top: 16px;">Monthly follow-ups to adjust your plan and keep momentum</div>
-        <div class="rule" style="padding: 16px 0 0; margin-top: 16px;">A dedicated 2-week check-in after any new medication, such as a GLP-1</div>
-      </div>
-    </div>
-
-    <div style="margin-top: 40px; background: #E6E2D2; border-radius: 8px; padding: 24px 28px;">
-      <div class="tag" style="margin-bottom: 10px;">Visit format</div>
-      <div style="font-size: 16px; line-height: 1.6; color: #3A382E;">Visits are available in person and by telehealth, whichever suits you day to day. Unlike most programs, which are largely telehealth-only, you'll always have access to an in-person appointment at our practice.</div>
-    </div>
-  </div>
-  <div class="reveal" style="width: 100%; box-sizing: border-box; padding: 8px 64px 72px; max-width: 780px; margin: 0 auto;">
-    <div class="tag" style="margin-bottom: 16px;">Who this is for</div>
-    <h2 style="font-size: 30px; color: #16222E; margin-bottom: 24px;">Is this you?</h2>
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-      <div class="card" style="padding: 22px 24px;">You want efficient, coordinated care rather than spending your own time stitching two separate providers together</div>
-      <div class="card" style="padding: 22px 24px;">You're currently on, or considering, a GLP-1 or similar medication and want a nutrition plan built around it from the start</div>
-      <div class="card" style="padding: 22px 24px;">You've tried medical weight management or dietitian care separately, and found the disconnect between them frustrating</div>
-      <div class="card" style="padding: 22px 24px;">You'd rather have a straightforward cash-pay relationship than navigate insurance authorizations and network limits</div>
-    </div>
-  </div>
-
-  <!-- YOUR SIX MONTHS (timeline) -->
-  <div class="reveal" style="width: 100%; box-sizing: border-box; padding: 72px 64px; background: #E6E2D2;">
-    <div style="max-width: 780px; margin: 0 auto;">
-      <h2 style="font-size: 34px; color: #16222E; margin-bottom: 44px;">Your six months.</h2>
-
-      <div style="display: grid; grid-template-columns: 140px 1fr; gap: 24px 32px; border-left: 2px solid #A9701F; padding-left: 32px;">
-        <div class="tag">Month 1</div>
-        <div style="font-size: 16px; line-height: 1.6; color: #3A382E; padding-bottom: 24px;">Comprehensive physician assessment and comprehensive nutrition assessment, both in depth.</div>
-
-        <div class="tag">Every 3 months</div>
-        <div style="font-size: 16px; line-height: 1.6; color: #3A382E; padding-bottom: 24px;">A physician follow-up visit to reassess your labs, hormones, and progress.</div>
-
-        <div class="tag">Every month</div>
-        <div style="font-size: 16px; line-height: 1.6; color: #3A382E; padding-bottom: 24px;">A dietitian follow-up to adjust your plan, troubleshoot, and keep things moving.</div>
-
-        <div class="tag">As needed</div>
-        <div style="font-size: 16px; line-height: 1.6; color: #3A382E;">A dedicated 2-week dietitian check-in when a new medication, such as a GLP-1, is first started, plus additional physician or dietitian visits if you're experiencing moderate to severe side effects.</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- LABS & MEDICATION -->
-    <div style="max-width: 980px; margin: 0 auto;">
-      <h2 style="font-size: 34px; color: #16222E; margin-bottom: 40px;">Labs &amp; medication.</h2>
-
-      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
-        <div class="card">
-          <div class="tag" style="margin-bottom: 10px;">Included</div>
-          <div style="font-size: 15px; line-height: 1.6; color: #3A382E;">Standard labs at no extra cost: cortisol, TSH, lipid panel, A1c, CBC, and metabolic chemistry panel. [Drawn once at program start / repeated during the program &mdash; confirm cadence]</div>
+      <div style="margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr 1.2fr; gap: 16px;">
+        <div class="tile">
+          <div class="eyebrow" style="margin-bottom: 8px;">Duration</div>
+          <div style="font-size: 22px; font-weight: 800;">Six months</div>
         </div>
-        <div class="card">
-          <div class="tag" style="margin-bottom: 10px;">If advanced testing is needed</div>
-          <div style="font-size: 15px; line-height: 1.6; color: #3A382E;">Complex or advanced labs, such as 24-hour urine cortisol or tumor markers, are ordered only if clinically indicated, and are the patient's responsibility.</div>
+        <div class="tile">
+          <div class="eyebrow" style="margin-bottom: 8px;">Your team</div>
+          <div style="font-size: 22px; font-weight: 800;">MD + RD</div>
         </div>
-        <div class="card">
-          <div class="tag" style="margin-bottom: 10px;">Medication</div>
-          <div style="font-size: 15px; line-height: 1.6; color: #3A382E;">GLP-1 and other prescribed medications are not included in the program price. Our team will assist with insurance billing for any prescribed medications.</div>
+        <div class="tile" style="background: #0E6E86; border: none;">
+          <div class="eyebrow" style="margin-bottom: 8px; color: rgba(255,255,255,0.75);">Investment</div>
+          <div style="font-size: 22px; font-weight: 800; color: #FFFFFF;">$5,000 all-inclusive</div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- CARE TEAM -->
-  <div class="reveal" style="width: 100%; box-sizing: border-box; padding: 80px 64px; background: #16222E;">
-    <div style="max-width: 1000px; margin: 0 auto;">
-      <h2 style="font-size: 34px; color: #F3EEE0; margin-bottom: 48px;">Your care team.</h2>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0;">
-        <div style="padding-right: 44px;">
-          <div style="font-family: 'Fraunces', serif; font-size: 28px; color: #F3EEE0; margin-bottom: 8px;">Minh Mach, MD</div>
-          <div style="font-family: 'Fraunces', serif; font-style: italic; font-size: 15px; color: #C99A4E; border-bottom: 1px solid #C99A4E; display: inline-block; padding-bottom: 6px; margin-bottom: 18px;">Endocrinology</div>
-          <div style="font-size: 15px; line-height: 1.7; color: #B9B4A4;">Board certified in Endocrinology, Internal Medicine, and Geriatrics, of Endocrine Specialty Consultants. Oversees your medical assessment, hormone and metabolic workup, and medication plan.</div>
+    <!-- MODEL: hormone specialty + integration, bento -->
+    <div id="model" style="padding: 20px 72px 48px;">
+      <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 16px;">
+        <div class="tile">
+          <div class="eyebrow" style="margin-bottom: 14px;">The hormone specialists</div>
+          <h2 style="font-size: 24px; margin-bottom: 14px;">Weight is governed by hormones, not willpower.</h2>
+          <div style="font-size: 15px; line-height: 1.65; color: #454A52;">Endocrinologists specialize specifically in the body's hormone systems, the same systems that regulate metabolism, appetite, and blood sugar. Your endocrinologist can assess whether a thyroid disorder, hormonal imbalance, or pituitary issue is contributing to your weight — and GLP-1 medications, which mimic a hormone the body already produces, sit squarely in the territory endocrinology has specialized in for decades.</div>
         </div>
-        <div style="padding-left: 44px; border-left: 1px solid #2E3B47;">
-          <div style="font-family: 'Fraunces', serif; font-size: 28px; color: #F3EEE0; margin-bottom: 8px;">Katherine Chen, MS, RD, CDCES</div>
-          <div style="font-family: 'Fraunces', serif; font-style: italic; font-size: 15px; color: #C99A4E; border-bottom: 1px solid #C99A4E; display: inline-block; padding-bottom: 6px; margin-bottom: 18px;">Nutrition</div>
-          <div style="font-size: 15px; line-height: 1.7; color: #B9B4A4;">Registered Dietitian and Certified Diabetes Care &amp; Education Specialist, founder of Symphoneats. Leads your ongoing nutrition strategy, with monthly clinical assessment and medical nutrition therapy.</div>
+        <div class="tile" style="background: #14161A; border: none; display: flex; align-items: center;">
+          <div style="font-size: 18px; line-height: 1.45; font-weight: 600; color: #FFFFFF;">A GLP-1 medication is one option your endocrinologist may consider — and only when it's medically appropriate.</div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <!-- WHAT'S INCLUDED (VALUE BREAKDOWN) -->
-  <div class="reveal" style="width: 100%; box-sizing: border-box; padding: 72px 64px 40px; max-width: 980px; margin: 0 auto;">
-    <div class="tag" style="margin-bottom: 16px;">What's included</div>
-    <h2 style="font-size: 30px; color: #16222E; margin-bottom: 32px;">What you're getting.</h2>
+      <div style="display: grid; grid-template-columns: 1fr 48px 1fr; gap: 0; align-items: stretch;">
+        <div class="tile">
+          <div class="eyebrow" style="margin-bottom: 14px;">Your physician</div>
+          <div style="font-size: 14.5px; line-height: 1.55; padding-bottom: 12px; border-bottom: 1px solid rgba(20,22,26,0.08); margin-bottom: 12px;">Comprehensive initial assessment of your hormonal and metabolic drivers</div>
+          <div style="font-size: 14.5px; line-height: 1.55; padding-bottom: 12px; border-bottom: 1px solid rgba(20,22,26,0.08); margin-bottom: 12px;">Follow-up visits approximately every three months to reassess labs, hormones, and progress</div>
+          <div style="font-size: 14.5px; line-height: 1.55;">Additional visits if you're experiencing moderate to severe side effects</div>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: center;">
+          <div style="writing-mode: vertical-rl; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; color: #9AA0A7; text-transform: uppercase;">Coordinated</div>
+        </div>
+        <div class="tile">
+          <div class="eyebrow" style="margin-bottom: 14px;">Your dietitian</div>
+          <div style="font-size: 14.5px; line-height: 1.55; padding-bottom: 12px; border-bottom: 1px solid rgba(20,22,26,0.08); margin-bottom: 12px;">Comprehensive nutrition assessment built around your schedule and goals</div>
+          <div style="font-size: 14.5px; line-height: 1.55; padding-bottom: 12px; border-bottom: 1px solid rgba(20,22,26,0.08); margin-bottom: 12px;">Monthly follow-ups to adjust your plan and keep momentum</div>
+          <div style="font-size: 14.5px; line-height: 1.55;">A dedicated 2-week check-in after any new medication, such as a GLP-1</div>
+        </div>
+      </div>
 
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-      <div class="card">
-        <div style="font-size: 17px; font-weight: 600; color: #16222E; margin-bottom: 8px;">A coordinated care team, not a solo provider</div>
-        <div style="font-size: 15px; line-height: 1.6; color: #3A382E;">You'll work with both an endocrinologist and a Registered Dietitian who are actively communicating about your case, not a single provider juggling both roles, and not a dietitian working in isolation from your prescriber.</div>
-      </div>
-      <div class="card">
-        <div style="font-size: 17px; font-weight: 600; color: #16222E; margin-bottom: 8px;">Visits included, no surprise billing</div>
-        <div style="font-size: 15px; line-height: 1.6; color: #3A382E;">Visits with both your endocrinologist and your dietitian throughout the six months, all included in your program fee. No per-visit billing, no surprise charges as you go.</div>
-      </div>
-      <div class="card">
-        <div style="font-size: 17px; font-weight: 600; color: #16222E; margin-bottom: 8px;">In-person access, always available</div>
-        <div style="font-size: 15px; line-height: 1.6; color: #3A382E;">Most programs at this price point default to virtual check-ins between a handful of in-person milestones. Ours doesn't. You can be seen in person whenever it's needed.</div>
-      </div>
-      <div class="card">
-        <div style="font-size: 17px; font-weight: 600; color: #16222E; margin-bottom: 8px;">Real medication, prescribed and monitored, never sold to you</div>
-        <div style="font-size: 15px; line-height: 1.6; color: #3A382E;">We prescribe FDA-approved GLP-1 medications, not compounded versions from an unidentified source. You always know exactly what you're taking and where it came from.</div>
-      </div>
-      <div class="card" style="grid-column: span 2; border-top: 4px solid #16222E;">
-        <div style="font-size: 17px; font-weight: 600; color: #16222E; margin-bottom: 8px;">A defined bridge, not an open-ended subscription</div>
-        <div style="font-size: 15px; line-height: 1.6; color: #3A382E;">Six months with a clear start and finish, built to get you to a stable, sustainable place, not a recurring monthly charge with no end in sight.</div>
+      <div class="tile" style="margin-top: 16px; display: flex; align-items: center; gap: 16px;">
+        <div class="eyebrow" style="flex: 0 0 140px;">Visit format</div>
+        <div style="font-size: 14.5px; line-height: 1.6; color: #454A52;">Available in person and by telehealth. Unlike most programs, which are largely telehealth-only, you'll always have access to an in-person appointment at our practice.</div>
       </div>
     </div>
-  </div>
 
-  <!-- PRICING -->
-  <div class="reveal" style="width: 100%; box-sizing: border-box; padding: 40px 64px 40px;">
-    <div style="max-width: 640px; margin: 0 auto;">
-      <div class="card" style="border-top: 4px solid #16222E; text-align: center;">
-        <div class="tag" style="font-size: 15px; margin-bottom: 8px;">Six-month program</div>
-        <div style="font-family: 'Fraunces', serif; font-size: 52px; color: #16222E; margin-bottom: 16px;">$5,000</div>
-        <div style="font-size: 15px; line-height: 1.6; color: #6E6558; margin-bottom: 28px;">Cash-pay, all-inclusive of physician visits, dietitian visits, and standard labs. Medication is billed separately.</div>
-        <a href="https://calendly.com/k-symphoneats/30min" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/k-symphoneats/30min'}); return false;" class="btn-primary">Book a Discovery Call</a>
+    <!-- TIMELINE: zigzag -->
+    <div id="timeline" style="padding: 20px 72px 48px;">
+      <div class="eyebrow" style="margin-bottom: 14px;">The arc of the program</div>
+      <h2 style="font-size: 26px; margin-bottom: 36px;">Your six months.</h2>
+      <div style="position: relative;">
+        <div style="position: absolute; left: 0; right: 0; top: 54px; height: 2px; background: rgba(20,22,26,0.1);"></div>
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
+          <div>
+            <div style="width: 10px; height: 10px; border-radius: 50%; background: #0E6E86; margin-bottom: 92px;"></div>
+            <div class="tile">
+              <div class="eyebrow" style="margin-bottom: 8px;">Month 1</div>
+              <div style="font-size: 13.5px; line-height: 1.55; color: #454A52;">Comprehensive physician and nutrition assessments, both in depth.</div>
+            </div>
+          </div>
+          <div style="margin-top: 44px;">
+            <div style="width: 10px; height: 10px; border-radius: 50%; background: #0E6E86; margin-bottom: 48px;"></div>
+            <div class="tile">
+              <div class="eyebrow" style="margin-bottom: 8px;">Every 3 months</div>
+              <div style="font-size: 13.5px; line-height: 1.55; color: #454A52;">Physician follow-up to reassess labs, hormones, and progress.</div>
+            </div>
+          </div>
+          <div>
+            <div style="width: 10px; height: 10px; border-radius: 50%; background: #0E6E86; margin-bottom: 92px;"></div>
+            <div class="tile">
+              <div class="eyebrow" style="margin-bottom: 8px;">Every month</div>
+              <div style="font-size: 13.5px; line-height: 1.55; color: #454A52;">Dietitian follow-up to adjust your plan and keep things moving.</div>
+            </div>
+          </div>
+          <div style="margin-top: 44px;">
+            <div style="width: 10px; height: 10px; border-radius: 50%; background: #0E6E86; margin-bottom: 48px;"></div>
+            <div class="tile">
+              <div class="eyebrow" style="margin-bottom: 8px;">As needed</div>
+              <div style="font-size: 13.5px; line-height: 1.55; color: #454A52;">2-week check-in on a new medication, plus visits for side effects.</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- APPLY -->
-  <div class="reveal" style="width: 100%; box-sizing: border-box; padding: 40px 64px 80px; background: #E6E2D2;">
-    <div style="max-width: 640px; margin: 0 auto;">
-      <div class="tag" style="margin-bottom: 16px;">Or, apply first</div>
-      <h2 style="font-size: 30px; color: #16222E; margin-bottom: 12px;">Tell us a bit about you.</h2>
-      <div style="font-size: 16px; line-height: 1.6; color: #3A382E; margin-bottom: 8px;">Prefer to start here instead of booking directly? Leave your contact information and we'll reach out to schedule your discovery call.</div>
-      <div style="font-size: 13px; line-height: 1.5; color: #6E6558; margin-bottom: 32px;">Please don't include medical details, medications, or health history in this form. We'll cover that securely once we connect.</div>
+    <!-- FIT + LABS + INCLUDED: single bento wall -->
+    <div id="fit" style="padding: 20px 72px 48px;">
+      <div class="eyebrow" style="margin-bottom: 14px;">Everything else you'd ask</div>
+      <h2 style="font-size: 26px; margin-bottom: 24px;">Fit, fine print, and value — at a glance.</h2>
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;">
 
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px 20px;">
+        <div class="tile"><div class="eyebrow" style="margin-bottom: 8px; color: #9AA0A7;">Fit</div><div style="font-size: 13.5px; line-height: 1.55;">You want coordinated care, not two providers you stitch together yourself</div></div>
+        <div class="tile"><div class="eyebrow" style="margin-bottom: 8px; color: #9AA0A7;">Fit</div><div style="font-size: 13.5px; line-height: 1.55;">You're on, or considering, a GLP-1 and want nutrition built around it</div></div>
+        <div class="tile"><div class="eyebrow" style="margin-bottom: 8px; color: #9AA0A7;">Fit</div><div style="font-size: 13.5px; line-height: 1.55;">You've felt the disconnect between separate medical and dietitian care</div></div>
+        <div class="tile"><div class="eyebrow" style="margin-bottom: 8px; color: #9AA0A7;">Fit</div><div style="font-size: 13.5px; line-height: 1.55;">You'd rather pay cash than navigate insurance authorizations</div></div>
+
+        <div class="tile" style="grid-column: span 2;"><div class="eyebrow" style="margin-bottom: 8px;">Labs — included</div><div style="font-size: 13.5px; line-height: 1.55;">Cortisol, TSH, lipid panel, A1c, CBC, and metabolic chemistry panel at no extra cost. [CONFIRM LAB CADENCE]</div></div>
+        <div class="tile" style="grid-column: span 2;"><div class="eyebrow" style="margin-bottom: 8px;">Labs — if needed</div><div style="font-size: 13.5px; line-height: 1.55;">Advanced labs (24-hour urine cortisol, tumor markers) only if clinically indicated, billed to the patient.</div></div>
+
+        <div class="tile"><div class="eyebrow" style="margin-bottom: 8px; color: #0E6E86;">Included</div><div style="font-size: 13.5px; line-height: 1.55; font-weight: 600;">A coordinated team, not a solo provider</div></div>
+        <div class="tile"><div class="eyebrow" style="margin-bottom: 8px; color: #0E6E86;">Included</div><div style="font-size: 13.5px; line-height: 1.55; font-weight: 600;">All visits, no surprise billing</div></div>
+        <div class="tile"><div class="eyebrow" style="margin-bottom: 8px; color: #0E6E86;">Included</div><div style="font-size: 13.5px; line-height: 1.55; font-weight: 600;">Always available in person, not virtual-only</div></div>
+        <div class="tile"><div class="eyebrow" style="margin-bottom: 8px; color: #0E6E86;">Included</div><div style="font-size: 13.5px; line-height: 1.55; font-weight: 600;">FDA-approved medication, never compounded</div></div>
+
+        <div class="tile" style="grid-column: span 4; background: #14161A; border: none; display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+          <div style="font-size: 15px; font-weight: 700; color: #FFFFFF;">A defined six-month bridge, not an open-ended subscription.</div>
+          <div style="font-size: 13px; color: #9AA0A7;">Medication billed separately</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARE TEAM -->
+    <div id="team" style="padding: 20px 72px 48px;">
+      <div class="eyebrow" style="margin-bottom: 14px;">Your care team</div>
+      <h2 style="font-size: 26px; margin-bottom: 24px;">Two clinicians. One plan.</h2>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+        <div class="tile" style="display: flex; gap: 20px;">
+          <div style="flex: 0 0 96px; height: 96px; border-radius: 10px; border: 1.5px dashed rgba(14,110,134,0.35); background: rgba(14,110,134,0.06); display: flex; align-items: center; justify-content: center; font-size: 10px; color: #0E6E86;">[ photo ]</div>
+          <div>
+            <h3 style="font-size: 19px; margin-bottom: 4px;">Minh Mach, MD</h3>
+            <div class="eyebrow" style="margin-bottom: 10px;">Endocrinology</div>
+            <div style="font-size: 13.5px; line-height: 1.6; color: #454A52;">Board certified in Endocrinology, Internal Medicine, and Geriatrics, of Endocrine Specialty Consultants. Oversees your medical assessment, hormone and metabolic workup, and medication plan.</div>
+          </div>
+        </div>
+        <div class="tile" style="display: flex; gap: 20px;">
+          <div style="flex: 0 0 96px; height: 96px; border-radius: 10px; border: 1.5px dashed rgba(14,110,134,0.35); background: rgba(14,110,134,0.06); display: flex; align-items: center; justify-content: center; font-size: 10px; color: #0E6E86;">[ photo ]</div>
+          <div>
+            <h3 style="font-size: 19px; margin-bottom: 4px;">Katherine Chen, MS, RD, CDCES</h3>
+            <div class="eyebrow" style="margin-bottom: 10px;">Nutrition</div>
+            <div style="font-size: 13.5px; line-height: 1.6; color: #454A52;">Registered Dietitian and Certified Diabetes Care &amp; Education Specialist, founder of Symphoneats. Leads your ongoing nutrition strategy.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRICING + APPLY split -->
+    <div id="pricing" style="padding: 20px 72px 64px; display: grid; grid-template-columns: 1fr 1.3fr; gap: 20px;">
+      <div class="tile" style="background: #14161A; border: none; display: flex; flex-direction: column; justify-content: space-between;">
         <div>
-          <label style="font-size: 13px; color: #6E6558; display: block; margin-bottom: 6px;">First name</label>
-          <input type="text" style="width: 100%; box-sizing: border-box; padding: 11px 12px; border: 1px solid #D6D2BF; border-radius: 4px; background: #FAF8F4; font-family: 'Libre Franklin', sans-serif; font-size: 15px;">
+          <div class="eyebrow" style="margin-bottom: 10px; color: #9AA0A7;">Six-month program</div>
+          <div style="font-size: 46px; font-weight: 800; color: #FFFFFF; margin-bottom: 14px;">$5,000</div>
+          <div style="font-size: 13.5px; line-height: 1.6; color: #9AA0A7; margin-bottom: 26px;">Cash-pay, all-inclusive of physician visits, dietitian visits, and standard labs. Medication billed separately.</div>
         </div>
-        <div>
-          <label style="font-size: 13px; color: #6E6558; display: block; margin-bottom: 6px;">Last name</label>
-          <input type="text" style="width: 100%; box-sizing: border-box; padding: 11px 12px; border: 1px solid #D6D2BF; border-radius: 4px; background: #FAF8F4; font-family: 'Libre Franklin', sans-serif; font-size: 15px;">
-        </div>
-        <div>
-          <label style="font-size: 13px; color: #6E6558; display: block; margin-bottom: 6px;">Email</label>
-          <input type="email" style="width: 100%; box-sizing: border-box; padding: 11px 12px; border: 1px solid #D6D2BF; border-radius: 4px; background: #FAF8F4; font-family: 'Libre Franklin', sans-serif; font-size: 15px;">
-        </div>
-        <div>
-          <label style="font-size: 13px; color: #6E6558; display: block; margin-bottom: 6px;">Phone</label>
-          <input type="tel" style="width: 100%; box-sizing: border-box; padding: 11px 12px; border: 1px solid #D6D2BF; border-radius: 4px; background: #FAF8F4; font-family: 'Libre Franklin', sans-serif; font-size: 15px;">
-        </div>
-        <div style="grid-column: span 2;">
-          <label style="font-size: 13px; color: #6E6558; display: block; margin-bottom: 6px;">Best time to reach you</label>
-          <input type="text" placeholder="e.g. weekday mornings" style="width: 100%; box-sizing: border-box; padding: 11px 12px; border: 1px solid #D6D2BF; border-radius: 4px; background: #FAF8F4; font-family: 'Libre Franklin', sans-serif; font-size: 15px;">
-        </div>
-        <div style="grid-column: span 2;">
-          <label style="font-size: 13px; color: #6E6558; display: block; margin-bottom: 6px;">How did you hear about us?</label>
-          <input type="text" style="width: 100%; box-sizing: border-box; padding: 11px 12px; border: 1px solid #D6D2BF; border-radius: 4px; background: #FAF8F4; font-family: 'Libre Franklin', sans-serif; font-size: 15px;">
-        </div>
+        <a href="https://calendly.com/k-symphoneats/30min" target="_blank" rel="noopener" class="btn-primary" style="justify-content: center;">Book a Discovery Call</a>
       </div>
 
-      <div style="margin-top: 28px;">
-        <span class="btn-primary" style="cursor: pointer;">Submit application</span>
+      <div class="tile">
+        <div class="eyebrow" style="margin-bottom: 10px;">Or, apply first</div>
+        <h3 style="font-size: 18px; margin-bottom: 6px;">Tell us a bit about you.</h3>
+        <div style="font-size: 12.5px; line-height: 1.5; color: #7C838C; margin-bottom: 18px;">No medical details here — we'll cover that securely once we connect.</div>
+        <form onsubmit="return false;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px 14px;">
+          <div style="display: flex; flex-direction: column; gap: 5px;">
+            <label for="r-fname" style="font-size: 12px; color: #454A52;">First name</label>
+            <input id="r-fname" name="first_name" type="text" style="box-sizing: border-box; padding: 10px 11px; border: 1px solid rgba(20,22,26,0.14); border-radius: 7px; background: #FAFAF8; font-size: 14px;">
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 5px;">
+            <label for="r-lname" style="font-size: 12px; color: #454A52;">Last name</label>
+            <input id="r-lname" name="last_name" type="text" style="box-sizing: border-box; padding: 10px 11px; border: 1px solid rgba(20,22,26,0.14); border-radius: 7px; background: #FAFAF8; font-size: 14px;">
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 5px;">
+            <label for="r-email" style="font-size: 12px; color: #454A52;">Email</label>
+            <input id="r-email" name="email" type="email" style="box-sizing: border-box; padding: 10px 11px; border: 1px solid rgba(20,22,26,0.14); border-radius: 7px; background: #FAFAF8; font-size: 14px;">
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 5px;">
+            <label for="r-phone" style="font-size: 12px; color: #454A52;">Phone</label>
+            <input id="r-phone" name="phone" type="tel" style="box-sizing: border-box; padding: 10px 11px; border: 1px solid rgba(20,22,26,0.14); border-radius: 7px; background: #FAFAF8; font-size: 14px;">
+          </div>
+          <div style="grid-column: span 2; display: flex; flex-direction: column; gap: 5px;">
+            <label for="r-source" style="font-size: 12px; color: #454A52;">How did you hear about us?</label>
+            <input id="r-source" name="source" type="text" style="box-sizing: border-box; padding: 10px 11px; border: 1px solid rgba(20,22,26,0.14); border-radius: 7px; background: #FAFAF8; font-size: 14px;">
+          </div>
+        </div>
+        <button type="submit" class="btn-primary" style="margin-top: 18px;">Submit Application</button>
+        </form>
       </div>
     </div>
-  </div>
 
-  <!-- FOOTER -->
-  <div style="width: 100%; box-sizing: border-box; padding: 32px 64px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #D6D2BF; flex-wrap: wrap; gap: 12px;">
-    <div style="font-family: 'Fraunces', serif; font-style: italic; font-size: 17px; color: #16222E;">By The Weigh</div>
-    <div style="font-size: 13px; color: #6E6558;">A collaboration between Symphoneats and Endocrine Specialty Consultants</div>
-  </div>
+    <!-- FOOTER -->
+    <div style="padding: 24px 72px; border-top: 1px solid rgba(20,22,26,0.08); font-size: 12.5px; color: #7C838C;">
+      A collaboration between Symphoneats and Endocrine Specialty Consultants
+    </div>
 
+  </div>
 </div>
-<script>
-  (function () {
-    var els = document.querySelectorAll('.reveal');
-    if (!('IntersectionObserver' in window) || !els.length) {
-      els.forEach(function (el) { el.classList.add('is-visible'); });
-      return;
-    }
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
-    els.forEach(function (el) { observer.observe(el); });
-  })();
-</script>
 </body>
 </html>
