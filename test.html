@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>By The Weigh — Executive Metabolic Care</title>
+<script>document.documentElement.className += ' js';</script>
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
 <style>
@@ -21,32 +22,84 @@
   .rail-link.active { color: #FFFFFF; border-left-color: #0E6E86; }
   input, label { font-family: 'Libre Franklin', sans-serif; }
 
-  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal { transition: opacity 0.7s ease, transform 0.7s ease; }
+  html.js .reveal:not(.is-visible) { opacity: 0; transform: translateY(28px); }
   .reveal.is-visible { opacity: 1; transform: translateY(0); }
-  .reveal .tile, .reveal > div { transition: opacity 0.7s ease, transform 0.7s ease; }
   @media (prefers-reduced-motion: reduce) {
-    .reveal { opacity: 1; transform: none; transition: none; }
+    html.js .reveal:not(.is-visible) { opacity: 1; transform: none; }
   }
 
   .page { width: 100%; min-height: 100vh; box-sizing: border-box; background: #FAFAF8; display: flex; }
   .rail { flex: 0 0 258px; background: #1B1E23; position: sticky; top: 0; align-self: flex-start; height: 100vh; box-sizing: border-box; padding: 40px 30px; display: flex; flex-direction: column; justify-content: space-between; }
   .main { flex: 1; min-width: 0; box-sizing: border-box; }
 
+  .nav-toggle { display: none; background: none; border: none; padding: 8px; margin: -8px; cursor: pointer; flex-direction: column; justify-content: center; gap: 5px; }
+  .nav-toggle span { display: block; width: 22px; height: 2px; background: #FFFFFF; border-radius: 2px; }
+
+  /* ===== Tablet / stacked layout ===== */
   @media (max-width: 900px) {
     .page { flex-direction: column; }
-    .rail { position: relative; height: auto; flex-direction: row; align-items: center; justify-content: space-between; padding: 20px 24px; }
-    .rail > div:first-child { display: flex; align-items: center; gap: 20px; }
-    .rail-link { display: none; }
-    .rail a.btn-primary { padding: 11px 18px; font-size: 13px; }
-    .rail > div:last-child > div { display: none; }
+    .rail { flex: 0 0 auto; position: sticky; top: 0; z-index: 40; height: auto; flex-direction: row; align-items: center; justify-content: space-between; padding: 16px 20px; }
+    .rail-nav-group { display: flex; align-items: center; }
+    .rail-top { display: flex; align-items: center; gap: 16px; }
+    .rail-logo { margin-bottom: 0 !important; font-size: 17px !important; }
+    .nav-toggle { display: flex; }
+    .rail-links {
+      display: none; position: absolute; top: 100%; left: 0; right: 0;
+      background: #1B1E23; flex-direction: column; padding: 4px 20px 16px;
+      box-shadow: 0 16px 28px rgba(0,0,0,0.28); border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .rail-links.open { display: flex; }
+    .rail-link { border-left: none; border-bottom: 1px solid rgba(255,255,255,0.08); padding: 15px 2px; font-size: 15px; }
+    .rail-link:last-child { border-bottom: none; }
+    .rail-link.active { border-left-color: transparent; }
+    .rail-bottom { display: flex; align-items: center; }
+    .rail a.btn-primary { padding: 11px 18px; font-size: 13px; margin-bottom: 0 !important; }
+    .rail-contact { display: none; }
+
     #program, #model, #timeline, #fit, #team, #pricing { padding-left: 24px !important; padding-right: 24px !important; }
-    #model > div[style*="grid-template-columns: 2fr 1fr"],
-    #model > div[style*="grid-template-columns: 1fr 48px 1fr"],
-    #timeline div[style*="grid-template-columns: repeat(4"],
-    #fit div[style*="grid-template-columns: repeat(4"],
-    #team div[style*="grid-template-columns: 1fr 1fr"],
-    #pricing { grid-template-columns: 1fr !important; }
-    #program div[style*="grid-template-columns: 1fr 1fr 1.2fr"] { grid-template-columns: 1fr !important; }
+    #program { padding-top: 36px !important; padding-bottom: 28px !important; }
+    #program h1 { font-size: 34px !important; margin-bottom: 18px !important; }
+    h2 { font-size: 22px !important; }
+
+    .fact-grid, .model-top, .model-compare, .team-grid, .pricing-grid, .timeline-grid {
+      grid-template-columns: minmax(0, 1fr) !important;
+    }
+    .model-divider { display: none; }
+    .model-compare { gap: 14px !important; }
+    .timeline-line { display: none !important; }
+    .tl-node { margin-top: 0 !important; }
+    .tl-dot { margin-bottom: 10px !important; }
+    .timeline-grid { gap: 14px !important; }
+
+    .fit-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important; }
+    .fit-grid .span-2, .fit-grid .span-4 { grid-column: span 2 !important; }
+
+    .form-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important; }
+
+    /* Grid tracks default to a min-width equal to their content's max-content
+       size; minmax(0, 1fr) above overrides that so tiles/forms can shrink to
+       fit the viewport instead of forcing horizontal overflow. */
+    .tile, .form-grid > div, input { min-width: 0; }
+  }
+
+  /* ===== Phone ===== */
+  @media (max-width: 560px) {
+    #program, #model, #timeline, #fit, #team, #pricing { padding-left: 18px !important; padding-right: 18px !important; }
+    #program h1 { font-size: 28px !important; }
+    #program > div[style*="font-size: 17px"] { font-size: 15px !important; }
+    h2 { font-size: 20px !important; }
+    .tile { padding: 18px !important; }
+    #program .btn-primary, #pricing .btn-primary { width: 100%; justify-content: center; }
+    .fit-grid { grid-template-columns: minmax(0, 1fr) !important; }
+    .fit-grid .span-2, .fit-grid .span-4 { grid-column: span 1 !important; }
+    .form-grid { grid-template-columns: minmax(0, 1fr) !important; }
+    input, textarea { max-width: 100%; }
+    input[type="text"], input[type="email"], input[type="tel"] { font-size: 16px !important; } /* prevents iOS auto-zoom on focus */
+  }
+
+  @media (max-width: 480px) {
+    .avatar { flex: 0 0 68px !important; height: 68px !important; font-size: 9px !important; }
   }
 </style>
 </head>
@@ -55,18 +108,25 @@
 
   <!-- RAIL -->
   <div class="rail">
-    <div>
-      <div style="font-size: 19px; font-weight: 800; color: #FFFFFF; margin-bottom: 44px;">By The Weigh</div>
-      <a href="#program" class="rail-link" data-section="program">Program</a>
-      <a href="#model" class="rail-link" data-section="model">How it works</a>
-      <a href="#timeline" class="rail-link" data-section="timeline">Timeline</a>
-      <a href="#fit" class="rail-link" data-section="fit">Fit &amp; details</a>
-      <a href="#team" class="rail-link" data-section="team">Care team</a>
-      <a href="#pricing" class="rail-link" data-section="pricing">Pricing</a>
+    <div class="rail-nav-group">
+      <div class="rail-top">
+        <div class="rail-logo" style="font-size: 19px; font-weight: 800; color: #FFFFFF; margin-bottom: 44px;">By The Weigh</div>
+        <button type="button" class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" onclick="toggleNav()">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+      <div class="rail-links">
+        <a href="#program" class="rail-link" data-section="program">Program</a>
+        <a href="#model" class="rail-link" data-section="model">How it works</a>
+        <a href="#timeline" class="rail-link" data-section="timeline">Timeline</a>
+        <a href="#fit" class="rail-link" data-section="fit">Fit &amp; details</a>
+        <a href="#team" class="rail-link" data-section="team">Care team</a>
+        <a href="#pricing" class="rail-link" data-section="pricing">Pricing</a>
+      </div>
     </div>
-    <div>
+    <div class="rail-bottom">
       <a href="https://calendly.com/k-symphoneats/30min" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/k-symphoneats/30min'}); return false;" class="btn-primary" style="width: 100%; box-sizing: border-box; justify-content: center; margin-bottom: 18px;">Book a call</a>
-      <div style="font-size: 12px; line-height: 1.6; color: #7C838C;">Symphoneats &amp; Endocrine Specialty Consultants<br>626.828.9333</div>
+      <div class="rail-contact" style="font-size: 12px; line-height: 1.6; color: #7C838C;">Symphoneats &amp; Endocrine Specialty Consultants</div>
     </div>
   </div>
 
@@ -79,7 +139,7 @@
       <div style="font-size: 17px; line-height: 1.6; color: #454A52; max-width: 620px; margin-bottom: 30px;">Six months of integrated physician and dietitian care, built for people who are serious about their weight and health goals and want sustainable results, not a quick fix.</div>
       <a href="https://calendly.com/k-symphoneats/30min" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/k-symphoneats/30min'}); return false;" class="btn-primary">Schedule Your Discovery Call</a>
 
-      <div style="margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr 1.2fr; gap: 16px;">
+      <div class="fact-grid" style="margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr 1.2fr; gap: 16px;">
         <div class="tile">
           <div class="eyebrow" style="margin-bottom: 8px;">Duration</div>
           <div style="font-size: 22px; font-weight: 800;">Six months</div>
@@ -97,7 +157,7 @@
 
     <!-- MODEL: hormone specialty + integration, bento -->
     <div id="model" class="reveal" style="padding: 20px 72px 48px;">
-      <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 16px;">
+      <div class="model-top" style="display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 16px;">
         <div class="tile">
           <div class="eyebrow" style="margin-bottom: 14px;">The hormone specialists</div>
           <h2 style="font-size: 24px; margin-bottom: 14px;">Weight is governed by hormones, not willpower.</h2>
@@ -108,14 +168,14 @@
         </div>
       </div>
 
-      <div style="display: grid; grid-template-columns: 1fr 48px 1fr; gap: 0; align-items: stretch;">
+      <div class="model-compare" style="display: grid; grid-template-columns: 1fr 48px 1fr; gap: 0; align-items: stretch;">
         <div class="tile">
           <div class="eyebrow" style="margin-bottom: 14px;">Your physician</div>
           <div style="font-size: 14.5px; line-height: 1.55; padding-bottom: 12px; border-bottom: 1px solid rgba(20,22,26,0.08); margin-bottom: 12px;">Comprehensive initial assessment of your hormonal and metabolic drivers</div>
           <div style="font-size: 14.5px; line-height: 1.55; padding-bottom: 12px; border-bottom: 1px solid rgba(20,22,26,0.08); margin-bottom: 12px;">Follow-up visits approximately every three months to reassess labs, hormones, and progress</div>
           <div style="font-size: 14.5px; line-height: 1.55;">Additional visits if you're experiencing moderate to severe side effects</div>
         </div>
-        <div style="display: flex; align-items: center; justify-content: center;">
+        <div class="model-divider" style="display: flex; align-items: center; justify-content: center;">
           <div style="writing-mode: vertical-rl; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; color: #9AA0A7; text-transform: uppercase;">Coordinated</div>
         </div>
         <div class="tile">
@@ -137,31 +197,31 @@
       <div class="eyebrow" style="margin-bottom: 14px;">The arc of the program</div>
       <h2 style="font-size: 26px; margin-bottom: 36px;">Your six months.</h2>
       <div style="position: relative;">
-        <div style="position: absolute; left: 0; right: 0; top: 54px; height: 2px; background: rgba(20,22,26,0.1);"></div>
-        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
-          <div>
-            <div style="width: 10px; height: 10px; border-radius: 50%; background: #0E6E86; margin-bottom: 92px;"></div>
+        <div class="timeline-line" style="position: absolute; left: 0; right: 0; top: 54px; height: 2px; background: rgba(20,22,26,0.1);"></div>
+        <div class="timeline-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
+          <div class="tl-node">
+            <div class="tl-dot" style="width: 10px; height: 10px; border-radius: 50%; background: #0E6E86; margin-bottom: 92px;"></div>
             <div class="tile">
               <div class="eyebrow" style="margin-bottom: 8px;">Month 1</div>
               <div style="font-size: 13.5px; line-height: 1.55; color: #454A52;">Comprehensive physician and nutrition assessments, both in depth.</div>
             </div>
           </div>
-          <div style="margin-top: 44px;">
-            <div style="width: 10px; height: 10px; border-radius: 50%; background: #0E6E86; margin-bottom: 48px;"></div>
+          <div class="tl-node" style="margin-top: 44px;">
+            <div class="tl-dot" style="width: 10px; height: 10px; border-radius: 50%; background: #0E6E86; margin-bottom: 48px;"></div>
             <div class="tile">
               <div class="eyebrow" style="margin-bottom: 8px;">Every 3 months</div>
               <div style="font-size: 13.5px; line-height: 1.55; color: #454A52;">Physician follow-up to reassess labs, hormones, and progress.</div>
             </div>
           </div>
-          <div>
-            <div style="width: 10px; height: 10px; border-radius: 50%; background: #0E6E86; margin-bottom: 92px;"></div>
+          <div class="tl-node">
+            <div class="tl-dot" style="width: 10px; height: 10px; border-radius: 50%; background: #0E6E86; margin-bottom: 92px;"></div>
             <div class="tile">
               <div class="eyebrow" style="margin-bottom: 8px;">Every month</div>
               <div style="font-size: 13.5px; line-height: 1.55; color: #454A52;">Dietitian follow-up to adjust your plan and keep things moving.</div>
             </div>
           </div>
-          <div style="margin-top: 44px;">
-            <div style="width: 10px; height: 10px; border-radius: 50%; background: #0E6E86; margin-bottom: 48px;"></div>
+          <div class="tl-node" style="margin-top: 44px;">
+            <div class="tl-dot" style="width: 10px; height: 10px; border-radius: 50%; background: #0E6E86; margin-bottom: 48px;"></div>
             <div class="tile">
               <div class="eyebrow" style="margin-bottom: 8px;">As needed</div>
               <div style="font-size: 13.5px; line-height: 1.55; color: #454A52;">2-week check-in on a new medication, plus visits for side effects.</div>
@@ -175,22 +235,22 @@
     <div id="fit" class="reveal" style="padding: 20px 72px 48px;">
       <div class="eyebrow" style="margin-bottom: 14px;">Everything else you'd ask</div>
       <h2 style="font-size: 26px; margin-bottom: 24px;">Fit, fine print, and value — at a glance.</h2>
-      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;">
+      <div class="fit-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;">
 
         <div class="tile"><div class="eyebrow" style="margin-bottom: 8px; color: #9AA0A7;">Fit</div><div style="font-size: 13.5px; line-height: 1.55;">You want coordinated care, not two providers you stitch together yourself</div></div>
         <div class="tile"><div class="eyebrow" style="margin-bottom: 8px; color: #9AA0A7;">Fit</div><div style="font-size: 13.5px; line-height: 1.55;">You're on, or considering, a GLP-1 and want nutrition built around it</div></div>
         <div class="tile"><div class="eyebrow" style="margin-bottom: 8px; color: #9AA0A7;">Fit</div><div style="font-size: 13.5px; line-height: 1.55;">You've felt the disconnect between separate medical and dietitian care</div></div>
         <div class="tile"><div class="eyebrow" style="margin-bottom: 8px; color: #9AA0A7;">Fit</div><div style="font-size: 13.5px; line-height: 1.55;">You'd rather pay cash than navigate insurance authorizations</div></div>
 
-        <div class="tile" style="grid-column: span 2;"><div class="eyebrow" style="margin-bottom: 8px;">Labs — included</div><div style="font-size: 13.5px; line-height: 1.55;">Cortisol, TSH, lipid panel, A1c, CBC, and metabolic chemistry panel at no extra cost. [CONFIRM LAB CADENCE]</div></div>
-        <div class="tile" style="grid-column: span 2;"><div class="eyebrow" style="margin-bottom: 8px;">Labs — if needed</div><div style="font-size: 13.5px; line-height: 1.55;">Advanced labs (24-hour urine cortisol, tumor markers) only if clinically indicated, billed to the patient.</div></div>
+        <div class="tile span-2" style="grid-column: span 2;"><div class="eyebrow" style="margin-bottom: 8px;">Labs — included</div><div style="font-size: 13.5px; line-height: 1.55;">Cortisol, TSH, lipid panel, A1c, CBC, and metabolic chemistry panel at no extra cost. [CONFIRM LAB CADENCE]</div></div>
+        <div class="tile span-2" style="grid-column: span 2;"><div class="eyebrow" style="margin-bottom: 8px;">Labs — if needed</div><div style="font-size: 13.5px; line-height: 1.55;">Advanced labs (24-hour urine cortisol, tumor markers) only if clinically indicated, billed to the patient.</div></div>
 
         <div class="tile"><div class="eyebrow" style="margin-bottom: 8px; color: #0E6E86;">Included</div><div style="font-size: 13.5px; line-height: 1.55; font-weight: 600;">A coordinated team, not a solo provider</div></div>
         <div class="tile"><div class="eyebrow" style="margin-bottom: 8px; color: #0E6E86;">Included</div><div style="font-size: 13.5px; line-height: 1.55; font-weight: 600;">All visits, no surprise billing</div></div>
         <div class="tile"><div class="eyebrow" style="margin-bottom: 8px; color: #0E6E86;">Included</div><div style="font-size: 13.5px; line-height: 1.55; font-weight: 600;">Always available in person, not virtual-only</div></div>
         <div class="tile"><div class="eyebrow" style="margin-bottom: 8px; color: #0E6E86;">Included</div><div style="font-size: 13.5px; line-height: 1.55; font-weight: 600;">FDA-approved medication, never compounded</div></div>
 
-        <div class="tile" style="grid-column: span 4; background: #14161A; border: none; display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+        <div class="tile span-4" style="grid-column: span 4; background: #14161A; border: none; display: flex; align-items: center; justify-content: space-between; gap: 16px;">
           <div style="font-size: 15px; font-weight: 700; color: #FFFFFF;">A defined six-month bridge, not an open-ended subscription.</div>
           <div style="font-size: 13px; color: #9AA0A7;">Medication billed separately</div>
         </div>
@@ -201,9 +261,9 @@
     <div id="team" class="reveal" style="padding: 20px 72px 48px;">
       <div class="eyebrow" style="margin-bottom: 14px;">Your care team</div>
       <h2 style="font-size: 26px; margin-bottom: 24px;">Two clinicians. One plan.</h2>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+      <div class="team-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
         <div class="tile" style="display: flex; gap: 20px;">
-          <div style="flex: 0 0 96px; height: 96px; border-radius: 10px; border: 1.5px dashed rgba(14,110,134,0.35); background: rgba(14,110,134,0.06); display: flex; align-items: center; justify-content: center; font-size: 10px; color: #0E6E86;">[ photo ]</div>
+          <div class="avatar" style="flex: 0 0 96px; height: 96px; border-radius: 10px; border: 1.5px dashed rgba(14,110,134,0.35); background: rgba(14,110,134,0.06); display: flex; align-items: center; justify-content: center; font-size: 10px; color: #0E6E86;">[ photo ]</div>
           <div>
             <h3 style="font-size: 19px; margin-bottom: 4px;">Minh Mach, MD</h3>
             <div class="eyebrow" style="margin-bottom: 10px;">Endocrinology</div>
@@ -211,7 +271,7 @@
           </div>
         </div>
         <div class="tile" style="display: flex; gap: 20px;">
-          <div style="flex: 0 0 96px; height: 96px; border-radius: 10px; border: 1.5px dashed rgba(14,110,134,0.35); background: rgba(14,110,134,0.06); display: flex; align-items: center; justify-content: center; font-size: 10px; color: #0E6E86;">[ photo ]</div>
+          <div class="avatar" style="flex: 0 0 96px; height: 96px; border-radius: 10px; border: 1.5px dashed rgba(14,110,134,0.35); background: rgba(14,110,134,0.06); display: flex; align-items: center; justify-content: center; font-size: 10px; color: #0E6E86;">[ photo ]</div>
           <div>
             <h3 style="font-size: 19px; margin-bottom: 4px;">Katherine Chen, MS, RD, CDCES</h3>
             <div class="eyebrow" style="margin-bottom: 10px;">Nutrition</div>
@@ -222,7 +282,7 @@
     </div>
 
     <!-- PRICING + APPLY split -->
-    <div id="pricing" class="reveal" style="padding: 20px 72px 64px; display: grid; grid-template-columns: 1fr 1.3fr; gap: 20px;">
+    <div id="pricing" class="reveal pricing-grid" style="padding: 20px 72px 64px; display: grid; grid-template-columns: 1fr 1.3fr; gap: 20px;">
       <div class="tile" style="background: #14161A; border: none; display: flex; flex-direction: column; justify-content: space-between;">
         <div>
           <div class="eyebrow" style="margin-bottom: 10px; color: #9AA0A7;">Six-month program</div>
@@ -237,7 +297,7 @@
         <h3 style="font-size: 18px; margin-bottom: 6px;">Tell us a bit about you.</h3>
         <div style="font-size: 12.5px; line-height: 1.5; color: #7C838C; margin-bottom: 18px;">No medical details here — we'll cover that securely once we connect.</div>
         <form onsubmit="return false;">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px 14px;">
+        <div class="form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px 14px;">
           <div style="display: flex; flex-direction: column; gap: 5px;">
             <label for="r-fname" style="font-size: 12px; color: #454A52;">First name</label>
             <input id="r-fname" name="first_name" type="text" style="box-sizing: border-box; padding: 10px 11px; border: 1px solid rgba(20,22,26,0.14); border-radius: 7px; background: #FAFAF8; font-size: 14px;">
@@ -268,11 +328,40 @@
 </div>
 
 <script>
+  function toggleNav() {
+    var panel = document.querySelector('.rail-links');
+    var btn = document.querySelector('.nav-toggle');
+    if (!panel || !btn) return;
+    var isOpen = panel.classList.toggle('open');
+    btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  }
+
   (function () {
     var sections = ['program', 'model', 'timeline', 'fit', 'team', 'pricing']
       .map(function (id) { return document.getElementById(id); })
       .filter(Boolean);
     var links = Array.prototype.slice.call(document.querySelectorAll('.rail-link'));
+
+    // Close the mobile dropdown once a section link is tapped.
+    links.forEach(function (link) {
+      link.addEventListener('click', function () {
+        var panel = document.querySelector('.rail-links');
+        var btn = document.querySelector('.nav-toggle');
+        if (panel) panel.classList.remove('open');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // If the viewport is resized back up past the mobile breakpoint, make
+    // sure the dropdown isn't left stuck open underneath the desktop rail.
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 900) {
+        var panel = document.querySelector('.rail-links');
+        var btn = document.querySelector('.nav-toggle');
+        if (panel) panel.classList.remove('open');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      }
+    });
 
     function setActive(id) {
       links.forEach(function (link) {
@@ -295,6 +384,34 @@
 
     sections.forEach(function (section) { observer.observe(section); });
     setActive(sections[0].id);
+  })();
+
+  (function () {
+    var reveals = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+    if (!reveals.length) return;
+
+    if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      reveals.forEach(function (el) { el.classList.add('is-visible'); });
+      return;
+    }
+
+    var revealObserver = new IntersectionObserver(function (entries, obs) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+    reveals.forEach(function (el) { revealObserver.observe(el); });
+
+    // Safety net: if something about the layout keeps the observer from ever
+    // firing (e.g. a section that's already fully past the viewport on load),
+    // reveal everything after a short delay so content never stays hidden.
+    setTimeout(function () {
+      reveals.forEach(function (el) { el.classList.add('is-visible'); });
+    }, 2500);
   })();
 </script>
 </body>
