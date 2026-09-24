@@ -75,12 +75,11 @@
     .fit-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important; }
     .fit-grid .span-2, .fit-grid .span-4 { grid-column: span 2 !important; }
 
-    .form-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important; }
-
     /* Grid tracks default to a min-width equal to their content's max-content
-       size; minmax(0, 1fr) above overrides that so tiles/forms can shrink to
+       size; minmax(0, 1fr) above overrides that so tiles can shrink to
        fit the viewport instead of forcing horizontal overflow. */
-    .tile, .form-grid > div, input { min-width: 0; }
+    .tile { min-width: 0; }
+    .calendly-inline-widget { min-width: 0 !important; }
   }
 
   /* ===== Phone ===== */
@@ -90,12 +89,9 @@
     #program > div[style*="font-size: 17px"] { font-size: 15px !important; }
     h2 { font-size: 20px !important; }
     .tile { padding: 18px !important; }
-    #program .btn-primary, #pricing .btn-primary { width: 100%; justify-content: center; }
     .fit-grid { grid-template-columns: minmax(0, 1fr) !important; }
     .fit-grid .span-2, .fit-grid .span-4 { grid-column: span 1 !important; }
-    .form-grid { grid-template-columns: minmax(0, 1fr) !important; }
-    input, textarea { max-width: 100%; }
-    input[type="text"], input[type="email"], input[type="tel"] { font-size: 16px !important; } /* prevents iOS auto-zoom on focus */
+    .calendly-inline-widget { height: 640px !important; }
   }
 
   @media (max-width: 480px) {
@@ -137,7 +133,7 @@
     <div id="program" style="padding: 72px 72px 40px;">
       <h1 style="font-size: 50px; line-height: 1.1; max-width: 780px; margin-bottom: 24px;">Executive metabolic care, coordinated end to end.</h1>
       <div style="font-size: 17px; line-height: 1.6; color: #454A52; max-width: 620px; margin-bottom: 30px;">Six months of integrated physician and dietitian care, built for people who are serious about their weight and health goals and want sustainable results, not a quick fix.</div>
-      <a href="https://calendly.com/k-symphoneats/30min" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/k-symphoneats/30min'}); return false;" class="btn-primary">Schedule Your Discovery Call</a>
+      <a href="#pricing" style="display: inline-flex; align-items: center; gap: 6px; font-weight: 700; font-size: 15px; text-decoration: underline; text-underline-offset: 3px;">See available times ↓</a>
 
       <div class="fact-grid" style="margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr 1.2fr; gap: 16px;">
         <div class="tile">
@@ -281,46 +277,21 @@
       </div>
     </div>
 
-    <!-- PRICING + APPLY split -->
-    <div id="pricing" class="reveal pricing-grid" style="padding: 20px 72px 64px; display: grid; grid-template-columns: 1fr 1.3fr; gap: 20px;">
-      <div class="tile" style="background: #14161A; border: none; display: flex; flex-direction: column; justify-content: space-between;">
-        <div>
-          <div class="eyebrow" style="margin-bottom: 10px; color: #9AA0A7;">Six-month program</div>
-          <div style="font-size: 46px; font-weight: 800; color: #FFFFFF; margin-bottom: 14px;">$5,000</div>
-          <div style="font-size: 13.5px; line-height: 1.6; color: #9AA0A7; margin-bottom: 26px;">Cash-pay, all-inclusive of physician visits, dietitian visits, and standard labs. Medication billed separately.</div>
-        </div>
-        <a href="https://calendly.com/k-symphoneats/30min" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/k-symphoneats/30min'}); return false;" class="btn-primary" style="justify-content: center;">Book a Discovery Call</a>
+    <!-- PRICING + BOOKING split -->
+    <div id="pricing" class="reveal pricing-grid" style="padding: 20px 72px 64px; display: grid; grid-template-columns: 1fr 1.3fr; gap: 20px; align-items: start;">
+      <div class="tile" style="background: #14161A; border: none;">
+        <div class="eyebrow" style="margin-bottom: 10px; color: #9AA0A7;">Six-month program</div>
+        <div style="font-size: 46px; font-weight: 800; color: #FFFFFF; margin-bottom: 14px;">$5,000</div>
+        <div style="font-size: 13.5px; line-height: 1.6; color: #9AA0A7;">Cash-pay, all-inclusive of physician visits, dietitian visits, and standard labs. Medication billed separately.</div>
       </div>
 
-      <div class="tile">
-        <div class="eyebrow" style="margin-bottom: 10px;">Or, apply first</div>
-        <h3 style="font-size: 18px; margin-bottom: 6px;">Tell us a bit about you.</h3>
-        <div style="font-size: 12.5px; line-height: 1.5; color: #7C838C; margin-bottom: 18px;">No medical details here — we'll cover that securely once we connect.</div>
-        <form onsubmit="return false;">
-        <div class="form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px 14px;">
-          <div style="display: flex; flex-direction: column; gap: 5px;">
-            <label for="r-fname" style="font-size: 12px; color: #454A52;">First name</label>
-            <input id="r-fname" name="first_name" type="text" style="box-sizing: border-box; padding: 10px 11px; border: 1px solid rgba(20,22,26,0.14); border-radius: 7px; background: #FAFAF8; font-size: 14px;">
-          </div>
-          <div style="display: flex; flex-direction: column; gap: 5px;">
-            <label for="r-lname" style="font-size: 12px; color: #454A52;">Last name</label>
-            <input id="r-lname" name="last_name" type="text" style="box-sizing: border-box; padding: 10px 11px; border: 1px solid rgba(20,22,26,0.14); border-radius: 7px; background: #FAFAF8; font-size: 14px;">
-          </div>
-          <div style="display: flex; flex-direction: column; gap: 5px;">
-            <label for="r-email" style="font-size: 12px; color: #454A52;">Email</label>
-            <input id="r-email" name="email" type="email" style="box-sizing: border-box; padding: 10px 11px; border: 1px solid rgba(20,22,26,0.14); border-radius: 7px; background: #FAFAF8; font-size: 14px;">
-          </div>
-          <div style="display: flex; flex-direction: column; gap: 5px;">
-            <label for="r-phone" style="font-size: 12px; color: #454A52;">Phone</label>
-            <input id="r-phone" name="phone" type="tel" style="box-sizing: border-box; padding: 10px 11px; border: 1px solid rgba(20,22,26,0.14); border-radius: 7px; background: #FAFAF8; font-size: 14px;">
-          </div>
-          <div style="grid-column: span 2; display: flex; flex-direction: column; gap: 5px;">
-            <label for="r-source" style="font-size: 12px; color: #454A52;">How did you hear about us?</label>
-            <input id="r-source" name="source" type="text" style="box-sizing: border-box; padding: 10px 11px; border: 1px solid rgba(20,22,26,0.14); border-radius: 7px; background: #FAFAF8; font-size: 14px;">
-          </div>
-        </div>
-        <button type="submit" class="btn-primary" style="margin-top: 18px;">Submit Application</button>
-        </form>
+      <div class="tile" style="padding: 24px 24px 8px;">
+        <div class="eyebrow" style="margin-bottom: 10px;">Book directly</div>
+        <h3 style="font-size: 18px; margin-bottom: 6px;">Find a time that works.</h3>
+        <div style="font-size: 12.5px; line-height: 1.5; color: #7C838C; margin-bottom: 8px;">A free 30-minute discovery call — pick a time below.</div>
+        <!-- Calendly inline widget begin -->
+        <div class="calendly-inline-widget" data-url="https://calendly.com/k-symphoneats/30min" style="min-width: 320px; width: 100%; height: 700px;"></div>
+        <!-- Calendly inline widget end -->
       </div>
     </div>
 
