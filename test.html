@@ -62,7 +62,7 @@
     #program h1 { font-size: 34px !important; margin-bottom: 18px !important; }
     h2 { font-size: 22px !important; }
 
-    .fact-grid, .model-top, .model-compare, .team-grid, .pricing-grid, .timeline-grid {
+    .fact-grid, .model-top, .model-compare, .team-grid, .timeline-grid {
       grid-template-columns: minmax(0, 1fr) !important;
     }
     .model-divider { display: none !important; }
@@ -79,7 +79,6 @@
        size; minmax(0, 1fr) above overrides that so tiles can shrink to
        fit the viewport instead of forcing horizontal overflow. */
     .tile { min-width: 0; }
-    .calendly-inline-widget { min-width: 0 !important; }
   }
 
   /* ===== Phone ===== */
@@ -89,9 +88,9 @@
     #program > div[style*="font-size: 17px"] { font-size: 15px !important; }
     h2 { font-size: 20px !important; }
     .tile { padding: 18px !important; }
+    #program .btn-primary, #pricing .btn-primary { width: 100%; justify-content: center; }
     .fit-grid { grid-template-columns: minmax(0, 1fr) !important; }
     .fit-grid .span-2, .fit-grid .span-4 { grid-column: span 1 !important; }
-    .calendly-inline-widget { height: 640px !important; }
   }
 
   @media (max-width: 480px) {
@@ -133,7 +132,7 @@
     <div id="program" style="padding: 72px 72px 40px;">
       <h1 style="font-size: 50px; line-height: 1.1; max-width: 780px; margin-bottom: 24px;">Executive metabolic care, coordinated end to end.</h1>
       <div style="font-size: 17px; line-height: 1.6; color: #454A52; max-width: 620px; margin-bottom: 30px;">Six months of integrated physician and dietitian care, built for people who are serious about their weight and health goals and want sustainable results, not a quick fix.</div>
-      <a href="#pricing" style="display: inline-flex; align-items: center; gap: 6px; font-weight: 700; font-size: 15px; text-decoration: underline; text-underline-offset: 3px;">See available times ↓</a>
+      <a href="https://calendly.com/k-symphoneats/30min" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/k-symphoneats/30min'}); return false;" class="btn-primary">Schedule Your Discovery Call</a>
 
       <div class="fact-grid" style="margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr 1.2fr; gap: 16px;">
         <div class="tile">
@@ -277,21 +276,13 @@
       </div>
     </div>
 
-    <!-- PRICING + BOOKING split -->
-    <div id="pricing" class="reveal pricing-grid" style="padding: 20px 72px 64px; display: grid; grid-template-columns: 1fr 1.3fr; gap: 20px; align-items: start;">
-      <div class="tile" style="background: #14161A; border: none;">
+    <!-- PRICING -->
+    <div id="pricing" class="reveal" style="padding: 20px 72px 64px; display: flex; justify-content: center;">
+      <div class="tile" style="background: #14161A; border: none; max-width: 480px; width: 100%; text-align: center;">
         <div class="eyebrow" style="margin-bottom: 10px; color: #9AA0A7;">Six-month program</div>
         <div style="font-size: 46px; font-weight: 800; color: #FFFFFF; margin-bottom: 14px;">$5,000</div>
-        <div style="font-size: 13.5px; line-height: 1.6; color: #9AA0A7;">Cash-pay, all-inclusive of physician visits, dietitian visits, and standard labs. Medication billed separately.</div>
-      </div>
-
-      <div class="tile" style="padding: 24px 24px 8px;">
-        <div class="eyebrow" style="margin-bottom: 10px;">Book directly</div>
-        <h3 style="font-size: 18px; margin-bottom: 6px;">Find a time that works.</h3>
-        <div style="font-size: 12.5px; line-height: 1.5; color: #7C838C; margin-bottom: 8px;">A free 30-minute discovery call — pick a time below.</div>
-        <!-- Calendly inline widget begin -->
-        <div class="calendly-inline-widget" data-url="https://calendly.com/k-symphoneats/30min" style="min-width: 320px; width: 100%; height: 700px;"></div>
-        <!-- Calendly inline widget end -->
+        <div style="font-size: 13.5px; line-height: 1.6; color: #9AA0A7; margin-bottom: 26px;">Cash-pay, all-inclusive of physician visits, dietitian visits, and standard labs. Medication billed separately.</div>
+        <a href="https://calendly.com/k-symphoneats/30min" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/k-symphoneats/30min'}); return false;" class="btn-primary" style="justify-content: center; width: 100%;">Book a Discovery Call</a>
       </div>
     </div>
 
