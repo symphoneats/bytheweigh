@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>By The Weigh | Arch Layout Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --teal:#0E5B5E; --teal-deep:#0A4649; --ink:#123A30; --mint:#F4F8F5;
+    --sage:#C9D3CD; --pale:#E3EAE6; --blob:#DDE3E0; --arch:#D2DDDA;
+    --white:#FFFFFF; --muted:#40605A;
+    --serif:"Cormorant Garamond","Cormorant",Garamond,"Times New Roman",serif;
+    --sans:"Atkinson Hyperlegible Next","Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    --rail:220px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0}
+  body{background:var(--mint);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.65;overflow:hidden;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  a{color:inherit}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--teal);outline-offset:3px}
+  .panel:focus{outline:none}
+  h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.1;margin:0}
+  p{margin:0} ul{list-style:none;margin:0;padding:0}
+  button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+
+  /* ---------- FRAME ---------- */
+  .frame{position:relative;height:100vh;height:100dvh;overflow:hidden;overflow:clip;
+    display:grid;grid-template-columns:var(--rail) minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto}
+  .rail{position:absolute;left:0;top:0;width:var(--rail);height:76%;background:var(--teal);z-index:0}
+  .blob{position:absolute;left:-200px;bottom:-180px;width:460px;height:420px;background:var(--blob);
+    border-radius:48% 52% 40% 60% / 45% 40% 60% 55%;z-index:0;pointer-events:none}
+  .doodle{position:absolute;fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round;pointer-events:none;z-index:0}
+  .doodle.a{width:190px;left:-30px;bottom:-60px;transform:rotate(-30deg)}
+  .dots{position:absolute;right:18px;bottom:64px;width:54px;pointer-events:none;z-index:0}
+
+  .logo{grid-column:1;grid-row:1;z-index:2;display:flex;align-items:center;gap:10px;
+    padding:38px 0 0 30px;color:var(--white);text-decoration:none;font-family:var(--serif);font-weight:500;font-size:29px;line-height:1}
+  .logo svg{width:28px;height:37px;stroke:var(--white);fill:none;stroke-width:1.6;flex:none}
+  .rail-meta{position:absolute;left:30px;top:118px;z-index:2;color:var(--white);pointer-events:none}
+  .rail-meta .count{display:block;font-size:13px;letter-spacing:.16em;opacity:.85}
+  .rail-meta .name{display:block;font-family:var(--serif);font-style:italic;font-weight:500;font-size:22px;margin-top:2px}
+
+  .tabs{grid-column:2;grid-row:1;z-index:2;position:relative;display:flex;align-items:center;gap:28px;
+    padding:44px 56px 18px 50px;font-size:13.5px;letter-spacing:.13em;text-transform:uppercase}
+  .tabs a{text-decoration:none;white-space:nowrap;padding:6px 0;border-bottom:2px solid transparent;transition:border-color .3s,color .3s}
+  .tabs a:hover{border-bottom-color:var(--sage)}
+  .tabs a[aria-current="true"]{border-bottom-color:var(--teal);color:var(--teal);font-weight:700}
+  .tabs .rule{flex:1;min-width:24px;height:1.5px;background:var(--teal)}
+  .tabs .cta{font-family:var(--serif);text-transform:none;letter-spacing:0;font-weight:600;font-size:24px;border:0!important;color:var(--ink)!important}
+
+  .stage{grid-column:1 / -1;grid-row:2;position:relative;z-index:1;min-height:0}
+  .bar{grid-column:2;grid-row:3;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:24px;
+    padding:10px 96px 22px 50px;font-size:15.5px}
+  .next{display:inline-flex;align-items:center;gap:10px;font-size:15.5px}
+  .next svg{width:28px;height:28px;fill:none;stroke:var(--teal);stroke-width:1.6;transition:transform .3s}
+  .next:hover svg{transform:translateY(3px)}
+  .next.up svg{transform:rotate(180deg)}
+  .next.up:hover svg{transform:rotate(180deg) translateY(3px)}
+  .contact{display:flex;gap:26px;align-items:center}
+  .contact a{text-decoration:none}
+  .contact a:hover{text-decoration:underline;text-underline-offset:4px}
+  .preview{font-size:13.5px;color:var(--muted);font-style:italic}
+
+  /* ---------- PANELS + REVEAL ---------- */
+  .panel{position:absolute;inset:0;overflow-y:auto;overscroll-behavior:contain;
+    padding:12px 56px 20px 270px;display:flex;flex-direction:column;
+    opacity:0;visibility:hidden;transition:opacity .35s ease,visibility 0s linear .35s;scrollbar-width:thin}
+  .panel.active{opacity:1;visibility:visible;transition:opacity .3s ease .1s,visibility 0s}
+  .panel > .inner{margin-block:auto;width:100%}
+
+  /* each piece rises and fades in; items further down a long section reveal as you scroll to them */
+  .rv{opacity:0;transform:translateY(38px);transition:opacity .25s ease,transform .25s ease}
+  .rv.in{opacity:1;transform:none;
+    transition:opacity .8s ease var(--d,0ms),transform 1s cubic-bezier(.16,.7,.2,1) var(--d,0ms)}
+  .stage.instant .panel{transition:none!important}
+  @media (prefers-reduced-motion:reduce){
+    .rv{transform:none}
+    .rv.in{transition:opacity .7s ease var(--d,0ms)}
+  }
+
+  /* shared */
+  .kicker{font-family:var(--serif);font-style:italic;font-weight:500;color:var(--muted);font-size:21px;line-height:1.3;margin-bottom:8px}
+  h2.sec{font-size:clamp(34px,min(3.6vw,6.2vh),52px)}
+  .ph{font-style:italic;font-size:14.5px;color:var(--muted);text-align:center;padding:0 20px}
+  .btn{display:inline-block;background:var(--teal);color:var(--white);text-decoration:none;
+    font-weight:700;font-size:17px;padding:14px 28px;letter-spacing:.02em}
+  .btn:hover{background:var(--teal-deep)}
+  .head{margin-bottom:clamp(20px,4vh,44px)}
+  .head.center{text-align:center}
+
+  /* 1. Program */
+  .p-hero{padding-left:110px}
+  .p-hero .inner{display:grid;grid-template-columns:300px minmax(0,1fr) 250px;gap:56px;align-items:center}
+  .hero-arch{height:min(440px,56vh);min-height:260px;border-radius:999px 999px 0 0;background:var(--arch);display:grid;place-items:center}
+  .hero-copy .sub{font-family:var(--serif);font-style:italic;font-weight:500;font-size:22px;color:var(--muted);margin-bottom:10px}
+  .hero-copy h1{font-size:clamp(42px,min(4.8vw,8vh),70px);line-height:1}
+  .hero-copy .lede{margin-top:clamp(16px,2.6vh,24px);font-size:19px;line-height:1.65;max-width:44ch}
+  .hero-copy .btn{margin-top:clamp(20px,3.2vh,30px)}
+  .hero-side{display:grid;gap:10px}
+  .price-box{background:var(--teal);color:var(--white);text-align:center;padding:16px 12px 18px}
+  .price-box span{display:block;font-family:var(--serif);font-size:24px;font-weight:500;line-height:1.2}
+  .price-box strong{display:block;font-family:var(--serif);font-size:50px;font-weight:600;line-height:1.05}
+  .price-box small{display:block;font-size:14px;opacity:.9;margin-top:4px}
+  .row{display:block;background:var(--pale);text-align:center;text-decoration:none;padding:12px 10px;font-weight:700;font-size:16px}
+  a.row:hover{background:var(--sage)}
+
+  /* 2. How it works */
+  .p-how .inner{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:center}
+  .p-how h2{margin-bottom:18px}
+  .p-how .intro-p{max-width:52ch}
+  .visit{margin-top:28px;background:var(--white);padding:18px 22px;border-left:5px solid var(--teal)}
+  .visit h3{font-size:26px;margin-bottom:4px}
+  .visit p{font-size:16.5px;line-height:1.6}
+  .role h3{font-size:28px;margin-bottom:10px}
+  .role li{background:var(--pale);padding:10px 16px;font-size:16.5px;line-height:1.5}
+  .role li + li{margin-top:7px}
+  .link{display:flex;align-items:center;gap:14px;margin:16px 0}
+  .link span{flex:1;height:1.5px;background:var(--teal)}
+  .link b{background:var(--teal);color:var(--white);padding:6px 18px;border-radius:999px;font-size:13px;letter-spacing:.14em;text-transform:uppercase}
+
+  /* 3. Specialists */
+  .spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:stretch}
+  .spec{border-radius:50% 50% 0 0 / 160px 160px 0 0;padding:clamp(56px,9vh,86px) 34px 30px}
+  .spec.teal{background:var(--teal);color:var(--white)}
+  .spec.sage{background:var(--sage)}
+  .spec .top{text-align:center;max-width:400px;margin:0 auto 16px}
+  .spec .kicker{color:inherit;opacity:.9}
+  .spec h3{font-size:clamp(27px,min(2.4vw,4.4vh),34px)}
+  .spec p{font-size:16.5px;line-height:1.62}
+  .spec blockquote{margin:16px 0 0;padding-top:14px;border-top:1px solid currentColor;font-family:var(--serif);font-style:italic;font-weight:500;font-size:22px;line-height:1.35}
+  .spec.teal blockquote{border-top-color:rgba(255,255,255,.45)}
+  .spec.sage blockquote{border-top-color:rgba(18,58,48,.3)}
+
+  /* 4. Timeline */
+  .arches4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:26px;position:relative}
+  .arches4::after{content:"";position:absolute;left:-24px;right:-24px;bottom:0;height:2px;background:var(--teal)}
+  .arches4 li{border:2px solid var(--teal);border-bottom:0;border-radius:999px 999px 0 0;
+    padding:60px 20px 30px;text-align:center;min-height:min(330px,46vh);display:flex;flex-direction:column;justify-content:flex-end}
+  .arches4 strong{font-family:var(--serif);font-weight:600;font-size:clamp(26px,2.4vw,33px);line-height:1.1;display:block;margin-bottom:10px}
+  .arches4 span{font-size:16.5px;line-height:1.5}
+  .arches4 li:first-child{background:var(--teal);color:var(--white)}
+
+  /* 5. Fit & details */
+  .fit-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;align-items:start}
+  .fit-grid h3{font-size:28px;margin-bottom:12px}
+  .fit-list li{background:var(--pale);padding:10px 16px;font-size:16px;line-height:1.5}
+  .fit-list li + li{margin-top:8px}
+  .labs{background:var(--teal);color:var(--white);padding:22px 22px}
+  .labs div + div{margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,.4)}
+  .labs strong{display:block;font-size:16.5px;margin-bottom:4px}
+  .labs p{font-size:16px;line-height:1.55}
+  .flag{display:inline-block;background:#FFE9A8;color:var(--ink);font-size:13px;padding:1px 6px;margin-top:6px}
+  .inc li{display:grid;grid-template-columns:20px 1fr;gap:10px;padding:8px 0;border-bottom:1px solid var(--pale);font-size:16px;line-height:1.5}
+  .inc svg{width:20px;height:20px;fill:none;stroke:var(--teal);stroke-width:1.8;margin-top:3px}
+  .fit-foot{margin-top:24px;display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;background:var(--sage);padding:14px 22px}
+  .fit-foot p{font-family:var(--serif);font-size:24px;font-weight:600;flex:1;min-width:240px;line-height:1.2}
+  .chip{background:var(--white);padding:5px 14px;font-size:14.5px;font-weight:700}
+
+  /* 6. Care team */
+  .team-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px}
+  .member{display:grid;grid-template-columns:clamp(150px,14vw,210px) 1fr;gap:30px;align-items:end}
+  .member .ph-arch{aspect-ratio:200/260;max-height:40vh;border-radius:999px 999px 0 0;background:var(--arch);display:grid;place-items:center}
+  .member h3{font-size:clamp(28px,2.4vw,34px)}
+  .member .tag{display:inline-block;background:var(--teal);color:var(--white);font-size:13px;letter-spacing:.12em;text-transform:uppercase;padding:4px 12px;margin:10px 0 12px}
+  .member p{font-size:16.5px;line-height:1.62}
+
+  /* 7. Pricing */
+  .price-band{position:relative;background:var(--sage);display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:48px;padding:52px 52px;align-items:center}
+  .price-band h2{margin-bottom:14px}
+  .price-band p{max-width:46ch}
+  .price-band .note{margin-top:18px;font-family:var(--serif);font-style:italic;font-weight:500;font-size:23px;line-height:1.3;color:var(--muted)}
+  .price-card{background:var(--teal);color:var(--white);text-align:center;padding:30px 24px}
+  .price-card span{font-family:var(--serif);font-size:25px;font-weight:500}
+  .price-card strong{display:block;font-family:var(--serif);font-weight:600;font-size:76px;line-height:1;margin:6px 0 4px}
+  .price-card small{display:block;font-size:14.5px;opacity:.9}
+  .price-card .btn{background:var(--white);color:var(--teal);margin-top:20px}
+  .price-card .btn:hover{background:var(--pale)}
+
+  /* ---------- MEDIUM ---------- */
+  @media (max-width:1300px){
+    :root{--rail:170px}
+    .logo{padding-left:20px;font-size:24px;gap:8px}
+    .logo svg{width:22px;height:30px}
+    .rail-meta{left:22px}
+    .tabs{gap:20px;font-size:12.5px;letter-spacing:.1em;padding-left:36px;padding-right:36px}
+    .tabs .cta{font-size:21px}
+    .panel{padding-left:210px;padding-right:36px}
+    .p-hero{padding-left:80px}
+    .p-hero .inner{grid-template-columns:250px minmax(0,1fr) 220px;gap:40px}
+    .bar{padding-left:36px;padding-right:84px}
+  }
+  @media (max-width:1080px){
+    .tabs .rule{display:none}
+    .p-hero .inner{grid-template-columns:220px minmax(0,1fr)}
+    .hero-side{grid-column:2}
+    .fit-grid{grid-template-columns:1fr 1fr}
+    .fit-grid > :last-child{grid-column:1 / -1}
+    .team-grid{grid-template-columns:1fr;gap:28px}
+    .preview{display:none}
+  }
+
+  /* ---------- SMALL ---------- */
+  @media (max-width:820px){
+    body{font-size:17.5px}
+    .frame{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto minmax(0,1fr) auto}
+    .rail,.rail-meta,.blob,.doodle.a{display:none}
+    .logo{grid-column:1;grid-row:1;background:var(--teal);padding:18px 20px 8px;font-size:25px}
+    .tabs{grid-column:1;grid-row:2;background:var(--teal);color:var(--white);padding:6px 20px 14px;gap:22px;overflow-x:auto;scrollbar-width:none;font-size:13px}
+    .tabs::-webkit-scrollbar{display:none}
+    .tabs a[aria-current="true"]{color:var(--white);border-bottom-color:var(--white)}
+    .tabs .cta{color:var(--white)!important;font-size:19px}
+    .stage{grid-column:1;grid-row:3}
+    .bar{grid-column:1;grid-row:4;padding:10px 20px 14px;border-top:1px solid var(--pale);font-size:15px}
+    .contact a:last-child{display:none}
+    .dots{display:none}
+    .panel,.p-hero{padding:22px 20px 28px}
+    .p-hero .inner,.p-how .inner,.spec-grid,.fit-grid,.price-band{grid-template-columns:minmax(0,1fr);gap:26px}
+    .hero-side{grid-column:auto}
+    .hero-arch{width:min(240px,70%);height:auto;aspect-ratio:3/3.4;min-height:0;justify-self:center}
+    .hero-copy .lede{font-size:18px}
+    .spec{border-radius:50% 50% 0 0 / 110px 110px 0 0;padding:64px 22px 24px}
+    .arches4{grid-template-columns:1fr 1fr;gap:14px}
+    .arches4::after{display:none}
+    .arches4 li{min-height:220px;padding:44px 12px 20px;border-bottom:2px solid var(--teal)}
+    .fit-grid > :last-child{grid-column:auto}
+    .member{grid-template-columns:120px 1fr;gap:18px}
+    .price-band{padding:30px 22px}
+    .price-card strong{font-size:60px}
+  }
+  @media (max-width:480px){
+    .arches4{grid-template-columns:1fr}
+    .arches4 li{min-height:180px}
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="monstera" viewBox="0 0 200 230">
+      <path d="M100 200 C 58 192 16 152 13 102 C 10 55 46 17 98 15 C 150 13 189 50 187 101 C 185 152 144 190 100 200 Z"/>
+      <path d="M100 200 C 101 150 101 80 98 15"/>
+      <path d="M20 60 C 44 70 66 84 86 98 C 66 90 44 82 24 76"/>
+      <path d="M13 104 C 40 106 64 106 88 108 C 64 112 40 116 16 120"/>
+      <path d="M30 158 C 52 146 72 132 92 121 C 76 136 58 152 42 170"/>
+      <path d="M180 60 C 156 70 134 84 112 98 C 134 90 156 82 176 76"/>
+      <path d="M187 104 C 160 106 136 106 111 108 C 136 112 160 116 184 120"/>
+      <path d="M170 158 C 148 146 128 132 107 121 C 124 136 142 152 158 170"/>
+      <path d="M100 200 C 104 212 110 222 118 228"/>
+    </symbol>
+    <symbol id="archleaf" viewBox="0 0 36 46">
+      <path d="M3 44 V19 A15 15 0 0 1 33 19 V44"/>
+      <path d="M18 40 C 9 33 9 20 18 12 C 27 20 27 33 18 40 Z"/>
+      <path d="M18 40 V14"/>
+    </symbol>
+    <symbol id="leafcheck" viewBox="0 0 24 24">
+      <path d="M4 20 C 4 10 10 4 20 4 C 20 14 14 20 4 20 Z"/>
+      <path d="M4 20 L 14 10"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="frame" id="frame">
+  <div class="rail" aria-hidden="true"></div>
+  <div class="blob" aria-hidden="true"></div>
+  <svg class="doodle a" viewBox="0 0 200 230" aria-hidden="true"><use href="#monstera"/></svg>
+  <svg class="dots" viewBox="0 0 90 110" aria-hidden="true" fill="#0E5B5E">
+    <ellipse cx="20" cy="10" rx="6" ry="8"/><ellipse cx="48" cy="22" rx="8" ry="6" transform="rotate(30 48 22)"/>
+    <ellipse cx="14" cy="42" rx="5" ry="7"/><ellipse cx="70" cy="40" rx="7" ry="10" transform="rotate(25 70 40)"/>
+    <ellipse cx="40" cy="58" rx="8" ry="10" transform="rotate(-20 40 58)"/><ellipse cx="12" cy="72" rx="4" ry="5"/>
+    <ellipse cx="62" cy="80" rx="6" ry="8"/><ellipse cx="30" cy="96" rx="5" ry="7"/><ellipse cx="80" cy="100" rx="5" ry="6"/>
+  </svg>
+
+  <a class="logo" href="#program" data-go aria-label="By The Weigh, back to start">
+    <svg aria-hidden="true"><use href="#archleaf"/></svg>by the weigh
+  </a>
+  <div class="rail-meta" aria-hidden="true"><span class="count" id="count">01 / 07</span><span class="name" id="curname">Program</span></div>
+
+  <nav class="tabs" aria-label="Sections">
+    <a href="#program" data-go>Program</a>
+    <a href="#how" data-go>How it works</a>
+    <a href="#specialists" data-go>Specialists</a>
+    <a href="#timeline" data-go>Timeline</a>
+    <a href="#fit" data-go>Fit &amp; details</a>
+    <a href="#team" data-go>Care team</a>
+    <a href="#pricing" data-go>Pricing</a>
+    <span class="rule" aria-hidden="true"></span>
+    <a class="cta" href="https://calendly.com/k-symphoneats/30min">Book a call</a>
+  </nav>
+
+  <main class="stage instant" id="stage">
+
+    <!-- 1 -->
+    <section class="panel p-hero" id="program" data-name="Program" tabindex="-1" aria-label="Program">
+      <div class="inner">
+        <div class="hero-arch rv"><span class="ph">[ physician + dietitian photo ]</span></div>
+        <div class="hero-copy">
+          <p class="sub rv">By The Weigh, a six-month program</p>
+          <h1 class="rv">Executive metabolic care, coordinated end to end.</h1>
+          <p class="lede rv">Six months of integrated physician and dietitian care, built for people who are serious about their weight and health goals and want sustainable results, not a quick fix.</p>
+          <a class="btn rv" href="https://calendly.com/k-symphoneats/30min">Schedule your discovery call</a>
+        </div>
+        <aside class="hero-side rv" aria-label="Program at a glance">
+          <div class="price-box"><span>Six-month program</span><strong>$5,000</strong><small>all-inclusive</small></div>
+          <a class="row" href="#timeline" data-go>Six months</a>
+          <a class="row" href="#team" data-go>Endocrinologist + Dietitian</a>
+          <a class="row" href="#how" data-go>In person + telehealth</a>
+        </aside>
+      </div>
+    </section>
+
+    <!-- 2 -->
+    <section class="panel p-how" id="how" data-name="How it works" tabindex="-1" aria-label="How it works">
+      <div class="inner">
+        <div>
+          <p class="kicker rv">How it works</p>
+          <h2 class="sec rv">True integration, not just a referral.</h2>
+          <p class="intro-p rv">Most patients are left to coordinate their own care, going between a prescriber and a dietitian who rarely speak to each other directly. By The Weigh closes that gap. Weight is a medical, metabolic, and nutritional question, so we pair a board-certified endocrinologist with a Registered Dietitian in one coordinated plan.</p>
+          <div class="visit rv">
+            <h3>Visit format</h3>
+            <p>Available in person and by telehealth. Unlike most programs, which are largely telehealth-only, you'll always have access to an in-person appointment at our practice.</p>
+          </div>
+        </div>
+        <div>
+          <div class="role rv">
+            <h3>Your physician</h3>
+            <ul>
+              <li>Comprehensive initial assessment of your hormonal and metabolic drivers</li>
+              <li>Follow-up visits approximately every three months to reassess labs, hormones, and progress</li>
+              <li>Additional visits if you're experiencing moderate to severe side effects</li>
+            </ul>
+          </div>
+          <div class="link rv" aria-hidden="true"><span></span><b>Coordinated</b><span></span></div>
+          <div class="role rv">
+            <h3>Your dietitian</h3>
+            <ul>
+              <li>Comprehensive nutrition assessment built around your schedule and goals</li>
+              <li>Monthly follow-ups to adjust your plan and keep momentum</li>
+              <li>A dedicated 2-week check-in after any new medication, such as a GLP-1</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 -->
+    <section class="panel" id="specialists" data-name="Specialists" tabindex="-1" aria-label="Specialists">
+      <div class="inner">
+        <div class="spec-grid">
+          <article class="spec teal rv">
+            <div class="top">
+              <p class="kicker">The hormone specialists</p>
+              <h3>Weight has as much to do with hormones as it does with willpower.</h3>
+            </div>
+            <p>Endocrinologists specialize specifically in the body's hormone systems, the same systems that regulate metabolism, appetite, and blood sugar. Your endocrinologist can assess whether a thyroid disorder, hormonal imbalance, or pituitary issue is contributing to your weight. GLP-1 medications, which mimic a hormone the body already produces, sit squarely in the territory endocrinology has specialized in for decades.</p>
+            <blockquote>A GLP-1 medication is one option your endocrinologist may consider, and only when it's medically appropriate.</blockquote>
+          </article>
+          <article class="spec sage rv">
+            <div class="top">
+              <p class="kicker">The nutrition specialists</p>
+              <h3>Losing weight and losing your health are not the same thing.</h3>
+            </div>
+            <p>Registered Dietitians are the clinicians trained specifically in medical nutrition therapy, assessing protein needs, micronutrient status, and how your metabolism shifts as intake drops, not just building meal plans. Appetite falls faster than the body's need for protein, vitamins, and minerals, and left unaddressed, that gap can show up in ways that go beyond the scale: hair loss, excessive muscle loss, low energy, and long-term bone loss such as osteopenia or osteoporosis, to name a few. Your dietitian works closely with you throughout the program to keep that gap from becoming severe.</p>
+            <blockquote>The scale only tells you one piece of the puzzle. Your dietitian makes sure you're not losing the other pieces that keep you healthy.</blockquote>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 -->
+    <section class="panel" id="timeline" data-name="Timeline" tabindex="-1" aria-label="Timeline">
+      <div class="inner">
+        <div class="head center">
+          <p class="kicker rv">The arc of the program</p>
+          <h2 class="sec rv">Your six months.</h2>
+        </div>
+        <ul class="arches4">
+          <li class="rv"><strong>Month 1</strong><span>Comprehensive physician and nutrition assessments, both in depth.</span></li>
+          <li class="rv"><strong>Every month</strong><span>Dietitian follow-up to adjust your plan and keep things moving.</span></li>
+          <li class="rv"><strong>Every 3 months</strong><span>Physician follow-up to reassess labs, hormones, and progress.</span></li>
+          <li class="rv"><strong>As needed</strong><span>2-week check-in on a new medication, plus visits for side effects.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 5 -->
+    <section class="panel" id="fit" data-name="Fit & details" tabindex="-1" aria-label="Fit and details">
+      <div class="inner">
+        <div class="head">
+          <p class="kicker rv">Everything else you'd ask</p>
+          <h2 class="sec rv">Fit, fine print, and value, at a glance.</h2>
+        </div>
+        <div class="fit-grid">
+          <div class="rv">
+            <h3>A good fit if</h3>
+            <ul class="fit-list">
+              <li>You want coordinated care, not two providers you stitch together yourself</li>
+              <li>You're on, or considering, a GLP-1 and want nutrition built around it</li>
+              <li>You've felt the disconnect between separate medical and dietitian care</li>
+              <li>You're investing in your own care directly, instead of letting insurance decide for you</li>
+            </ul>
+          </div>
+          <div class="labs rv">
+            <h3>Labs</h3>
+            <div>
+              <strong>Included</strong>
+              <p>Cortisol, TSH, lipid panel, A1c, CBC, and metabolic chemistry panel at no extra cost.</p>
+              <span class="flag">[CONFIRM LAB CADENCE]</span>
+            </div>
+            <div>
+              <strong>If needed</strong>
+              <p>Advanced labs (24-hour urine cortisol, tumor markers) only if clinically indicated, billed to the patient.</p>
+            </div>
+          </div>
+          <div class="rv">
+            <h3>Included</h3>
+            <ul class="inc">
+              <li><svg aria-hidden="true"><use href="#leafcheck"/></svg>A coordinated team, not a solo provider</li>
+              <li><svg aria-hidden="true"><use href="#leafcheck"/></svg>All visits, no surprise billing</li>
+              <li><svg aria-hidden="true"><use href="#leafcheck"/></svg>Always available in person, not virtual-only</li>
+              <li><svg aria-hidden="true"><use href="#leafcheck"/></svg>A prescription for FDA-approved medication, never a compounded version. Your physician will pursue insurance coverage for it where possible, though coverage isn't guaranteed.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="fit-foot rv">
+          <p>A defined six-month bridge, not an open-ended subscription.</p>
+          <span class="chip">Medication billed separately</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 -->
+    <section class="panel" id="team" data-name="Care team" tabindex="-1" aria-label="Care team">
+      <div class="inner">
+        <div class="head">
+          <p class="kicker rv">Your care team</p>
+          <h2 class="sec rv">Two clinicians. One plan.</h2>
+        </div>
+        <div class="team-grid">
+          <article class="member rv">
+            <div class="ph-arch"><span class="ph">[ photo ]</span></div>
+            <div>
+              <h3>Minh Mach, MD</h3>
+              <span class="tag">Endocrinology</span>
+              <p>Board certified in Endocrinology, Internal Medicine, and Geriatrics, of Endocrine Specialty Consultants. Oversees your medical assessment, hormone and metabolic workup, and medication plan.</p>
+            </div>
+          </article>
+          <article class="member rv">
+            <div class="ph-arch"><span class="ph">[ photo ]</span></div>
+            <div>
+              <h3>Katherine Chen, MS, RD, CDCES</h3>
+              <span class="tag">Nutrition</span>
+              <p>Registered Dietitian and Certified Diabetes Care &amp; Education Specialist, founder of Symphoneats. Leads your ongoing nutrition strategy.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 -->
+    <section class="panel" id="pricing" data-name="Pricing" tabindex="-1" aria-label="Pricing">
+      <div class="inner">
+        <div class="price-band">
+          <div>
+            <p class="kicker rv">Pricing</p>
+            <h2 class="sec rv">One program, one fee.</h2>
+            <p class="rv">Cash-pay, all-inclusive of physician visits, dietitian visits, and standard labs. Medication billed separately.</p>
+            <p class="note rv">A defined six-month bridge, not an open-ended subscription.</p>
+          </div>
+          <div class="price-card rv">
+            <span>Six-month program</span>
+            <strong>$5,000</strong>
+            <small>all-inclusive</small>
+            <a class="btn" href="https://calendly.com/k-symphoneats/30min">Book a discovery call</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="bar">
+    <button class="next" id="next" type="button">
+      <svg viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="12"/><path d="M8 11 L13 16 L18 11"/></svg>
+      <span id="nextlabel">Next: How it works</span>
+    </button>
+    <span class="preview">Layout preview only</span>
+    <div class="contact">
+      <a href="mailto:care@bytheweigh.com">care@bytheweigh.com</a>
+      <a href="https://calendly.com/k-symphoneats/30min">Book a discovery call</a>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const stage = document.getElementById('stage');
+  const frame = document.getElementById('frame');
+  const panels = [...stage.querySelectorAll('.panel')];
+  const tabLinks = [...document.querySelectorAll('.tabs a[data-go]')];
+  const countEl = document.getElementById('count');
+  const nameEl = document.getElementById('curname');
+  const nextBtn = document.getElementById('next');
+  const nextLabel = document.getElementById('nextlabel');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const n = panels.length;
+  let cur = -1, busy = false;
+
+  const pad = x => String(x).padStart(2,'0');
+  const indexOf = id => panels.findIndex(p => p.id === id);
+
+  // Items further down a tall section reveal as they scroll into view
+  const io = ('IntersectionObserver' in window) ? new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (en.isIntersecting){ en.target.style.setProperty('--d','0ms'); en.target.classList.add('in'); io.unobserve(en.target); }
+    });
+  }, {threshold: 0.12}) : null;
+
+  function hide(p){
+    p.querySelectorAll('.rv').forEach(el => { el.classList.remove('in'); if (io) io.unobserve(el); });
+  }
+  function reveal(p){
+    const items = [...p.querySelectorAll('.rv')];
+    items.forEach(el => el.classList.remove('in'));
+    // wait a frame so the "hidden" state is painted before revealing, otherwise nothing animates
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      const bottom = p.getBoundingClientRect().bottom - 30;
+      let k = 0;
+      items.forEach(el => {
+        if (el.getBoundingClientRect().top < bottom || !io){
+          el.style.setProperty('--d', (160 + k++ * 120) + 'ms');
+          el.classList.add('in');
+        } else {
+          io.observe(el);
+        }
+      });
+    }));
+  }
+
+  function show(i, opts = {}){
+    if (i < 0 || i >= n || i === cur) return;
+    if (cur > -1){ const old = panels[cur]; old.classList.remove('active'); old.setAttribute('aria-hidden','true'); hide(old); }
+    const p = panels[i];
+    p.scrollTop = 0;
+    p.removeAttribute('aria-hidden');
+    p.classList.add('active');
+    cur = i;
+    reveal(p);
+
+    tabLinks.forEach(a => a.setAttribute('aria-current', a.getAttribute('href') === '#' + p.id ? 'true' : 'false'));
+    countEl.textContent = pad(i+1) + ' / ' + pad(n);
+    nameEl.textContent = p.dataset.name;
+    if (i === n - 1){ nextLabel.textContent = 'Back to start'; nextBtn.classList.add('up'); }
+    else { nextLabel.textContent = 'Next: ' + panels[i+1].dataset.name; nextBtn.classList.remove('up'); }
+    history.replaceState(null, '', '#' + p.id);
+    if (opts.focus) p.focus({preventScroll:true});
+
+    const t = tabLinks.find(a => a.getAttribute('aria-current') === 'true');
+    const row = t && t.parentElement;
+    if (row && row.scrollWidth > row.clientWidth){
+      row.scrollTo({left: t.offsetLeft - row.clientWidth/2 + t.offsetWidth/2, behavior: reduce.matches ? 'auto' : 'smooth'});
+    }
+
+    busy = true;
+    clearTimeout(show._t);
+    show._t = setTimeout(() => busy = false, 700);
+  }
+
+  panels.forEach(p => p.setAttribute('aria-hidden','true'));
+  const startAt = () => {
+    show(Math.max(0, indexOf(location.hash.slice(1))));
+    busy = false;
+    requestAnimationFrame(() => stage.classList.remove('instant'));
+  };
+  // start once fonts are ready so the first reveal isn't hidden behind a font swap
+  if (document.fonts && document.fonts.ready) Promise.race([document.fonts.ready, new Promise(r => setTimeout(r, 800))]).then(startAt);
+  else startAt();
+
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[data-go]');
+    if (!a) return;
+    const i = indexOf(a.getAttribute('href').slice(1));
+    if (i < 0) return;
+    e.preventDefault();
+    show(i, {focus:true});
+  });
+  nextBtn.addEventListener('click', () => show(cur === n - 1 ? 0 : cur + 1, {focus:true}));
+  window.addEventListener('hashchange', () => { const i = indexOf(location.hash.slice(1)); if (i > -1) show(i); });
+
+  function canScroll(dir){
+    const p = panels[cur];
+    if (!p || p.scrollHeight <= p.clientHeight + 2) return false;
+    return dir > 0 ? p.scrollTop + p.clientHeight < p.scrollHeight - 2 : p.scrollTop > 2;
+  }
+
+  // wheel / trackpad: one gesture moves one section
+  let acc = 0, gestureUsed = false, idle;
+  window.addEventListener('wheel', e => {
+    if (e.ctrlKey || Math.abs(e.deltaY) < Math.abs(e.deltaX)) return;
+    if (e.target.closest && e.target.closest('.tabs')) return;
+    clearTimeout(idle);
+    idle = setTimeout(() => { gestureUsed = false; acc = 0; }, 160);
+    const dir = e.deltaY > 0 ? 1 : -1;
+    if (canScroll(dir)) { gestureUsed = true; return; }
+    e.preventDefault();
+    if (gestureUsed || busy) return;
+    acc += e.deltaY;
+    if (Math.abs(acc) > 25){ gestureUsed = true; acc = 0; show(cur + dir); }
+  }, {passive:false});
+
+  // touch swipe
+  let ty = null, atTop = false, atBottom = false;
+  window.addEventListener('touchstart', e => {
+    if (e.target.closest && e.target.closest('.tabs')) { ty = null; return; }
+    ty = e.touches[0].clientY; atBottom = !canScroll(1); atTop = !canScroll(-1);
+  }, {passive:true});
+  window.addEventListener('touchend', e => {
+    if (ty === null) return;
+    const dy = ty - e.changedTouches[0].clientY; ty = null;
+    if (Math.abs(dy) < 50 || busy) return;
+    if (dy > 0 && atBottom) show(cur + 1);
+    else if (dy < 0 && atTop) show(cur - 1);
+  }, {passive:true});
+
+  // keyboard
+  document.addEventListener('keydown', e => {
+    if (e.altKey || e.ctrlKey || e.metaKey) return;
+    const k = e.key; let dir = 0;
+    if (k === 'ArrowDown' || k === 'PageDown' || (k === ' ' && !e.shiftKey)) dir = 1;
+    else if (k === 'ArrowUp' || k === 'PageUp' || (k === ' ' && e.shiftKey)) dir = -1;
+    else if (k === 'Home') { e.preventDefault(); show(0); return; }
+    else if (k === 'End') { e.preventDefault(); show(n - 1); return; }
+    if (!dir) return;
+    if (k === ' ' && e.target.closest('a,button')) return;
+    if (canScroll(dir)) return;
+    e.preventDefault();
+    if (!busy) show(cur + dir);
+  });
+})();
+</script>
+</body>
+</html>
