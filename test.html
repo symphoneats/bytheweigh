@@ -542,10 +542,6 @@
     }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
 
     reveals.forEach(function (el) { revealObserver.observe(el); });
-
-    setTimeout(function () {
-      reveals.forEach(function (el) { el.classList.add('is-visible'); });
-    }, 2500);
   })();
 </script>
 </body>
