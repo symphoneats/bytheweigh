@@ -8,6 +8,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<!-- Calendly popup widget -->
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 <style>
 /* ============ Tokens ============ */
 :root{
@@ -268,7 +271,7 @@ body.panels .panel{padding-right:0}
     <a href="#pricing" data-go="6" data-tab="5">Pricing</a>
   </nav>
   <svg class="sparkle" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C12.9 7 17 11.1 24 12C17 12.9 12.9 17 12 24C11.1 17 7 12.9 0 12C7 11.1 11.1 7 12 0Z"/></svg>
-  <a class="btn btn-outline btn-sm" href="https://calendly.com/k-symphoneats/30min">Book a call</a>
+  <a class="btn btn-outline btn-sm" href="https://calendly.com/k-symphoneats/30min" data-calendly>Book a call</a>
 </header>
 
 <main id="stage">
@@ -282,7 +285,7 @@ body.panels .panel{padding-right:0}
         <h1 class="display h1 rv" style="--d:2">Executive metabolic care, coordinated end to end.</h1>
         <p class="lead rv" style="--d:3">Six months of integrated physician and dietitian care, built for people who are serious about their weight and health goals and want sustainable results, not a quick fix.</p>
         <div class="cta-row rv" style="--d:4">
-          <a class="btn btn-solid" href="https://calendly.com/k-symphoneats/30min">Schedule a discovery call</a>
+          <a class="btn btn-solid" href="https://calendly.com/k-symphoneats/30min" data-calendly>Schedule a discovery call</a>
           <a class="btn btn-outline" href="#model" data-go="1">How it works</a>
         </div>
       </div>
@@ -440,7 +443,7 @@ body.panels .panel{padding-right:0}
       <span class="eyebrow rv">Six-month program</span>
       <span class="price rv" style="--d:1">$5,000</span>
       <p class="lead rv" style="--d:2">Cash-pay, all-inclusive of physician visits, dietitian visits, and standard labs. Medication billed separately.</p>
-      <a class="btn btn-dark rv" style="--d:3;margin-top:8px;min-height:60px;padding:0 40px;font-size:17px" href="https://calendly.com/k-symphoneats/30min">Book a discovery call</a>
+      <a class="btn btn-dark rv" style="--d:3;margin-top:8px;min-height:60px;padding:0 40px;font-size:17px" href="https://calendly.com/k-symphoneats/30min" data-calendly>Book a discovery call</a>
     </div>
     <footer class="site-footer rv" style="--d:4">
       <strong>By The Weigh</strong>
@@ -554,6 +557,7 @@ body.panels .panel{padding-right:0}
   // Keyboard
   document.addEventListener('keydown', function (e) {
     if (!body.classList.contains('panels')) return;
+    if (document.querySelector('.calendly-overlay')) return;
     var tag = (e.target.tagName || '').toLowerCase();
     if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
     var k = e.key;
@@ -625,6 +629,17 @@ body.panels .panel{padding-right:0}
   }
   if (bigScreen.addEventListener) bigScreen.addEventListener('change', applyMode);
   else if (bigScreen.addListener) bigScreen.addListener(applyMode);
+
+  // Calendly popup: booking links open in an overlay on the page.
+  // If Calendly's script hasn't loaded (slow connection, blocker), the link opens Calendly normally.
+  var CALENDLY_URL = 'https://calendly.com/k-symphoneats/30min?hide_gdpr_banner=1&primary_color=b5583b';
+  document.querySelectorAll('[data-calendly]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      if (!window.Calendly || !window.Calendly.initPopupWidget) return;
+      e.preventDefault();
+      window.Calendly.initPopupWidget({ url: CALENDLY_URL });
+    });
+  });
 
   window.addEventListener('hashchange', function () {
     if (body.classList.contains('panels')) show(indexFromHash(), true);
