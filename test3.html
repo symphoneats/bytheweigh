@@ -21,6 +21,17 @@
 
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
+
+  /* Smooth entrance for the Calendly popup — its own overlay/card would
+     otherwise just snap into view with no transition at all. */
+  .calendly-overlay { animation: cal-fade-in 0.3s ease both; }
+  .calendly-overlay .calendly-popup { animation: cal-pop-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; }
+  @keyframes cal-fade-in { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes cal-pop-in { from { opacity: 0; transform: translateY(12px) scale(0.97); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .calendly-overlay, .calendly-overlay .calendly-popup { animation: none; }
+  }
+
   body {
     margin: 0; background: #EFEAE0; font-family: 'Figtree', system-ui, sans-serif; color: var(--ink);
     transition: opacity 0.6s ease;
@@ -378,7 +389,7 @@
         <a href="#team" data-section="team">Care team</a>
         <a href="#pricing" data-section="pricing">Pricing</a>
       </nav>
-      <a href="https://calendly.com/k-symphoneats/30min" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/k-symphoneats/30min'}); return false;" class="nav-cta">Book a call</a>
+      <a href="https://calendly.com/k-symphoneats/30min" onclick="return openCalendlyPopup();" class="nav-cta">Book a call</a>
       <button type="button" class="mobile-nav-toggle" aria-label="Toggle menu" aria-expanded="false" onclick="toggleMobileNav()">
         <span></span><span></span><span></span>
       </button>
@@ -389,7 +400,7 @@
         <a href="#fit" data-section="fit">Fit &amp; details</a>
         <a href="#team" data-section="team">Care team</a>
         <a href="#pricing" data-section="pricing">Pricing</a>
-        <a href="https://calendly.com/k-symphoneats/30min" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/k-symphoneats/30min'}); return false;" class="nav-cta">Book a call</a>
+        <a href="https://calendly.com/k-symphoneats/30min" onclick="return openCalendlyPopup();" class="nav-cta">Book a call</a>
       </nav>
     </header>
 
@@ -433,7 +444,7 @@
         </h1>
         <p>Six months of integrated physician and dietitian care, built for people who are serious about their weight and health goals and want sustainable results, not a quick fix.</p>
         <hr class="hero-rule">
-        <a href="https://calendly.com/k-symphoneats/30min" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/k-symphoneats/30min'}); return false;" class="btn-shop">Schedule Your Discovery Call</a>
+        <a href="https://calendly.com/k-symphoneats/30min" onclick="return openCalendlyPopup();" class="btn-shop">Schedule Your Discovery Call</a>
 
         <div class="fact-grid">
           <div class="tile">
@@ -598,7 +609,7 @@
         <div class="eyebrow">Six-month program</div>
         <div class="pricing-amount">$5,000</div>
         <p>Cash-pay, all-inclusive of physician visits, dietitian visits, and standard labs. Medication billed separately.</p>
-        <a href="https://calendly.com/k-symphoneats/30min" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/k-symphoneats/30min'}); return false;" class="btn-primary">Book a Discovery Call</a>
+        <a href="https://calendly.com/k-symphoneats/30min" onclick="return openCalendlyPopup();" class="btn-primary">Book a Discovery Call</a>
       </div>
     </section>
 
@@ -617,6 +628,28 @@
       });
     });
   });
+
+  // Opens the Calendly popup. Falls back to retrying briefly if the widget
+  // script (loaded async) hasn't finished loading yet on the very first
+  // click, and to opening Calendly directly in a new tab if it never does,
+  // so the button never just does nothing.
+  var CALENDLY_URL = 'https://calendly.com/k-symphoneats/30min';
+  var calendlyRetries = 0;
+  function openCalendlyPopup() {
+    if (window.Calendly && typeof Calendly.initPopupWidget === 'function') {
+      calendlyRetries = 0;
+      Calendly.initPopupWidget({ url: CALENDLY_URL });
+      return false;
+    }
+    calendlyRetries++;
+    if (calendlyRetries > 20) {
+      calendlyRetries = 0;
+      window.open(CALENDLY_URL, '_blank');
+      return false;
+    }
+    setTimeout(openCalendlyPopup, 150);
+    return false;
+  }
 
   function toggleMobileNav() {
     var panel = document.querySelector('.mobile-nav-panel');
@@ -707,6 +740,8 @@
       setActiveNav(order[index]);
       updateDots(index);
       window.scrollTo({ top: 0, behavior: 'auto' });
+      pendingSwipeDirection = 0;
+      clearTimeout(pendingSwipeTimeout);
     }
     setActiveNav(order[0]);
 
@@ -786,17 +821,57 @@
     // (nothing left to scroll) would just sit there when swiped and only
     // the menu could move you along. A swipe past a small threshold, while
     // already at the top/bottom edge, advances the same way the wheel does.
+    //
+    // A single swipe on a short section (already at both edges) advances
+    // right away. On a longer section, the finger often lifts (touchend)
+    // before the phone's own momentum scrolling has actually finished
+    // carrying the page the rest of the way to the edge — checking only at
+    // that instant made it look like it took "a couple of swipes" to catch.
+    // So a swipe that isn't already at the edge instead arms a pending
+    // direction, and a debounced scroll listener catches the moment the
+    // page actually settles at that edge (even after the finger has long
+    // since lifted) and advances then, off that same one swipe.
     var touchStartY = null;
+    var pendingSwipeDirection = 0;
+    var pendingSwipeTimeout = null;
+    var scrollSettleTimer = null;
+
+    function armPendingSwipe(direction) {
+      pendingSwipeDirection = direction;
+      clearTimeout(pendingSwipeTimeout);
+      pendingSwipeTimeout = setTimeout(function () { pendingSwipeDirection = 0; }, 1200);
+    }
+
     window.addEventListener('touchstart', function (e) {
       touchStartY = (e.touches && e.touches.length === 1) ? e.touches[0].clientY : null;
     }, { passive: true });
+
     window.addEventListener('touchend', function (e) {
       if (touchStartY === null) return;
       var endY = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0].clientY : touchStartY;
       var deltaY = touchStartY - endY; // positive: swiped up (toward next section)
       touchStartY = null;
       if (Math.abs(deltaY) < 40) return;
-      tryAdvance(deltaY > 0 ? 1 : -1);
+      var direction = deltaY > 0 ? 1 : -1;
+      if ((direction > 0 && atBottomEdge()) || (direction < 0 && atTopEdge())) {
+        tryAdvance(direction);
+      } else {
+        // Not at the edge yet — momentum scrolling is likely still carrying
+        // the page there; catch it once it settles.
+        armPendingSwipe(direction);
+      }
+    }, { passive: true });
+
+    window.addEventListener('scroll', function () {
+      if (!pendingSwipeDirection) return;
+      clearTimeout(scrollSettleTimer);
+      scrollSettleTimer = setTimeout(function () {
+        var direction = pendingSwipeDirection;
+        pendingSwipeDirection = 0;
+        if ((direction > 0 && atBottomEdge()) || (direction < 0 && atTopEdge())) {
+          tryAdvance(direction);
+        }
+      }, 120);
     }, { passive: true });
   })();
 </script>
