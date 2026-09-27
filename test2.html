@@ -8,9 +8,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-<!-- Calendly popup widget -->
-<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 <style>
 /* ============ Tokens ============ */
 :root{
@@ -246,6 +243,30 @@ body.panels .panel{padding-right:0}
   .team .photo:last-child{display:none}
 }
 
+/* ============ Booking popup ============ */
+.booking{
+  width:min(1040px, 94vw);height:min(780px, 90vh);height:min(780px, 90dvh);
+  padding:0;border:0;border-radius:24px;background:#fff;overflow:hidden;
+  box-shadow:0 24px 80px rgba(42,37,34,.28);
+}
+.booking::backdrop{background:rgba(42,37,34,.55)}
+.booking[open]{animation:bookIn .35s cubic-bezier(.2,.7,.2,1)}
+@keyframes bookIn{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
+.booking-inner{position:relative;width:100%;height:100%}
+.booking iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent}
+.booking-loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--muted)}
+.booking-close{
+  position:absolute;top:12px;right:12px;z-index:2;width:44px;height:44px;border-radius:50%;
+  border:1.5px solid var(--ink);background:#fff;color:var(--ink);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+}
+.booking-close:hover{background:var(--blush)}
+.booking-close svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+@media (max-width:640px){
+  .booking{width:100vw;height:100vh;height:100dvh;max-width:none;max-height:none;border-radius:0}
+}
+@media (prefers-reduced-motion:reduce){.booking[open]{animation:none}}
+
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .rv,.panel.is-active .rv{opacity:1;animation:none}
@@ -459,6 +480,13 @@ body.panels .panel{padding-right:0}
   <button class="arrow" type="button" data-step="1" aria-label="Next section"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
 </nav>
 
+<dialog class="booking" id="booking" aria-label="Book a discovery call">
+  <div class="booking-inner">
+    <button class="booking-close" type="button" aria-label="Close booking"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <p class="booking-loading">Loading calendar…</p>
+  </div>
+</dialog>
+
 <script>
 (function () {
   var body = document.body;
@@ -557,7 +585,7 @@ body.panels .panel{padding-right:0}
   // Keyboard
   document.addEventListener('keydown', function (e) {
     if (!body.classList.contains('panels')) return;
-    if (document.querySelector('.calendly-overlay')) return;
+    if (booking.open) return;
     var tag = (e.target.tagName || '').toLowerCase();
     if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
     var k = e.key;
@@ -630,33 +658,37 @@ body.panels .panel{padding-right:0}
   if (bigScreen.addEventListener) bigScreen.addEventListener('change', applyMode);
   else if (bigScreen.addListener) bigScreen.addListener(applyMode);
 
-  // Calendly popup: booking links open in an overlay on the page.
-  // If Calendly's script isn't ready yet, load it on the spot, then open the popup.
-  // Only if it can't load at all (ad blocker, offline) does the link open Calendly normally.
-  var CALENDLY_URL = 'https://calendly.com/k-symphoneats/30min?hide_gdpr_banner=1&primary_color=b5583b';
-  var calendlyLoading = null;
-  function loadCalendly() {
-    if (window.Calendly && window.Calendly.initPopupWidget) return Promise.resolve();
-    if (calendlyLoading) return calendlyLoading;
-    calendlyLoading = new Promise(function (resolve, reject) {
-      var sc = document.createElement('script');
-      sc.src = 'https://assets.calendly.com/assets/external/widget.js';
-      sc.onload = function () { resolve(); };
-      sc.onerror = function () { calendlyLoading = null; reject(); };
-      document.head.appendChild(sc);
-      setTimeout(function () { if (!window.Calendly) reject(); }, 4000);
-    });
-    return calendlyLoading;
+  // Booking popup: shows your Calendly page inside a window on this page.
+  var CAL_URL = 'https://calendly.com/k-symphoneats/30min';
+  var booking = document.getElementById('booking');
+  var bookingInner = booking.querySelector('.booking-inner');
+  var lastFocus = null;
+  function openBooking(fallbackHref) {
+    if (typeof booking.showModal !== 'function') { window.location.href = fallbackHref; return; }
+    if (!bookingInner.querySelector('iframe')) {
+      var f = document.createElement('iframe');
+      f.title = 'Book a discovery call with By The Weigh';
+      f.src = CAL_URL + '?embed_domain=' + encodeURIComponent(location.hostname) +
+              '&embed_type=Inline&hide_gdpr_banner=1&primary_color=b5583b';
+      f.addEventListener('load', function () {
+        var l = bookingInner.querySelector('.booking-loading');
+        if (l) l.remove();
+      });
+      bookingInner.appendChild(f);
+    }
+    lastFocus = document.activeElement;
+    booking.showModal();
+    booking.querySelector('.booking-close').focus();
   }
+  function closeBooking() { booking.close(); }
+  booking.addEventListener('close', function () { if (lastFocus) lastFocus.focus(); });
+  booking.querySelector('.booking-close').addEventListener('click', closeBooking);
+  // Click on the dimmed area outside the window closes it
+  booking.addEventListener('click', function (e) { if (e.target === booking) closeBooking(); });
   document.querySelectorAll('[data-calendly]').forEach(function (a) {
     a.addEventListener('click', function (e) {
       e.preventDefault();
-      var href = a.href;
-      loadCalendly().then(function () {
-        window.Calendly.initPopupWidget({ url: CALENDLY_URL });
-      }).catch(function () {
-        window.location.href = href;
-      });
+      openBooking(a.href);
     });
   });
 
