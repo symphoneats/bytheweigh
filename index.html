@@ -2,536 +2,58 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>By The Weigh — Executive Metabolic Care (Editorial mockup)</title>
-<script>document.documentElement.className += ' js';</script>
-<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>By The Weigh</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:ital,opsz,wght@0,12..96,400;0,12..96,500;0,12..96,600;0,12..96,700;0,12..96,800;1,12..96,500;1,12..96,600&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
-
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Lora:ital,wght@1,500;1,600;1,700&display=swap');
+  :root {
+    --bg: #FFFFFF;
+    --ink: #1C1C1C;
+    --ink-soft: #4A4A44;
+    --muted: #767066;
+    --line: #E3E0D8;
+    --accent: #1F4B3F;
+    --navy: #1B2A4A;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body { margin: 0; background: #FFFFFF; font-family: 'Public Sans', system-ui, sans-serif; color: #0B0B0C; }
-  a { color: inherit; text-decoration: none; }
-  ::selection { background: #0E6E86; color: #FFFFFF; }
-
-  h1, h2, h3, .display { font-family: 'Bricolage Grotesque', 'Public Sans', sans-serif; margin: 0; font-weight: 800; letter-spacing: -0.015em; }
-
-  .kicker {
-    font-family: 'Public Sans', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.16em;
-    text-transform: uppercase; color: #0E6E86; margin-bottom: 18px; display: flex; align-items: center; gap: 10px;
+  html { height: 100%; }
+  body {
+    height: 100%; margin: 0; background: var(--bg); color: var(--ink);
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    display: flex; align-items: center; justify-content: center;
   }
-  .kicker::before { content: ''; width: 22px; height: 1px; background: #0E6E86; display: inline-block; }
-
-  .display-xl { font-size: clamp(38px, 6vw, 72px); line-height: 1.01; letter-spacing: -0.02em; }
-  .display-lg { font-size: clamp(28px, 3.6vw, 42px); line-height: 1.05; }
-  .display-md { font-size: clamp(21px, 2.2vw, 26px); line-height: 1.2; font-weight: 700; }
-
-  .lede { font-family: 'Bricolage Grotesque', sans-serif; font-style: italic; font-weight: 500; font-size: 19px; line-height: 1.55; color: #33353A; }
-  .body-copy { font-size: 15.5px; line-height: 1.7; color: #3D4045; }
-
-  .rule { border: none; border-top: 1px solid #0B0B0C; margin: 0; }
-  .rule-light { border: none; border-top: 1px solid rgba(11,11,12,0.12); margin: 0; }
-
-  .section { padding: 88px 64px; max-width: 1240px; margin: 0 auto; }
-  .section + .section { border-top: 1px solid rgba(11,11,12,0.1); }
-
-  .reveal { transition: opacity 0.7s ease, transform 0.7s ease; }
-  html.js .reveal:not(.is-visible) { opacity: 0; transform: translateY(24px); }
-  .reveal.is-visible { opacity: 1; transform: translateY(0); }
-  @media (prefers-reduced-motion: reduce) {
-    html.js .reveal:not(.is-visible) { opacity: 1; transform: none; }
+  .wrap { max-width: 620px; margin: 0 auto; padding: 48px 24px; text-align: center; }
+  .kicker { font-size: 14px; font-weight: 500; letter-spacing: 0.01em; color: var(--muted); margin-bottom: 16px; }
+  h1 {
+    font-family: 'Lora', Georgia, 'Times New Roman', serif;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 50px;
+    color: var(--navy);
+    margin: 0 0 20px;
+    line-height: 1.1;
   }
-
-  /* ---------- MASTHEAD ---------- */
-  .masthead { position: sticky; top: 0; z-index: 50; background: #FFFFFF; border-bottom: 1px solid #0B0B0C; }
-  .masthead-inner {
-    max-width: 1240px; margin: 0 auto; padding: 20px 64px; display: flex; align-items: center; justify-content: space-between; gap: 24px;
-  }
-  .wordmark { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 21px; letter-spacing: -0.01em; white-space: nowrap; }
-  .nav-desktop { display: flex; align-items: center; gap: 30px; flex: 1; justify-content: center; }
-  .nav-link {
-    font-size: 12.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #6B6E73;
-    padding-bottom: 3px; border-bottom: 2px solid transparent; white-space: nowrap; display: inline-block;
-    transform: scale(1); transform-origin: center bottom;
-    transition: color 0.15s ease, border-color 0.15s ease, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
-  }
-  .nav-link:hover { color: #0B0B0C; }
-  .nav-link.active { color: #0B0B0C; border-bottom-color: #0E6E86; }
-  .nav-desktop.is-hovering .nav-link:not(.is-hover-active) { opacity: 0.4; }
-  .nav-link.is-hover-active { color: #0B0B0C; transform: scale(1.16); }
-
-  /* header hover-reveal: the masthead grows to show a one-line description of whichever nav item is hovered */
-  .masthead-desc {
-    display: grid; grid-template-rows: 0fr;
-    transition: grid-template-rows 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-    border-top: 1px solid transparent;
-  }
-  .masthead.is-hovering .masthead-desc { grid-template-rows: 1fr; border-top-color: rgba(11,11,12,0.1); }
-  .masthead-desc-inner { overflow: hidden; }
-  .masthead-desc-text {
-    max-width: 560px; margin: 0 auto; text-align: center; padding: 16px 20px; font-size: 13.5px; line-height: 1.55; color: #55585E;
-    opacity: 0; transform: translateY(-6px); transition: opacity 0.35s ease 0.05s, transform 0.35s ease 0.05s;
-  }
-  .masthead.is-hovering .masthead-desc-text { opacity: 1; transform: translateY(0); }
-  .btn-book {
-    display: inline-flex; align-items: center; background: #0B0B0C; color: #FFFFFF; padding: 11px 22px;
-    font-weight: 700; font-size: 12.5px; letter-spacing: 0.08em; text-transform: uppercase; border: 1px solid #0B0B0C; cursor: pointer; white-space: nowrap;
-    transition: background 0.15s ease, color 0.15s ease;
-  }
-  .btn-book:hover { background: #0E6E86; border-color: #0E6E86; }
-
-  .nav-toggle { display: none; background: none; border: none; padding: 8px; margin: -8px; cursor: pointer; flex-direction: column; justify-content: center; gap: 5px; }
-  .nav-toggle span { display: block; width: 22px; height: 2px; background: #0B0B0C; border-radius: 1px; }
-  .nav-mobile { display: none; }
-
-  /* ---------- HERO ---------- */
-  .hero { padding-top: 72px; }
-  .cta-link {
-    display: inline-flex; align-items: center; gap: 8px; margin-top: 26px; font-weight: 700; font-size: 13.5px;
-    letter-spacing: 0.06em; text-transform: uppercase; border-bottom: 2px solid #0B0B0C; padding-bottom: 4px;
-  }
-  .cta-link span { color: #0E6E86; transition: transform 0.15s ease; }
-  .cta-link:hover span { transform: translateX(4px); }
-
-  .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 56px; border-top: 1px solid #0B0B0C; }
-  .stat { padding: 22px 26px 0 0; border-right: 1px solid rgba(11,11,12,0.12); }
-  .stat:last-child { border-right: none; }
-  .stat-label { display: block; font-size: 11.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #8A8D92; margin-bottom: 8px; }
-  .stat-value { display: block; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 21px; }
-  .stat-accent .stat-value { color: #0E6E86; }
-
-  /* ---------- FEATURE ROWS (how it works) ---------- */
-  .feature-row { display: grid; grid-template-columns: 1.7fr 1fr; gap: 40px; margin-top: 56px; align-items: stretch; }
-  .feature-kicker { font-size: 11.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #8A8D92; margin-bottom: 12px; }
-  .feature-copy h3 { margin-bottom: 14px; }
-  .feature-quote {
-    background: #0B0B0C; color: #FFFFFF; padding: 34px 30px; display: flex; align-items: center;
-    font-family: 'Bricolage Grotesque', sans-serif; font-style: italic; font-weight: 600; font-size: 19px; line-height: 1.45; position: relative;
-  }
-  .feature-quote::before {
-    content: '\201C'; position: absolute; top: 6px; left: 20px; font-family: Georgia, serif; font-size: 64px; color: #0E6E86; line-height: 1; opacity: 0.85;
-  }
-  .feature-quote span { position: relative; z-index: 1; }
-
-  .compare-row { display: grid; grid-template-columns: 1fr 60px 1fr; margin-top: 56px; border-top: 1px solid #0B0B0C; padding-top: 30px; }
-  .compare-divider { display: flex; align-items: center; justify-content: center; }
-  .compare-divider span { writing-mode: vertical-rl; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; color: #8A8D92; text-transform: uppercase; }
-  .plain-list { list-style: none; margin: 0; padding: 0; }
-  .plain-list li { font-size: 14.5px; line-height: 1.6; color: #3D4045; padding: 13px 0; border-bottom: 1px solid rgba(11,11,12,0.1); }
-  .plain-list li:last-child { border-bottom: none; }
-
-  .note-row { display: flex; gap: 22px; margin-top: 40px; padding-top: 24px; border-top: 1px solid rgba(11,11,12,0.12); }
-  .note-row .feature-kicker { flex: 0 0 140px; margin-bottom: 0; }
-
-  /* ---------- TIMELINE ---------- */
-  .steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 48px; border-top: 1px solid #0B0B0C; }
-  .step { padding: 26px 24px 0 0; border-right: 1px solid rgba(11,11,12,0.12); }
-  .step:last-child { border-right: none; }
-  .step-number { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 40px; color: #0E6E86; line-height: 1; margin-bottom: 16px; }
-  .step-label { font-size: 11.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #8A8D92; margin-bottom: 8px; }
-  .step p { font-size: 13.5px; line-height: 1.6; color: #3D4045; margin: 0; }
-
-  /* ---------- FIT ---------- */
-  .fit-columns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-top: 48px; }
-  .fit-col-title { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 17px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #0B0B0C; }
-  .check-list { list-style: none; margin: 0; padding: 0; }
-  .check-list li { font-size: 13.5px; line-height: 1.6; color: #3D4045; padding: 11px 0; border-bottom: 1px solid rgba(11,11,12,0.1); }
-  .check-list li:last-child { border-bottom: none; }
-  .check-list li strong { color: #0B0B0C; }
-
-  .callout-band {
-    margin-top: 48px; background: #0B0B0C; color: #FFFFFF; padding: 26px 30px; display: flex; align-items: center;
-    justify-content: space-between; gap: 16px; flex-wrap: wrap;
-  }
-  .callout-band .headline { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 16px; }
-  .callout-band .note { font-size: 12.5px; color: #9AA0A7; }
-
-  /* ---------- TEAM ---------- */
-  .credits-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 48px; }
-  .credit { border-top: 1px solid #0B0B0C; padding-top: 22px; }
-  .credit-photo {
-    width: 76px; height: 76px; border-radius: 50%; border: 1.5px dashed rgba(14,110,134,0.4); background: rgba(14,110,134,0.06);
-    display: flex; align-items: center; justify-content: center; font-size: 10px; color: #0E6E86; margin-bottom: 18px;
-  }
-  .credit-name { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 19px; margin-bottom: 4px; }
-  .credit-role { font-family: 'Bricolage Grotesque', sans-serif; font-style: italic; font-weight: 500; font-size: 13.5px; color: #0E6E86; margin-bottom: 14px; }
-  .credit p { font-size: 13.5px; line-height: 1.6; color: #3D4045; margin: 0; }
-
-  /* ---------- PRICING ---------- */
-  .pricing-band { background: #EFF4F5; color: #0B0B0C; text-align: center; border-top: 1px solid rgba(11,11,12,0.08); }
-  .pricing-band .kicker { justify-content: center; }
-  .price-amount { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(28px, 3.6vw, 42px); line-height: 1.1; margin-bottom: 14px; }
-  .price-note { font-size: 14px; line-height: 1.6; color: #55585E; max-width: 460px; margin: 0 auto 32px; }
-  .btn-invert {
-    display: inline-flex; align-items: center; background: #0B0B0C; color: #FFFFFF; padding: 15px 34px;
-    font-weight: 700; font-size: 13.5px; letter-spacing: 0.06em; text-transform: uppercase; border: 1px solid #0B0B0C; cursor: pointer;
-    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
-  }
-  .btn-invert:hover { background: #0E6E86; border-color: #0E6E86; color: #FFFFFF; }
-
-  /* ---------- FOOTER ---------- */
-  .footer { padding: 28px 64px; max-width: 1240px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
-  .footer-note { font-size: 12px; color: #8A8D92; }
-
-  /* ================= RESPONSIVE ================= */
-  @media (max-width: 900px) {
-    .section { padding: 64px 28px; }
-    .masthead-inner { padding: 16px 20px; }
-    .nav-desktop, .btn-book { display: none; }
-    .nav-toggle { display: flex; }
-    .masthead-desc { display: none; }
-    .nav-mobile {
-      display: none; position: absolute; top: 100%; left: 0; right: 0; background: #FFFFFF; border-bottom: 1px solid #0B0B0C;
-      flex-direction: column; padding: 6px 20px 20px;
-    }
-    .nav-mobile.open { display: flex; }
-    .nav-mobile .nav-link { padding: 14px 2px; border-bottom: 1px solid rgba(11,11,12,0.1); }
-    .nav-mobile .nav-link:last-of-type { border-bottom: none; }
-    .nav-mobile .btn-book { display: flex; margin-top: 14px; justify-content: center; width: 100%; box-sizing: border-box; }
-
-    .stat-row, .feature-row, .compare-row, .steps-grid, .fit-columns, .credits-grid {
-      grid-template-columns: 1fr !important;
-    }
-    .stat { border-right: none; border-bottom: 1px solid rgba(11,11,12,0.12); padding: 18px 0; }
-    .stat:last-child { border-bottom: none; }
-    .feature-row { gap: 20px; }
-    .compare-divider { display: none; }
-    .compare-row { gap: 24px; padding-top: 24px; }
-    .step { border-right: none; border-bottom: 1px solid rgba(11,11,12,0.12); padding: 20px 0; }
-    .step:last-child { border-bottom: none; }
-    .fit-columns { gap: 28px; }
-    .credits-grid { gap: 32px; }
-    .note-row { flex-direction: column; gap: 10px; }
-    .note-row .feature-kicker { flex: none; }
-  }
-
-  @media (max-width: 560px) {
-    .section { padding: 52px 20px; }
-    .masthead-inner { padding: 14px 18px; }
-    .price-note { padding: 0 8px; }
-    .callout-band { flex-direction: column; align-items: flex-start; }
-  }
+  p.lead { font-size: 17px; color: var(--ink-soft); line-height: 1.65; margin: 0 auto 32px; max-width: 460px; }
+  .cta-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+  .btn { display: inline-block; background: var(--accent); color: var(--bg); padding: 13px 26px; border-radius: 6px; text-decoration: none; font-size: 15px; font-weight: 600; }
+  .btn-outline { display: inline-block; background: transparent; color: var(--accent); border: 1.5px solid var(--accent); padding: 11.5px 24px; border-radius: 6px; text-decoration: none; font-size: 15px; font-weight: 600; }
+  .credit { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; font-size: 13px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 20px; margin-top: 24px; }
 </style>
 </head>
 <body>
-
-<header class="masthead">
-  <div class="masthead-inner">
-    <a href="#program" class="wordmark">By The Weigh</a>
-    <nav class="nav-desktop">
-      <a href="#program" class="nav-link" data-section="program" data-desc="A six-month, cash-pay bridge for coordinated physician and dietitian care.">Program</a>
-      <a href="#model" class="nav-link" data-section="model" data-desc="One integrated plan: your endocrinologist and dietitian work in step, not in isolation.">How it works</a>
-      <a href="#timeline" class="nav-link" data-section="timeline" data-desc="Four stages, from your first metabolic workup to a sustainable long-term plan.">Timeline</a>
-      <a href="#fit" class="nav-link" data-section="fit" data-desc="Who this program is built for, what's included, and what to expect.">Fit &amp; details</a>
-      <a href="#team" class="nav-link" data-section="team" data-desc="Meet the endocrinologist and dietitian who oversee your care together.">Care team</a>
-      <a href="#pricing" class="nav-link" data-section="pricing" data-desc="$5,000 for six months, all-inclusive of physician visits, dietitian visits, and labs.">Pricing</a>
-    </nav>
-    <a href="https://calendly.com/k-symphoneats/30min" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/k-symphoneats/30min'}); return false;" class="btn-book">Book a call</a>
-    <button type="button" class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" onclick="toggleNav()">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-  <div class="masthead-desc">
-    <div class="masthead-desc-inner">
-      <p class="masthead-desc-text">&nbsp;</p>
-    </div>
-  </div>
-  <nav class="nav-mobile">
-    <a href="#program" class="nav-link" data-section="program">Program</a>
-    <a href="#model" class="nav-link" data-section="model">How it works</a>
-    <a href="#timeline" class="nav-link" data-section="timeline">Timeline</a>
-    <a href="#fit" class="nav-link" data-section="fit">Fit &amp; details</a>
-    <a href="#team" class="nav-link" data-section="team">Care team</a>
-    <a href="#pricing" class="nav-link" data-section="pricing">Pricing</a>
-    <a href="https://calendly.com/k-symphoneats/30min" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/k-symphoneats/30min'}); return false;" class="btn-book">Book a call</a>
-  </nav>
-</header>
-
-<!-- HERO / PROGRAM -->
-<section id="program" class="section hero">
-  <div class="kicker">By The Weigh — Executive Metabolic Care</div>
-  <h1 class="display-xl">Executive metabolic care, coordinated end to end.</h1>
-  <p class="lede" style="max-width: 620px; margin-top: 22px;">Six months of integrated physician and dietitian care, built for people who are serious about their weight and health goals and want sustainable results, not a quick fix.</p>
-  <a href="https://calendly.com/k-symphoneats/30min" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/k-symphoneats/30min'}); return false;" class="cta-link">Schedule your discovery call <span>&rarr;</span></a>
-
-  <div class="stat-row">
-    <div class="stat">
-      <span class="stat-label">Duration</span>
-      <span class="stat-value">Six months</span>
-    </div>
-    <div class="stat">
-      <span class="stat-label">Your team</span>
-      <span class="stat-value">Endocrinologist + Dietitian</span>
-    </div>
-    <div class="stat stat-accent">
-      <span class="stat-label">Investment</span>
-      <span class="stat-value">$5,000 all-inclusive</span>
-    </div>
-  </div>
-</section>
-
-<!-- MODEL / HOW IT WORKS -->
-<section id="model" class="section reveal">
-  <div class="kicker">How it works</div>
-  <h2 class="display-lg" style="max-width: 640px;">True integration, not just a referral.</h2>
-  <p class="body-copy" style="max-width: 680px; margin-top: 18px;">Most patients are left to coordinate their own care, going between a prescriber and a dietitian who rarely speak to each other directly. By The Weigh closes that gap. Weight is a medical, metabolic, and nutritional question, so we pair a board-certified endocrinologist with a Registered Dietitian in one coordinated plan.</p>
-
-  <div class="feature-row">
-    <div class="feature-copy">
-      <div class="feature-kicker">The hormone specialists</div>
-      <h3 class="display-md">Weight has as much to do with hormones as it does with willpower.</h3>
-      <p class="body-copy">Endocrinologists specialize specifically in the body's hormone systems, the same systems that regulate metabolism, appetite, and blood sugar. Your endocrinologist can assess whether a thyroid disorder, hormonal imbalance, or pituitary issue is contributing to your weight — and GLP-1 medications, which mimic a hormone the body already produces, sit squarely in the territory endocrinology has specialized in for decades.</p>
-    </div>
-    <div class="feature-quote"><span>A GLP-1 medication is one option your endocrinologist may consider — and only when it's medically appropriate.</span></div>
-  </div>
-
-  <div class="feature-row">
-    <div class="feature-copy">
-      <div class="feature-kicker">The nutrition specialists</div>
-      <h3 class="display-md">Losing weight and losing your health are not the same thing.</h3>
-      <p class="body-copy">Registered Dietitians are the clinicians trained specifically in medical nutrition therapy, assessing protein needs, micronutrient status, and how your metabolism shifts as intake drops, not just building meal plans. Appetite falls faster than the body's need for protein, vitamins, and minerals, and left unaddressed, that gap can show up in ways that go beyond the scale, things like hair loss, excessive muscle loss, low energy, and long-term bone loss such as osteopenia or osteoporosis, to name a few. Your dietitian works closely with you throughout the program to keep that gap from becoming severe.</p>
-    </div>
-    <div class="feature-quote"><span>The scale only tells you one piece of the puzzle. Your dietitian makes sure you're not losing the other pieces that keep you healthy.</span></div>
-  </div>
-
-  <div class="compare-row">
-    <div class="compare-col">
-      <div class="feature-kicker">Your physician</div>
-      <ul class="plain-list">
-        <li>Comprehensive initial assessment of your hormonal and metabolic drivers</li>
-        <li>Follow-up visits approximately every three months to reassess labs, hormones, and progress</li>
-        <li>Additional visits if you're experiencing moderate to severe side effects</li>
-      </ul>
-    </div>
-    <div class="compare-divider"><span>Coordinated</span></div>
-    <div class="compare-col">
-      <div class="feature-kicker">Your dietitian</div>
-      <ul class="plain-list">
-        <li>Comprehensive nutrition assessment built around your schedule and goals</li>
-        <li>Monthly follow-ups to adjust your plan and keep momentum</li>
-        <li>A dedicated 2-week check-in after any new medication, such as a GLP-1</li>
-      </ul>
+  <div class="wrap">
+    <div class="kicker">An executive metabolic care program</div>
+    <h1>By The Weigh</h1>
+    <p class="lead">Six months of integrated endocrinologist and dietitian care, built for people who are serious about their weight and health goals and want sustainable results.</p>
+    <div class="cta-row">
+      <a class="btn" href="https://calendly.com/k-symphoneats/30min" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/k-symphoneats/30min'}); return false;">Schedule a Call</a>
     </div>
   </div>
 
-  <div class="note-row">
-    <div class="feature-kicker">Visit format</div>
-    <p class="body-copy">Available in person and by telehealth. Unlike most programs, which are largely telehealth-only, you'll always have access to an in-person appointment at our practice.</p>
-  </div>
-</section>
-
-<!-- TIMELINE -->
-<section id="timeline" class="section reveal">
-  <div class="kicker">The arc of the program</div>
-  <h2 class="display-lg">Your six months.</h2>
-  <div class="steps-grid">
-    <div class="step">
-      <div class="step-number">01</div>
-      <div class="step-label">Month 1</div>
-      <p>Comprehensive physician and nutrition assessments, both in depth.</p>
-    </div>
-    <div class="step">
-      <div class="step-number">02</div>
-      <div class="step-label">Every 3 months</div>
-      <p>Physician follow-up to reassess labs, hormones, and progress.</p>
-    </div>
-    <div class="step">
-      <div class="step-number">03</div>
-      <div class="step-label">Every month</div>
-      <p>Dietitian follow-up to adjust your plan and keep things moving.</p>
-    </div>
-    <div class="step">
-      <div class="step-number">04</div>
-      <div class="step-label">As needed</div>
-      <p>2-week check-in on a new medication, plus visits for side effects.</p>
-    </div>
-  </div>
-</section>
-
-<!-- FIT + LABS + INCLUDED -->
-<section id="fit" class="section reveal">
-  <div class="kicker">Everything else you'd ask</div>
-  <h2 class="display-lg">Fit, fine print, and value at a glance.</h2>
-
-  <div class="fit-columns">
-    <div class="fit-col">
-      <div class="fit-col-title">Is this a fit?</div>
-      <ul class="check-list">
-        <li>You want coordinated care, not two providers you stitch together yourself</li>
-        <li>You're on, or considering, a GLP-1 and want nutrition built around it</li>
-        <li>You've felt the disconnect between separate medical and dietitian care</li>
-        <li>You'd rather pay cash than navigate insurance authorizations</li>
-      </ul>
-    </div>
-    <div class="fit-col">
-      <div class="fit-col-title">Labs</div>
-      <ul class="check-list">
-        <li><strong>Included.</strong> Cortisol, TSH, lipid panel, A1c, CBC, and metabolic chemistry panel at no extra cost. [CONFIRM LAB CADENCE]</li>
-        <li><strong>If needed.</strong> Advanced labs (24-hour urine cortisol, tumor markers) only if clinically indicated, billed to the patient.</li>
-      </ul>
-    </div>
-    <div class="fit-col">
-      <div class="fit-col-title">What's included</div>
-      <ul class="check-list">
-        <li>A coordinated team, not a solo provider</li>
-        <li>All visits, no surprise billing</li>
-        <li>Always available in person, not virtual-only</li>
-        <li>A prescription for FDA-approved medication, never a compounded version</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="callout-band">
-    <span class="headline">A defined six-month bridge, not an open-ended subscription.</span>
-    <span class="note">Medication billed separately</span>
-  </div>
-</section>
-
-<!-- CARE TEAM -->
-<section id="team" class="section reveal">
-  <div class="kicker">Your care team</div>
-  <h2 class="display-lg">Two clinicians. One plan.</h2>
-  <div class="credits-grid">
-    <div class="credit">
-      <div class="credit-photo">[ photo ]</div>
-      <div class="credit-name">Minh Mach, MD</div>
-      <div class="credit-role">Endocrinology</div>
-      <p>Board certified in Endocrinology, Internal Medicine, and Geriatrics, of Endocrine Specialty Consultants. Oversees your medical assessment, hormone and metabolic workup, and medication plan.</p>
-    </div>
-    <div class="credit">
-      <div class="credit-photo">[ photo ]</div>
-      <div class="credit-name">Katherine Chen, MS, RD, CDCES</div>
-      <div class="credit-role">Nutrition</div>
-      <p>Registered Dietitian and Certified Diabetes Care &amp; Education Specialist, founder of Symphoneats. Leads your ongoing nutrition strategy.</p>
-    </div>
-  </div>
-</section>
-
-<!-- PRICING -->
-<section id="pricing" class="section reveal pricing-band">
-  <div class="kicker">Six-month program</div>
-  <div class="price-amount">$5,000</div>
-  <p class="price-note">Cash-pay, all-inclusive of physician visits, dietitian visits, and standard labs. Medication billed separately.</p>
-  <a href="https://calendly.com/k-symphoneats/30min" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/k-symphoneats/30min'}); return false;" class="btn-invert">Book a Discovery Call</a>
-</section>
-
-<footer class="footer">
-  <div class="wordmark" style="font-size: 15px;">By The Weigh</div>
-  <div class="footer-note">Symphoneats &amp; Endocrine Specialty Consultants</div>
-</footer>
-
-<script>
-  function toggleNav() {
-    var panel = document.querySelector('.nav-mobile');
-    var btn = document.querySelector('.nav-toggle');
-    if (!panel || !btn) return;
-    var isOpen = panel.classList.toggle('open');
-    btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-  }
-
-  // Header hover-reveal: hovering a desktop nav link enlarges it, dims the others,
-  // and grows the masthead to show that section's one-line description.
-  (function () {
-    var masthead = document.querySelector('.masthead');
-    var navDesktop = document.querySelector('.nav-desktop');
-    var descText = document.querySelector('.masthead-desc-text');
-    if (!masthead || !navDesktop || !descText) return;
-    var deskLinks = Array.prototype.slice.call(navDesktop.querySelectorAll('.nav-link'));
-
-    deskLinks.forEach(function (link) {
-      link.addEventListener('mouseenter', function () {
-        deskLinks.forEach(function (l) { l.classList.remove('is-hover-active'); });
-        link.classList.add('is-hover-active');
-        navDesktop.classList.add('is-hovering');
-        masthead.classList.add('is-hovering');
-        descText.textContent = link.getAttribute('data-desc') || '';
-      });
-      link.addEventListener('mouseleave', function () {
-        link.classList.remove('is-hover-active');
-        navDesktop.classList.remove('is-hovering');
-        masthead.classList.remove('is-hovering');
-      });
-      link.addEventListener('focus', function () {
-        link.dispatchEvent(new Event('mouseenter'));
-      });
-      link.addEventListener('blur', function () {
-        link.dispatchEvent(new Event('mouseleave'));
-      });
-    });
-  })();
-
-  (function () {
-    var sections = ['program', 'model', 'timeline', 'fit', 'team', 'pricing']
-      .map(function (id) { return document.getElementById(id); })
-      .filter(Boolean);
-    var links = Array.prototype.slice.call(document.querySelectorAll('.nav-link'));
-
-    links.forEach(function (link) {
-      link.addEventListener('click', function () {
-        var panel = document.querySelector('.nav-mobile');
-        var btn = document.querySelector('.nav-toggle');
-        if (panel) panel.classList.remove('open');
-        if (btn) btn.setAttribute('aria-expanded', 'false');
-      });
-    });
-
-    window.addEventListener('resize', function () {
-      if (window.innerWidth > 900) {
-        var panel = document.querySelector('.nav-mobile');
-        var btn = document.querySelector('.nav-toggle');
-        if (panel) panel.classList.remove('open');
-        if (btn) btn.setAttribute('aria-expanded', 'false');
-      }
-    });
-
-    function setActive(id) {
-      links.forEach(function (link) {
-        link.classList.toggle('active', link.getAttribute('data-section') === id);
-      });
-    }
-
-    if (!('IntersectionObserver' in window) || !sections.length) {
-      if (links[0]) links[0].classList.add('active');
-      return;
-    }
-
-    var observer = new IntersectionObserver(function (entries) {
-      var visible = entries.filter(function (e) { return e.isIntersecting; });
-      if (!visible.length) return;
-      visible.sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top; });
-      setActive(visible[0].target.id);
-    }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
-
-    sections.forEach(function (section) { observer.observe(section); });
-    setActive(sections[0].id);
-  })();
-
-  (function () {
-    var reveals = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
-    if (!reveals.length) return;
-
-    if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      reveals.forEach(function (el) { el.classList.add('is-visible'); });
-      return;
-    }
-
-    var revealObserver = new IntersectionObserver(function (entries, obs) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          obs.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
-
-    reveals.forEach(function (el) { revealObserver.observe(el); });
-
-    setTimeout(function () {
-      reveals.forEach(function (el) { el.classList.add('is-visible'); });
-    }, 2500);
-  })();
-</script>
+<!-- Calendly popup widget (no floating badge) -->
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
 </body>
 </html>
