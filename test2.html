@@ -631,13 +631,32 @@ body.panels .panel{padding-right:0}
   else if (bigScreen.addListener) bigScreen.addListener(applyMode);
 
   // Calendly popup: booking links open in an overlay on the page.
-  // If Calendly's script hasn't loaded (slow connection, blocker), the link opens Calendly normally.
+  // If Calendly's script isn't ready yet, load it on the spot, then open the popup.
+  // Only if it can't load at all (ad blocker, offline) does the link open Calendly normally.
   var CALENDLY_URL = 'https://calendly.com/k-symphoneats/30min?hide_gdpr_banner=1&primary_color=b5583b';
+  var calendlyLoading = null;
+  function loadCalendly() {
+    if (window.Calendly && window.Calendly.initPopupWidget) return Promise.resolve();
+    if (calendlyLoading) return calendlyLoading;
+    calendlyLoading = new Promise(function (resolve, reject) {
+      var sc = document.createElement('script');
+      sc.src = 'https://assets.calendly.com/assets/external/widget.js';
+      sc.onload = function () { resolve(); };
+      sc.onerror = function () { calendlyLoading = null; reject(); };
+      document.head.appendChild(sc);
+      setTimeout(function () { if (!window.Calendly) reject(); }, 4000);
+    });
+    return calendlyLoading;
+  }
   document.querySelectorAll('[data-calendly]').forEach(function (a) {
     a.addEventListener('click', function (e) {
-      if (!window.Calendly || !window.Calendly.initPopupWidget) return;
       e.preventDefault();
-      window.Calendly.initPopupWidget({ url: CALENDLY_URL });
+      var href = a.href;
+      loadCalendly().then(function () {
+        window.Calendly.initPopupWidget({ url: CALENDLY_URL });
+      }).catch(function () {
+        window.location.href = href;
+      });
     });
   });
 
