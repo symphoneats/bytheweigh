@@ -744,30 +744,60 @@
       if (window.innerWidth > 900) closeMobileNav();
     });
 
-    // Wheel: once the page is scrolled to the very top or bottom of the
-    // *current* section, the next wheel notch advances to the next/previous
-    // section instead of doing nothing. While there's more of the current
-    // section left to see (for a longer one, like "How it works"), the wheel
-    // just scrolls the page normally.
-    var wheelLock = false;
-    window.addEventListener('wheel', function (e) {
-      if (wheelLock) return;
+    // Shared edge check: is the page currently scrolled all the way to the
+    // top or bottom of whichever section is showing?
+    function atTopEdge() { return window.scrollY <= 0; }
+    function atBottomEdge() {
       var doc = document.documentElement;
-      var atTop = window.scrollY <= 0;
-      var atBottom = window.scrollY + window.innerHeight >= doc.scrollHeight - 2;
+      return window.scrollY + window.innerHeight >= doc.scrollHeight - 2;
+    }
 
-      if (e.deltaY > 0 && atBottom && currentIndex < panels.length - 1) {
-        e.preventDefault();
-        wheelLock = true;
+    var advanceLock = false;
+    function tryAdvance(direction) {
+      if (advanceLock) return;
+      if (direction > 0 && atBottomEdge() && currentIndex < panels.length - 1) {
+        advanceLock = true;
         goTo(currentIndex + 1);
-        setTimeout(function () { wheelLock = false; }, 700);
-      } else if (e.deltaY < 0 && atTop && currentIndex > 0) {
-        e.preventDefault();
-        wheelLock = true;
+        setTimeout(function () { advanceLock = false; }, 700);
+      } else if (direction < 0 && atTopEdge() && currentIndex > 0) {
+        advanceLock = true;
         goTo(currentIndex - 1);
-        setTimeout(function () { wheelLock = false; }, 700);
+        setTimeout(function () { advanceLock = false; }, 700);
       }
+    }
+
+    // Mouse wheel / trackpad (desktop): once the page is scrolled to the very
+    // top or bottom of the *current* section, the next notch advances to the
+    // next/previous section instead of doing nothing. While there's more of
+    // the current section left to see (for a longer one, like "How it
+    // works"), the wheel just scrolls the page normally.
+    window.addEventListener('wheel', function (e) {
+      if (advanceLock) return;
+      var goingDown = e.deltaY > 0;
+      if ((goingDown && atBottomEdge() && currentIndex < panels.length - 1) ||
+          (!goingDown && atTopEdge() && currentIndex > 0)) {
+        e.preventDefault();
+      }
+      tryAdvance(goingDown ? 1 : -1);
     }, { passive: false });
+
+    // Touch swipe (mobile/tablet): wheel events don't fire for touch
+    // scrolling, so without this, a section that already fits the screen
+    // (nothing left to scroll) would just sit there when swiped and only
+    // the menu could move you along. A swipe past a small threshold, while
+    // already at the top/bottom edge, advances the same way the wheel does.
+    var touchStartY = null;
+    window.addEventListener('touchstart', function (e) {
+      touchStartY = (e.touches && e.touches.length === 1) ? e.touches[0].clientY : null;
+    }, { passive: true });
+    window.addEventListener('touchend', function (e) {
+      if (touchStartY === null) return;
+      var endY = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0].clientY : touchStartY;
+      var deltaY = touchStartY - endY; // positive: swiped up (toward next section)
+      touchStartY = null;
+      if (Math.abs(deltaY) < 40) return;
+      tryAdvance(deltaY > 0 ? 1 : -1);
+    }, { passive: true });
   })();
 </script>
 
