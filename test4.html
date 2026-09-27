@@ -9,8 +9,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
-<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 <style>
   :root{
     --teal:#0E5B5E; --teal-deep:#0A4649; --ink:#123A30; --mint:#F4F8F5;
@@ -239,6 +237,29 @@
     .arches4{grid-template-columns:1fr}
     .arches4 li{min-height:180px}
   }
+  /* ---------- BOOKING POPUP (same as the attached version) ---------- */
+  .booking{
+    width:min(1040px, 94vw);height:min(780px, 90vh);height:min(780px, 90dvh);
+    padding:0;border:0;border-radius:24px;background:#fff;overflow:hidden;
+    box-shadow:0 24px 80px rgba(42,37,34,.28);
+  }
+  .booking::backdrop{background:rgba(42,37,34,.55)}
+  .booking[open]{animation:bookIn .35s cubic-bezier(.2,.7,.2,1)}
+  @keyframes bookIn{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
+  .booking-inner{position:relative;width:100%;height:100%}
+  .booking iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent}
+  .booking-loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--muted)}
+  .booking-close{
+    position:absolute;top:12px;right:12px;z-index:2;width:44px;height:44px;border-radius:50%;
+    border:1.5px solid var(--ink);background:#fff;color:var(--ink);cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .booking-close:hover{background:var(--pale)}
+  .booking-close svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+  @media (max-width:640px){
+    .booking{width:100vw;height:100vh;height:100dvh;max-width:none;max-height:none;border-radius:0}
+  }
+  @media (prefers-reduced-motion:reduce){.booking[open]{animation:none}}
 </style>
 </head>
 <body>
@@ -293,7 +314,7 @@
     <a href="#team" data-go>Care team</a>
     <a href="#pricing" data-go>Pricing</a>
     <span class="rule" aria-hidden="true"></span>
-    <a class="cta" href="https://calendly.com/k-symphoneats/30min">Book a call</a>
+    <a class="cta" href="https://calendly.com/k-symphoneats/30min" data-calendly>Book a call</a>
   </nav>
 
   <main class="stage instant" id="stage">
@@ -306,7 +327,7 @@
           <p class="sub rv">By The Weigh, a six-month program</p>
           <h1 class="rv">Executive metabolic care, coordinated end to end.</h1>
           <p class="lede rv">Six months of integrated physician and dietitian care, built for people who are serious about their weight and health goals and want sustainable results, not a quick fix.</p>
-          <a class="btn rv" href="https://calendly.com/k-symphoneats/30min">Schedule your discovery call</a>
+          <a class="btn rv" href="https://calendly.com/k-symphoneats/30min" data-calendly>Schedule your discovery call</a>
         </div>
         <aside class="hero-side rv" aria-label="Program at a glance">
           <div class="price-box"><span>Six-month program</span><strong>$5,000</strong><small>all-inclusive</small></div>
@@ -479,7 +500,7 @@
             <span>Six-month program</span>
             <strong>$5,000</strong>
             <small>all-inclusive</small>
-            <a class="btn" href="https://calendly.com/k-symphoneats/30min">Book a discovery call</a>
+            <a class="btn" href="https://calendly.com/k-symphoneats/30min" data-calendly>Book a discovery call</a>
           </div>
         </div>
       </div>
@@ -494,10 +515,17 @@
     <span class="preview">Layout preview only</span>
     <div class="contact">
       <a href="mailto:care@bytheweigh.com">care@bytheweigh.com</a>
-      <a href="https://calendly.com/k-symphoneats/30min">Book a discovery call</a>
+      <a href="https://calendly.com/k-symphoneats/30min" data-calendly>Book a discovery call</a>
     </div>
   </div>
 </div>
+
+<dialog class="booking" id="booking" aria-label="Book a discovery call">
+  <div class="booking-inner">
+    <button class="booking-close" type="button" aria-label="Close booking"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <p class="booking-loading">Loading calendar…</p>
+  </div>
+</dialog>
 
 <script>
 (function(){
@@ -583,19 +611,39 @@
   if (document.fonts && document.fonts.ready) Promise.race([document.fonts.ready, new Promise(r => setTimeout(r, 800))]).then(startAt);
   else startAt();
 
-  // Booking links open Calendly as a popup over the page instead of navigating away
-  const CAL = 'https://calendly.com/k-symphoneats/30min';
-  const calendlyOpen = () => !!document.querySelector('.calendly-overlay, .calendly-popup');
-  document.addEventListener('click', e => {
-    const c = e.target.closest('a[href*="calendly.com"]');
-    if (!c) return;
-    e.preventDefault();
-    if (window.Calendly && typeof Calendly.initPopupWidget === 'function'){
-      Calendly.initPopupWidget({ url: c.href || CAL });
-    } else {
-      // widget script hasn't loaded (slow connection or blocked): open in a new tab so this page stays put
-      window.open(c.href || CAL, '_blank', 'noopener');
+  // Booking popup: shows your Calendly page inside a window on this page. (same as the attached version)
+  var CAL_URL = 'https://calendly.com/k-symphoneats/30min';
+  var booking = document.getElementById('booking');
+  var bookingInner = booking.querySelector('.booking-inner');
+  var lastFocus = null;
+  const calendlyOpen = () => booking.open;
+  function openBooking(fallbackHref) {
+    if (typeof booking.showModal !== 'function') { window.location.href = fallbackHref; return; }
+    if (!bookingInner.querySelector('iframe')) {
+      var f = document.createElement('iframe');
+      f.title = 'Book a discovery call with By The Weigh';
+      f.src = CAL_URL + '?embed_domain=' + encodeURIComponent(location.hostname) +
+              '&embed_type=Inline&hide_gdpr_banner=1&primary_color=0e5b5e';
+      f.addEventListener('load', function () {
+        var l = bookingInner.querySelector('.booking-loading');
+        if (l) l.remove();
+      });
+      bookingInner.appendChild(f);
     }
+    lastFocus = document.activeElement;
+    booking.showModal();
+    booking.querySelector('.booking-close').focus();
+  }
+  function closeBooking() { booking.close(); }
+  booking.addEventListener('close', function () { if (lastFocus) lastFocus.focus(); });
+  booking.querySelector('.booking-close').addEventListener('click', closeBooking);
+  // Click on the dimmed area outside the window closes it
+  booking.addEventListener('click', function (e) { if (e.target === booking) closeBooking(); });
+  document.querySelectorAll('[data-calendly]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      openBooking(a.href);
+    });
   });
 
   document.addEventListener('click', e => {
