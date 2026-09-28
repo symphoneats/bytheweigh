@@ -2,11 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>By The Weigh — Garden Layout Preview</title>
 <script>document.documentElement.className += ' js';</script>
-<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800&family=Figtree:wght@400;500;600;700;800&display=swap');
 
@@ -20,17 +18,8 @@
   }
 
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-
-  /* Smooth entrance for the Calendly popup — its own overlay/card would
-     otherwise just snap into view with no transition at all. */
-  .calendly-overlay { animation: cal-fade-in 0.3s ease both; }
-  .calendly-overlay .calendly-popup { animation: cal-pop-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; }
-  @keyframes cal-fade-in { from { opacity: 0; } to { opacity: 1; } }
-  @keyframes cal-pop-in { from { opacity: 0; transform: translateY(12px) scale(0.97); } to { opacity: 1; transform: none; } }
-  @media (prefers-reduced-motion: reduce) {
-    .calendly-overlay, .calendly-overlay .calendly-popup { animation: none; }
-  }
+  html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+  :focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; border-radius: 6px; }
 
   body {
     margin: 0; background: #EFEAE0; font-family: 'Figtree', system-ui, sans-serif; color: var(--ink);
@@ -49,7 +38,7 @@
   .page-wrap { max-width: 1400px; margin: 40px auto; padding: 0 20px; }
 
   .card {
-    position: relative; overflow: hidden; background: var(--cream);
+    position: relative; overflow: hidden; overflow: clip; background: var(--cream);
     border-radius: 18px; box-shadow: 0 30px 70px rgba(20,22,26,0.22);
   }
 
@@ -83,16 +72,6 @@
     display: inline-flex; align-items: center; gap: 10px; background: var(--teal); color: #fff !important; border: none;
     padding: 16px 30px; border-radius: 8px; font-weight: 700; font-size: 15px; cursor: pointer; font-family: 'Figtree', sans-serif;
     text-decoration: none;
-  }
-
-  /* scroll-reveal (progressive enhancement: content is visible-by-default without JS) */
-  .reveal { transition: opacity 0.7s ease, transform 0.7s ease; }
-  html.js .reveal:not(.is-visible) { opacity: 0; transform: translateY(28px); }
-  .reveal.is-visible { opacity: 1; transform: translateY(0); }
-
-  @media (prefers-reduced-motion: reduce) {
-    html.js .reveal:not(.is-visible) { opacity: 1; transform: none; }
-    html.js body { opacity: 1; }
   }
 
   /* ---------- HEADER ---------- */
@@ -146,11 +125,11 @@
     padding: 10px;
   }
   .arch-main {
-    width: 62%; height: 420px; left: 34px; bottom: 0;
+    width: 62%; height: 87.5%; left: 34px; bottom: 0;
     border-radius: 210px 210px 14px 14px;
   }
   .arch-accent {
-    width: 44%; height: 260px; right: 0; top: 0;
+    width: 44%; height: 54%; right: 0; top: 0;
     border-radius: 140px 140px 14px 14px;
     box-shadow: 0 0 0 10px var(--cream);
   }
@@ -254,36 +233,111 @@
   .pricing-card p { font-size: 13.5px; line-height: 1.6; color: var(--muted); margin-bottom: 26px; }
   .pricing-card .btn-primary { justify-content: center; width: 100%; }
 
-  /* ---------- STAGE MODE (JS-driven "tabbed page": one section is shown at
-     a time, replacing the last, instead of every section stacking down the
-     page). Each panel keeps its own natural height rather than being locked
-     to a fixed screen size or forced to match the tallest one — a short
-     panel (like pricing) stays compact, and a long one is simply allowed to
-     make that one screen taller, with the browser's own scrollbar, rather
-     than getting an internal scrollbar of its own. ---------- */
-  html.stage-active #stage > .panel {
-    opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+  /* ---------- ENTRANCE ANIMATION ----------
+     Each section's pieces rise in with a short stagger whenever that section
+     becomes the current one (one-screen mode) or scrolls into view (stacked
+     mode). Content stays visible if JS never runs. */
+  @keyframes rise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+  html.rv-ready .rv { opacity: 0; }
+  .panel.is-active .rv { animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(var(--d, 0) * 0.12s); }
+
+  /* ---------- ONE-SCREEN MODE (large screens) ----------
+     The page is locked to the window height. Every section sits stacked in
+     the same spot and they crossfade, so nothing about the page's height or
+     scroll position changes during a swap (that was the source of the jumpy
+     feel). A section that is taller than the window scrolls on its own, with
+     its scrollbar hidden, before the wheel moves on to the next section. */
+  body.panels { height: 100vh; height: 100dvh; overflow: hidden; display: flex; flex-direction: column; }
+  body.panels .note-banner { flex: none; }
+  body.panels .page-wrap { flex: 1; min-height: 0; width: 100%; margin: 16px auto; }
+  body.panels .card { height: 100%; display: flex; flex-direction: column; }
+  body.panels .site-header { flex: none; padding-top: 22px; padding-bottom: 22px; }
+  body.panels #stage { flex: 1; min-height: 0; position: relative; }
+  body.panels #stage > .panel {
+    position: absolute; inset: 0; z-index: 2; overflow-y: auto; overscroll-behavior: contain;
+    scrollbar-width: none; display: grid; align-content: start; align-content: safe center;
+    background: var(--cream);
+    /* the page being left stays put underneath until the new one has fully
+       landed on top of it, then disappears */
+    opacity: 0; visibility: hidden; transition: opacity 0s linear 0.5s, visibility 0s linear 0.5s;
   }
-  html.stage-active #stage > .panel.is-hidden { display: none; }
-  html.stage-active #stage > .panel.is-current {
-    opacity: 1; pointer-events: auto;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    html.stage-active #stage > .panel { transition: none; }
+  body.panels #stage > .panel::-webkit-scrollbar { display: none; }
+  body.panels #stage > .panel.is-active {
+    z-index: 3; opacity: 1; visibility: visible; transition: opacity 0.5s ease;
+    box-shadow: 0 -18px 40px rgba(20,22,26,0.06);
   }
 
-  .stage-dots {
-    display: none; position: fixed; right: 22px; top: 50%; transform: translateY(-50%);
-    z-index: 35; flex-direction: column; gap: 12px;
+  /* each page's own paper texture and doodles (added by the script) */
+  .page-deco { display: none; }
+  body.panels .page-deco { display: block; position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; min-height: 100%; }
+  body.panels .page-deco.is-flipped { transform: scaleX(-1); }
+  body.panels #stage > .panel > :not(.page-deco) { position: relative; z-index: 1; }
+  body.panels .card > .squiggle, body.panels .card > .dabs { display: none; }
+  body.panels #stage > .section { padding: 32px 80px 36px 56px; }
+  body.panels #stage > .hero { padding: 36px 80px 44px 56px; }
+  body.panels .hero-visual { height: min(480px, calc(100dvh - 250px)); }
+  body.panels #stage > #pricing { justify-content: center; grid-template-columns: minmax(0, 480px); }
+
+  /* progress dots + arrows (one-screen mode only) */
+  .dots { display: none; }
+  body.panels .dots {
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    position: fixed; right: clamp(6px, 1.4vw, 26px); top: 50%; transform: translateY(-50%); z-index: 35;
   }
-  html.stage-active .stage-dots { display: flex; }
-  .stage-dots button {
-    width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--ink); background: transparent;
-    padding: 0; cursor: pointer; transition: background 0.2s ease, transform 0.2s ease;
+  .dots button { background: none; border: 0; padding: 0; cursor: pointer; color: var(--ink); }
+  .dots .arrow { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
+  .dots .arrow svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .dots .arrow[disabled] { opacity: 0.25; cursor: default; }
+  .dots ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .dots li { display: flex; }
+  .dots .dot { width: 9px; height: 9px; border-radius: 999px; box-shadow: inset 0 0 0 1.5px var(--ink); transition: height 0.35s ease, background 0.35s ease, box-shadow 0.35s ease; }
+  .dots .dot[aria-current="true"] { height: 26px; background: var(--teal); box-shadow: inset 0 0 0 1.5px var(--teal); }
+
+  /* ---------- BOOKING POPUP ----------
+     Calendly shown inside a native dialog, which the browser always centers
+     in the window. */
+  .booking {
+    width: min(1040px, 94vw); height: min(780px, 90vh); height: min(780px, 90dvh);
+    padding: 0; border: 0; border-radius: 20px; background: #fff; overflow: hidden;
+    box-shadow: 0 24px 80px rgba(20,22,26,0.3);
   }
-  .stage-dots button.is-current { background: var(--ink); transform: scale(1.15); }
+  .booking::backdrop { background: rgba(20,22,26,0.55); }
+  .booking[open] { animation: bookIn 0.35s cubic-bezier(0.2, 0.7, 0.2, 1); }
+  @keyframes bookIn { from { opacity: 0; transform: translateY(16px) scale(0.98); } to { opacity: 1; transform: none; } }
+  .booking-inner { position: relative; width: 100%; height: 100%; }
+  .booking iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: transparent; }
+  .booking-loading { position: absolute; inset: 0; margin: 0; display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--muted); }
+  .booking-close {
+    position: absolute; top: 12px; right: 12px; z-index: 2; width: 44px; height: 44px; border-radius: 50%;
+    border: 1.5px solid var(--ink); background: var(--cream); color: var(--ink); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .booking-close:hover { background: #fff; }
+  .booking-close svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+  @media (max-width: 640px) {
+    .booking { width: 100vw; height: 100vh; height: 100dvh; max-width: none; max-height: none; border-radius: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    html.js body { opacity: 1; }
+    .rv, .panel.is-active .rv { opacity: 1 !important; animation: none !important; }
+    body.panels #stage > .panel, body.panels #stage > .panel.is-active { transition: none; }
+    .booking[open] { animation: none; }
+  }
 
   /* ---------- RESPONSIVE ---------- */
+  /* Stacked mode (phones, tablets, short windows): each section gets at
+     least a full screen and a rule between it and the next, so it still reads
+     as its own page while you scroll. */
+  body:not(.panels) #stage > .panel {
+    min-height: calc(100vh - 90px); min-height: calc(100svh - 90px);
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  body:not(.panels) #stage > .panel.hero { display: grid; }
+  body:not(.panels) #stage > .panel + .panel { border-top: 1px solid rgba(20,22,26,0.14); }
+  body:not(.panels) #stage > #pricing { align-items: center; }
+
   @media (max-width: 900px) {
     .main-nav { display: none; }
     .mobile-nav-toggle { display: flex; }
@@ -328,10 +382,19 @@
     .visit-format-tile { flex-direction: column; align-items: flex-start; gap: 8px; }
     .visit-format-tile .eyebrow { flex: none; }
 
-    .stage-dots { display: none !important; }
+  }
+
+  @media (max-width: 900px) {
+    body.panels .page-wrap { margin: 10px auto; padding: 0 10px; }
+    body.panels .site-header { padding-top: 16px; padding-bottom: 16px; }
+    body.panels #stage > .section { padding: 28px 24px 36px; }
+    body.panels #stage > .hero { padding: 28px 24px 40px; }
+    body.panels .hero-visual { height: 340px; }
+    body.panels .dots { display: none; }
   }
 
   @media (max-width: 560px) {
+    body.panels #stage > .section, body.panels #stage > .hero { padding-left: 18px; padding-right: 18px; }
     .section { padding: 18px 18px 36px; }
     .section h2 { font-size: 20px; }
     .tile { padding: 18px; }
@@ -389,8 +452,8 @@
         <a href="#team" data-section="team">Care team</a>
         <a href="#pricing" data-section="pricing">Pricing</a>
       </nav>
-      <a href="https://calendly.com/k-symphoneats/30min" onclick="return openCalendlyPopup();" class="nav-cta">Book a call</a>
-      <button type="button" class="mobile-nav-toggle" aria-label="Toggle menu" aria-expanded="false" onclick="toggleMobileNav()">
+      <a href="https://calendly.com/k-symphoneats/30min" data-calendly class="nav-cta">Book a call</a>
+      <button type="button" class="mobile-nav-toggle" aria-label="Toggle menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
       <nav class="mobile-nav-panel" aria-label="Section navigation, mobile">
@@ -400,19 +463,17 @@
         <a href="#fit" data-section="fit">Fit &amp; details</a>
         <a href="#team" data-section="team">Care team</a>
         <a href="#pricing" data-section="pricing">Pricing</a>
-        <a href="https://calendly.com/k-symphoneats/30min" onclick="return openCalendlyPopup();" class="nav-cta">Book a call</a>
+        <a href="https://calendly.com/k-symphoneats/30min" data-calendly class="nav-cta">Book a call</a>
       </nav>
     </header>
 
-    <!-- STAGE: holds one full-height "screen" per section. On viewports and
-         browsers where JS runs, only the current panel is shown and the page
-         itself never grows taller than one viewport (see stage-controller
-         script below). Without JS, .panel/.is-current never activate and this
-         simply renders as a normal, tall, scrolling page. -->
+    <!-- STAGE: on large screens only one section shows at a time and they
+         crossfade in place. On phones, tablets and short windows it is a
+         normal scrolling page. Without JS it is always a normal page. -->
     <div class="stage" id="stage">
 
     <!-- hero / program -->
-    <section class="hero" id="program">
+    <section class="hero" id="program" data-tab="program" aria-label="Program">
       <div class="hero-visual">
         <div class="dot-rail">
           <span class="filled"></span><span></span><span></span><span></span><span></span>
@@ -444,7 +505,7 @@
         </h1>
         <p>Six months of integrated physician and dietitian care, built for people who are serious about their weight and health goals and want sustainable results, not a quick fix.</p>
         <hr class="hero-rule">
-        <a href="https://calendly.com/k-symphoneats/30min" onclick="return openCalendlyPopup();" class="btn-shop">Schedule Your Discovery Call</a>
+        <a href="https://calendly.com/k-symphoneats/30min" data-calendly class="btn-shop">Schedule Your Discovery Call</a>
 
         <div class="fact-grid">
           <div class="tile">
@@ -464,11 +525,35 @@
     </section>
 
     <!-- HOW IT WORKS -->
-    <section class="section reveal" id="model">
+    <section class="section" id="model" data-tab="model" aria-label="How it works">
       <div class="eyebrow">How it works</div>
       <h2>True integration, not just a referral.</h2>
       <p class="section-intro">Most patients are left to coordinate their own care, going between a prescriber and a dietitian who rarely speak to each other directly. By The Weigh closes that gap. Weight is a medical, metabolic, and nutritional question, so we pair a board-certified endocrinologist with a Registered Dietitian in one coordinated plan.</p>
 
+      <div class="model-compare">
+        <div class="tile">
+          <div class="eyebrow">Your physician</div>
+          <div class="visit-line">Comprehensive initial assessment of your hormonal and metabolic drivers</div>
+          <div class="visit-line">Follow-up visits approximately every three months to reassess labs, hormones, and progress</div>
+          <div class="visit-line">Additional visits if you're experiencing moderate to severe side effects</div>
+        </div>
+        <div class="model-divider"><span>Coordinated</span></div>
+        <div class="tile">
+          <div class="eyebrow">Your dietitian</div>
+          <div class="visit-line">Comprehensive nutrition assessment built around your schedule and goals</div>
+          <div class="visit-line">Monthly follow-ups to adjust your plan and keep momentum</div>
+          <div class="visit-line">A dedicated 2-week check-in after any new medication, such as a GLP-1</div>
+        </div>
+      </div>
+
+      <div class="tile visit-format-tile">
+        <div class="eyebrow">Visit format</div>
+        <p>Available in person and by telehealth. Unlike most programs, which are largely telehealth-only, you'll always have access to an in-person appointment at our practice.</p>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS, continued: the specialists -->
+    <section class="section" id="specialists" data-tab="model" aria-label="The specialists">
       <div class="model-top">
         <div class="tile">
           <div class="eyebrow">The hormone specialists</div>
@@ -493,30 +578,10 @@
         </div>
       </div>
 
-      <div class="model-compare">
-        <div class="tile">
-          <div class="eyebrow">Your physician</div>
-          <div class="visit-line">Comprehensive initial assessment of your hormonal and metabolic drivers</div>
-          <div class="visit-line">Follow-up visits approximately every three months to reassess labs, hormones, and progress</div>
-          <div class="visit-line">Additional visits if you're experiencing moderate to severe side effects</div>
-        </div>
-        <div class="model-divider"><span>Coordinated</span></div>
-        <div class="tile">
-          <div class="eyebrow">Your dietitian</div>
-          <div class="visit-line">Comprehensive nutrition assessment built around your schedule and goals</div>
-          <div class="visit-line">Monthly follow-ups to adjust your plan and keep momentum</div>
-          <div class="visit-line">A dedicated 2-week check-in after any new medication, such as a GLP-1</div>
-        </div>
-      </div>
-
-      <div class="tile visit-format-tile">
-        <div class="eyebrow">Visit format</div>
-        <p>Available in person and by telehealth. Unlike most programs, which are largely telehealth-only, you'll always have access to an in-person appointment at our practice.</p>
-      </div>
     </section>
 
     <!-- TIMELINE -->
-    <section class="section reveal" id="timeline">
+    <section class="section" id="timeline" data-tab="timeline" aria-label="Timeline">
       <div class="eyebrow">The arc of the program</div>
       <h2>Your six months.</h2>
       <div style="position: relative;">
@@ -555,7 +620,7 @@
     </section>
 
     <!-- FIT + LABS + INCLUDED -->
-    <section class="section reveal" id="fit">
+    <section class="section" id="fit" data-tab="fit" aria-label="Fit and details">
       <div class="eyebrow">Everything else you'd ask</div>
       <h2>Fit, fine print, and value — at a glance.</h2>
       <div class="fit-grid">
@@ -580,7 +645,7 @@
     </section>
 
     <!-- CARE TEAM -->
-    <section class="section reveal" id="team">
+    <section class="section" id="team" data-tab="team" aria-label="Care team">
       <div class="eyebrow">Your care team</div>
       <h2>Two clinicians. One plan.</h2>
       <div class="team-grid">
@@ -604,12 +669,12 @@
     </section>
 
     <!-- PRICING -->
-    <section class="section reveal pricing-wrap" id="pricing">
+    <section class="section pricing-wrap" id="pricing" data-tab="pricing" aria-label="Pricing">
       <div class="tile pricing-card">
         <div class="eyebrow">Six-month program</div>
         <div class="pricing-amount">$5,000</div>
         <p>Cash-pay, all-inclusive of physician visits, dietitian visits, and standard labs. Medication billed separately.</p>
-        <a href="https://calendly.com/k-symphoneats/30min" onclick="return openCalendlyPopup();" class="btn-primary">Book a Discovery Call</a>
+        <a href="https://calendly.com/k-symphoneats/30min" data-calendly class="btn-primary">Book a Discovery Call</a>
       </div>
     </section>
 
@@ -619,261 +684,310 @@
   </div>
 </div>
 
+<nav class="dots" aria-label="Section progress">
+  <button class="arrow" type="button" data-step="-1" aria-label="Previous section"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg></button>
+  <ul></ul>
+  <button class="arrow" type="button" data-step="1" aria-label="Next section"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+</nav>
+
+<dialog class="booking" id="booking" aria-label="Book a discovery call">
+  <div class="booking-inner">
+    <button class="booking-close" type="button" aria-label="Close booking"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <p class="booking-loading">Loading calendar…</p>
+  </div>
+</dialog>
+
 <script>
-  // Whole-page fade-in on load (progressive enhancement: page is visible-by-default if JS never runs).
+  // Whole-page fade-in on load (page is visible by default if JS never runs).
   document.addEventListener('DOMContentLoaded', function () {
     requestAnimationFrame(function () {
-      requestAnimationFrame(function () {
-        document.body.classList.add('is-loaded');
-      });
+      requestAnimationFrame(function () { document.body.classList.add('is-loaded'); });
     });
   });
 
-  // Opens the Calendly popup. Falls back to retrying briefly if the widget
-  // script (loaded async) hasn't finished loading yet on the very first
-  // click, and to opening Calendly directly in a new tab if it never does,
-  // so the button never just does nothing.
-  var CALENDLY_URL = 'https://calendly.com/k-symphoneats/30min';
-  var calendlyRetries = 0;
-  function openCalendlyPopup() {
-    if (window.Calendly && typeof Calendly.initPopupWidget === 'function') {
-      calendlyRetries = 0;
-      Calendly.initPopupWidget({ url: CALENDLY_URL });
-      return false;
-    }
-    calendlyRetries++;
-    if (calendlyRetries > 20) {
-      calendlyRetries = 0;
-      window.open(CALENDLY_URL, '_blank');
-      return false;
-    }
-    setTimeout(openCalendlyPopup, 150);
-    return false;
+(function () {
+  var body = document.body;
+  var stage = document.getElementById('stage');
+  if (!stage) return;
+  var panels = Array.prototype.slice.call(stage.children).filter(function (el) { return el.tagName === 'SECTION'; });
+  if (!panels.length) return;
+  panels.forEach(function (p) { p.classList.add('panel'); });
+
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('a[data-section]'));
+  var dotList = document.querySelector('.dots ul');
+  var arrows = document.querySelectorAll('.dots .arrow');
+  var booking = document.getElementById('booking');
+  var cur = 0;
+
+  // Timing. LOCK_MS is the minimum time between section changes. QUIET_MS is
+  // how long the wheel has to go quiet before the next change is allowed, so
+  // one trackpad flick (which keeps firing "momentum" wheel events for a
+  // second or more) moves exactly one section instead of skipping ahead.
+  var LOCK_MS = 900;
+  var QUIET_MS = 200;
+  var locked = false, stepAt = 0, releaseTimer = null, lastInside = 0;
+
+  // One-page-at-a-time mode on every screen size (the long scrolling page is
+  // only used for printing, or if JavaScript is off).
+  var bigScreen = window.matchMedia('screen');
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  function isPanels() { return body.classList.contains('panels'); }
+
+  // Tag the individual pieces of each page for the staggered entrance, the
+  // same way the reference file does it: headings, each card, each timeline
+  // step and each button rise in one after another, rather than whole blocks.
+  var PIECES = [
+    '.dot-rail', '.arch', '.badge',
+    '.kicker', 'h1', '.hero-copy > p', '.hero-rule', '.btn-shop',
+    ':scope > .eyebrow', ':scope > h2', '.section-intro',
+    '.tl-node', '.tile:not(.pricing-card)', '.model-divider',
+    '.pricing-card > *'
+  ].join(',');
+  panels.forEach(function (p) {
+    var found = Array.prototype.slice.call(p.querySelectorAll(PIECES));
+    var items = found.filter(function (el) {
+      for (var n = el.parentElement; n && n !== p; n = n.parentElement) {
+        if (found.indexOf(n) !== -1) return false; // parent already animates
+      }
+      return true;
+    });
+    items.forEach(function (el, i) { el.classList.add('rv'); el.style.setProperty('--d', Math.min(i, 7)); });
+  });
+
+  // Give every page its own paper and doodles, so each section reads as a
+  // separate page laid over the last, rather than content swapping inside
+  // one fixed frame. Doodles alternate sides from page to page.
+  var decoSource = Array.prototype.slice.call(document.querySelectorAll('.card > .squiggle, .card > .dabs'));
+  panels.forEach(function (p, i) {
+    var deco = document.createElement('div');
+    deco.className = 'page-deco' + (i % 2 ? ' is-flipped' : '');
+    deco.setAttribute('aria-hidden', 'true');
+    deco.innerHTML = '<div class="texture"></div>';
+    decoSource.forEach(function (d) { deco.appendChild(d.cloneNode(true)); });
+    p.insertBefore(deco, p.firstChild);
+  });
+  document.documentElement.classList.add('rv-ready');
+
+  // Progress dots
+  var dots = panels.map(function (p, i) {
+    var li = document.createElement('li');
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'dot';
+    b.setAttribute('aria-label', 'Go to ' + (p.getAttribute('aria-label') || p.id));
+    b.addEventListener('click', function () { show(i); });
+    li.appendChild(b);
+    dotList.appendChild(li);
+    return b;
+  });
+
+  function setTab(tabId) {
+    navLinks.forEach(function (l) { l.classList.toggle('is-active', l.getAttribute('data-section') === tabId); });
   }
 
-  function toggleMobileNav() {
-    var panel = document.querySelector('.mobile-nav-panel');
-    var btn = document.querySelector('.mobile-nav-toggle');
-    if (!panel || !btn) return;
-    var isOpen = panel.classList.toggle('open');
-    btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  function show(i, fromHash) {
+    i = Math.max(0, Math.min(panels.length - 1, i));
+    cur = i;
+    panels.forEach(function (p, k) {
+      var on = k === i;
+      p.classList.toggle('is-active', on);
+      p.setAttribute('aria-hidden', on ? 'false' : 'true');
+      p.inert = !on;
+    });
+    panels[i].scrollTop = 0;
+    setTab(panels[i].getAttribute('data-tab'));
+    dots.forEach(function (d, k) { d.setAttribute('aria-current', k === i ? 'true' : 'false'); });
+    arrows[0].disabled = i === 0;
+    arrows[1].disabled = i === panels.length - 1;
+    if (!fromHash && history.replaceState) history.replaceState(null, '', '#' + panels[i].id);
   }
 
-  // ---------- STAGE CONTROLLER ----------
-  // Shows one section at a time, replacing the last, instead of every
-  // section stacking down the page. Each section keeps its own natural
-  // height: a short one (like pricing) stays compact, and a long one is
-  // simply allowed to make that one screen a bit taller, with the normal
-  // browser scrollbar, rather than an internal scrollbar of its own. If
-  // #stage or any section is unexpectedly missing, this bails out silently
-  // and the page just stays a normal, long, scrolling page (the CSS above
-  // only takes effect once html.stage-active is added below).
-  (function () {
-    var order = ['program', 'model', 'timeline', 'fit', 'team', 'pricing'];
-    var stage = document.getElementById('stage');
-    var panels = order.map(function (id) { return document.getElementById(id); });
-    if (!stage || panels.indexOf(null) !== -1) return;
+  function scheduleRelease() {
+    clearTimeout(releaseTimer);
+    var minLock = reduceMotion.matches ? 300 : LOCK_MS;
+    var wait = Math.max(QUIET_MS, minLock - (Date.now() - stepAt));
+    releaseTimer = setTimeout(function () { locked = false; }, wait);
+  }
+  function step(dir) {
+    var next = cur + dir;
+    if (next < 0 || next >= panels.length) return;
+    show(next);
+    locked = true;
+    stepAt = Date.now();
+    scheduleRelease();
+  }
 
-    document.documentElement.classList.add('stage-active');
-    panels.forEach(function (p, i) {
-      p.classList.add('panel');
-      if (i === 0) { p.classList.add('is-current'); } else { p.classList.add('is-hidden'); }
+  // If the current section is taller than the window, let it scroll first.
+  function canScrollInside(dir) {
+    var p = panels[cur];
+    if (p.scrollHeight <= p.clientHeight + 2) return false;
+    if (dir > 0) return p.scrollTop + p.clientHeight < p.scrollHeight - 2;
+    return p.scrollTop > 0;
+  }
+
+  // Wheel / trackpad
+  window.addEventListener('wheel', function (e) {
+    if (!isPanels() || booking.open || e.ctrlKey) return;
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+    var dir = e.deltaY > 0 ? 1 : (e.deltaY < 0 ? -1 : 0);
+    if (!dir) return;
+    if (locked) { e.preventDefault(); scheduleRelease(); return; }
+    if (canScrollInside(dir)) { lastInside = Date.now(); return; }
+    e.preventDefault();
+    // The same flick that just carried a long section to its end shouldn't
+    // also flip to the next one; wait for a fresh scroll.
+    if (Date.now() - lastInside < QUIET_MS) { lastInside = Date.now(); return; }
+    if (Math.abs(e.deltaY) < 8) return;
+    step(dir);
+  }, { passive: false });
+
+  // Touch swipe (large touch screens in one-screen mode)
+  var touchY = null;
+  // A swipe only turns the page if the page was already at its top/bottom
+  // when the finger went down, so the swipe that scrolls a long page to its
+  // end doesn't also flip to the next one.
+  var startEdge = { down: false, up: false };
+  function touchStartAtEdge(dir) { return dir > 0 ? startEdge.down : startEdge.up; }
+  stage.addEventListener('touchstart', function (e) {
+    touchY = e.touches.length === 1 ? e.touches[0].clientY : null;
+    startEdge.down = !canScrollInside(1);
+    startEdge.up = !canScrollInside(-1);
+  }, { passive: true });
+  stage.addEventListener('touchend', function (e) {
+    if (!isPanels() || touchY === null || locked) { touchY = null; return; }
+    var d = touchY - e.changedTouches[0].clientY;
+    touchY = null;
+    if (Math.abs(d) < 50) return;
+    var dir = d > 0 ? 1 : -1;
+    if (canScrollInside(dir) || !touchStartAtEdge(dir)) return;
+    step(dir);
+  }, { passive: true });
+
+  // Keyboard
+  document.addEventListener('keydown', function (e) {
+    if (!isPanels() || booking.open) return;
+    var tag = (e.target.tagName || '').toLowerCase();
+    if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
+    var k = e.key;
+    if (k === 'ArrowDown' || k === 'PageDown' || (k === ' ' && tag !== 'button' && tag !== 'a')) {
+      if (canScrollInside(1)) return;
+      e.preventDefault(); if (!locked) step(1);
+    } else if (k === 'ArrowUp' || k === 'PageUp') {
+      if (canScrollInside(-1)) return;
+      e.preventDefault(); if (!locked) step(-1);
+    } else if (k === 'Home') { e.preventDefault(); show(0); }
+    else if (k === 'End') { e.preventDefault(); show(panels.length - 1); }
+  });
+
+  arrows.forEach(function (b) {
+    b.addEventListener('click', function () { show(cur + parseInt(b.getAttribute('data-step'), 10)); });
+  });
+
+  // Mobile menu
+  var mobilePanel = document.querySelector('.mobile-nav-panel');
+  var mobileBtn = document.querySelector('.mobile-nav-toggle');
+  function closeMobileNav() {
+    if (mobilePanel) mobilePanel.classList.remove('open');
+    if (mobileBtn) mobileBtn.setAttribute('aria-expanded', 'false');
+  }
+  if (mobileBtn) mobileBtn.addEventListener('click', function () {
+    var isOpen = mobilePanel.classList.toggle('open');
+    mobileBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  window.addEventListener('resize', function () { if (window.innerWidth > 900) closeMobileNav(); });
+
+  // Nav links: in one-screen mode switch sections; in stacked mode they are
+  // normal anchor links that scroll smoothly to the section.
+  function indexOfId(id) {
+    for (var i = 0; i < panels.length; i++) if (panels[i].id === id) return i;
+    return -1;
+  }
+  navLinks.forEach(function (link) {
+    var idx = indexOfId(link.getAttribute('data-section'));
+    link.addEventListener('click', function (e) {
+      closeMobileNav();
+      if (!isPanels()) return;
+      e.preventDefault();
+      show(idx);
     });
+  });
 
-    // The per-section scroll-reveal isn't meaningful once each section is its
-    // own "slide" reached by a fade; show their content immediately rather
-    // than waiting on a scroll-linked observer.
-    Array.prototype.slice.call(document.querySelectorAll('.reveal')).forEach(function (el) {
-      el.classList.add('is-visible');
-    });
+  // Stacked mode: reveal each section as it scrolls into view, and track the active tab.
+  var revealObserver = new IntersectionObserver(function (entries) {
+    if (isPanels()) return;
+    entries.forEach(function (en) { if (en.isIntersecting) en.target.classList.add('is-active'); });
+  }, { threshold: 0, rootMargin: '0px 0px -12% 0px' });
+  var tabObserver = new IntersectionObserver(function (entries) {
+    if (isPanels()) return;
+    entries.forEach(function (en) { if (en.isIntersecting) setTab(en.target.getAttribute('data-tab')); });
+  }, { rootMargin: '-45% 0px -50% 0px' });
 
-    var currentIndex = 0;
+  function indexFromHash() {
+    var i = indexOfId((location.hash || '').replace('#', ''));
+    return i < 0 ? 0 : i;
+  }
 
-    function closeMobileNav() {
-      var panel = document.querySelector('.mobile-nav-panel');
-      var btn = document.querySelector('.mobile-nav-toggle');
-      if (panel) panel.classList.remove('open');
-      if (btn) btn.setAttribute('aria-expanded', 'false');
-    }
-
-    function setActiveNav(id) {
-      Array.prototype.slice.call(document.querySelectorAll('a[data-section]')).forEach(function (link) {
-        link.classList.toggle('is-active', link.getAttribute('data-section') === id);
+  function applyMode() {
+    revealObserver.disconnect();
+    tabObserver.disconnect();
+    if (bigScreen.matches) {
+      body.classList.add('panels');
+      show(cur, true);
+    } else {
+      body.classList.remove('panels');
+      panels.forEach(function (p) {
+        p.classList.remove('is-active');
+        p.removeAttribute('aria-hidden');
+        p.inert = false;
+        revealObserver.observe(p);
+        tabObserver.observe(p);
       });
     }
+  }
 
-    var dotsWrap = document.createElement('div');
-    dotsWrap.className = 'stage-dots';
-    dotsWrap.setAttribute('aria-hidden', 'true');
-    order.forEach(function (id, i) {
-      var b = document.createElement('button');
-      b.type = 'button';
-      b.setAttribute('aria-label', 'Go to ' + id);
-      if (i === 0) b.classList.add('is-current');
-      b.addEventListener('click', function () { goTo(i); });
-      dotsWrap.appendChild(b);
-    });
-    document.body.appendChild(dotsWrap);
-    function updateDots(index) {
-      Array.prototype.slice.call(dotsWrap.children).forEach(function (b, i) {
-        b.classList.toggle('is-current', i === index);
+  cur = indexFromHash();
+  applyMode();
+  if (!bigScreen.matches && location.hash) {
+    var target = document.getElementById(location.hash.slice(1));
+    if (target) target.scrollIntoView();
+  }
+  if (bigScreen.addEventListener) bigScreen.addEventListener('change', applyMode);
+  else if (bigScreen.addListener) bigScreen.addListener(applyMode);
+
+  window.addEventListener('hashchange', function () {
+    if (isPanels()) show(indexFromHash(), true);
+  });
+
+  // ---------- Booking popup: your Calendly page inside a centered window ----------
+  var CAL_URL = 'https://calendly.com/k-symphoneats/30min';
+  var bookingInner = booking.querySelector('.booking-inner');
+  var lastFocus = null;
+  function openBooking(fallbackHref) {
+    if (typeof booking.showModal !== 'function') { window.open(fallbackHref, '_blank'); return; }
+    if (!bookingInner.querySelector('iframe')) {
+      var f = document.createElement('iframe');
+      f.title = 'Book a discovery call with By The Weigh';
+      f.src = CAL_URL + '?' + (location.hostname ? 'embed_domain=' + encodeURIComponent(location.hostname) + '&' : '') +
+              'embed_type=Inline&hide_gdpr_banner=1&primary_color=0e6e86';
+      f.addEventListener('load', function () {
+        var l = bookingInner.querySelector('.booking-loading');
+        if (l) l.remove();
       });
+      bookingInner.appendChild(f);
     }
-
-    function goTo(index) {
-      if (index < 0 || index >= panels.length || index === currentIndex) return;
-      var prev = panels[currentIndex];
-      var next = panels[index];
-
-      // Old panel disappears immediately (no fade-out) so the two never
-      // overlap and stack their heights during the swap.
-      prev.classList.remove('is-current');
-      prev.classList.add('is-hidden');
-
-      // New panel takes its natural height right away, starting at opacity 0,
-      // then fades in on the next frame.
-      next.classList.remove('is-hidden');
-      void next.offsetWidth; // force layout so the opacity transition below actually runs
-      next.classList.add('is-current');
-
-      currentIndex = index;
-      setActiveNav(order[index]);
-      updateDots(index);
-      window.scrollTo({ top: 0, behavior: 'auto' });
-      pendingSwipeDirection = 0;
-      clearTimeout(pendingSwipeTimeout);
-    }
-    setActiveNav(order[0]);
-
-    // Nav links (desktop tabs + mobile dropdown): click jumps immediately.
-    Array.prototype.slice.call(document.querySelectorAll('a[data-section]')).forEach(function (link) {
-      var idx = order.indexOf(link.getAttribute('data-section'));
-      link.addEventListener('click', function (e) {
-        e.preventDefault();
-        goTo(idx);
-        closeMobileNav();
-      });
-    });
-
-    // Desktop tabs also respond to hover, after a brief dwell so a quick pass
-    // across the nav (e.g. heading for "Book a call") doesn't accidentally
-    // swap the section on you.
-    var HOVER_DELAY = 380;
-    var hoverTimer = null;
-    Array.prototype.slice.call(document.querySelectorAll('.main-nav a[data-section]')).forEach(function (link) {
-      var idx = order.indexOf(link.getAttribute('data-section'));
-      link.addEventListener('mouseenter', function () {
-        clearTimeout(hoverTimer);
-        hoverTimer = setTimeout(function () { goTo(idx); }, HOVER_DELAY);
-      });
-      link.addEventListener('mouseleave', function () { clearTimeout(hoverTimer); });
-      link.addEventListener('focus', function () {
-        clearTimeout(hoverTimer);
-        hoverTimer = setTimeout(function () { goTo(idx); }, HOVER_DELAY);
-      });
-      link.addEventListener('blur', function () { clearTimeout(hoverTimer); });
-    });
-
-    // Close the mobile dropdown if the viewport is resized back past the breakpoint.
-    window.addEventListener('resize', function () {
-      if (window.innerWidth > 900) closeMobileNav();
-    });
-
-    // Shared edge check: is the page currently scrolled all the way to the
-    // top or bottom of whichever section is showing?
-    function atTopEdge() { return window.scrollY <= 0; }
-    function atBottomEdge() {
-      var doc = document.documentElement;
-      return window.scrollY + window.innerHeight >= doc.scrollHeight - 2;
-    }
-
-    var advanceLock = false;
-    function tryAdvance(direction) {
-      if (advanceLock) return;
-      if (direction > 0 && atBottomEdge() && currentIndex < panels.length - 1) {
-        advanceLock = true;
-        goTo(currentIndex + 1);
-        setTimeout(function () { advanceLock = false; }, 700);
-      } else if (direction < 0 && atTopEdge() && currentIndex > 0) {
-        advanceLock = true;
-        goTo(currentIndex - 1);
-        setTimeout(function () { advanceLock = false; }, 700);
-      }
-    }
-
-    // Mouse wheel / trackpad (desktop): once the page is scrolled to the very
-    // top or bottom of the *current* section, the next notch advances to the
-    // next/previous section instead of doing nothing. While there's more of
-    // the current section left to see (for a longer one, like "How it
-    // works"), the wheel just scrolls the page normally.
-    window.addEventListener('wheel', function (e) {
-      if (advanceLock) return;
-      var goingDown = e.deltaY > 0;
-      if ((goingDown && atBottomEdge() && currentIndex < panels.length - 1) ||
-          (!goingDown && atTopEdge() && currentIndex > 0)) {
-        e.preventDefault();
-      }
-      tryAdvance(goingDown ? 1 : -1);
-    }, { passive: false });
-
-    // Touch swipe (mobile/tablet): wheel events don't fire for touch
-    // scrolling, so without this, a section that already fits the screen
-    // (nothing left to scroll) would just sit there when swiped and only
-    // the menu could move you along. A swipe past a small threshold, while
-    // already at the top/bottom edge, advances the same way the wheel does.
-    //
-    // A single swipe on a short section (already at both edges) advances
-    // right away. On a longer section, the finger often lifts (touchend)
-    // before the phone's own momentum scrolling has actually finished
-    // carrying the page the rest of the way to the edge — checking only at
-    // that instant made it look like it took "a couple of swipes" to catch.
-    // So a swipe that isn't already at the edge instead arms a pending
-    // direction, and a debounced scroll listener catches the moment the
-    // page actually settles at that edge (even after the finger has long
-    // since lifted) and advances then, off that same one swipe.
-    var touchStartY = null;
-    var pendingSwipeDirection = 0;
-    var pendingSwipeTimeout = null;
-    var scrollSettleTimer = null;
-
-    function armPendingSwipe(direction) {
-      pendingSwipeDirection = direction;
-      clearTimeout(pendingSwipeTimeout);
-      pendingSwipeTimeout = setTimeout(function () { pendingSwipeDirection = 0; }, 1200);
-    }
-
-    window.addEventListener('touchstart', function (e) {
-      touchStartY = (e.touches && e.touches.length === 1) ? e.touches[0].clientY : null;
-    }, { passive: true });
-
-    window.addEventListener('touchend', function (e) {
-      if (touchStartY === null) return;
-      var endY = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0].clientY : touchStartY;
-      var deltaY = touchStartY - endY; // positive: swiped up (toward next section)
-      touchStartY = null;
-      if (Math.abs(deltaY) < 40) return;
-      var direction = deltaY > 0 ? 1 : -1;
-      if ((direction > 0 && atBottomEdge()) || (direction < 0 && atTopEdge())) {
-        tryAdvance(direction);
-      } else {
-        // Not at the edge yet — momentum scrolling is likely still carrying
-        // the page there; catch it once it settles.
-        armPendingSwipe(direction);
-      }
-    }, { passive: true });
-
-    window.addEventListener('scroll', function () {
-      if (!pendingSwipeDirection) return;
-      clearTimeout(scrollSettleTimer);
-      scrollSettleTimer = setTimeout(function () {
-        var direction = pendingSwipeDirection;
-        pendingSwipeDirection = 0;
-        if ((direction > 0 && atBottomEdge()) || (direction < 0 && atTopEdge())) {
-          tryAdvance(direction);
-        }
-      }, 120);
-    }, { passive: true });
-  })();
+    closeMobileNav();
+    lastFocus = document.activeElement;
+    booking.showModal();
+    booking.querySelector('.booking-close').focus();
+  }
+  booking.addEventListener('close', function () { if (lastFocus) lastFocus.focus(); });
+  booking.querySelector('.booking-close').addEventListener('click', function () { booking.close(); });
+  // Clicking the dimmed area outside the window closes it
+  booking.addEventListener('click', function (e) { if (e.target === booking) booking.close(); });
+  document.querySelectorAll('[data-calendly]').forEach(function (a) {
+    a.addEventListener('click', function (e) { e.preventDefault(); openBooking(a.href); });
+  });
+})();
 </script>
 
 </body>
