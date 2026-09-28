@@ -130,8 +130,9 @@ a{color:var(--accent-text)}
 .specialists > div:last-child{padding-right:var(--gutter)}
 
 /* Timeline */
-.tl-head{flex-grow:1;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;padding:48px var(--gutter) clamp(36px,7vh,64px)}
-.tl-head .sparkle{width:48px;height:48px}
+.tl-head{flex-grow:1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,46%);align-items:end;gap:clamp(32px,4vw,64px);padding:40px var(--gutter) 0}
+.tl-head > div:first-child{padding-bottom:clamp(36px,7vh,64px)}
+.tl-photo{align-self:stretch;min-height:200px}
 .tl-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:var(--line)}
 .step{display:flex;flex-direction:column;gap:14px;padding:clamp(32px,6vh,52px) clamp(20px,2.5vw,36px) clamp(40px,8vh,80px)}
 .step:first-child{padding-left:var(--gutter)}
@@ -152,7 +153,7 @@ a{color:var(--accent-text)}
 
 /* Care team */
 .team{display:grid;grid-template-columns:minmax(0,24%) minmax(0,1fr) minmax(0,24%);padding:0 var(--gutter);flex-grow:1}
-.team .photo{align-self:end;height:min(500px,78%)}
+.team .photo{margin-top:40px}
 .team-copy{display:flex;flex-direction:column;justify-content:center;gap:40px;padding:40px clamp(20px,3.6vw,52px)}
 .team-copy header{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px}
 .bios{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px}
@@ -224,9 +225,11 @@ body.panels .panel{padding-right:0}
   .two-col > div + div,.specialists > div + div{border-top:var(--line)}
   .intro{flex-direction:column;align-items:flex-start;padding:48px var(--gutter) 32px}
   .intro-head{flex:none}
-  .tl-head{padding-top:56px}
+  .tl-head{grid-template-columns:1fr;gap:28px;padding-top:56px}
+  .tl-head > div:first-child{padding-bottom:0}
+  .tl-photo{min-height:0;height:240px;border-radius:28px 28px 0 0}
   .team{grid-template-columns:1fr 1fr;gap:16px;padding-top:32px}
-  .team .photo{height:260px;border-radius:28px 28px 0 0;grid-row:1}
+  .team .photo{height:260px;margin-top:0;border-radius:28px 28px 0 0;grid-row:1}
   .team .photo:last-child{grid-column:2}
   .team-copy{grid-column:1 / -1;grid-row:2;padding:32px 0 48px}
   .bio:last-child{text-align:left}
@@ -386,7 +389,7 @@ body.panels .panel{padding-right:0}
         <span class="eyebrow rv">The arc of the program</span>
         <h2 class="display rv" style="--d:1;font-size:clamp(44px,5vw,72px);margin-top:16px">Your six months.</h2>
       </div>
-      <svg class="sparkle rv" style="--d:2" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C12.9 7 17 11.1 24 12C17 12.9 12.9 17 12 24C11.1 17 7 12.9 0 12C7 11.1 11.1 7 12 0Z"/></svg>
+      <div class="photo tl-photo rv" style="--d:2">[ Photo: planner, everyday routine, or walk outdoors ]</div>
     </div>
     <ol class="tl-grid" style="margin:0;padding:0;list-style:none">
       <li class="step rv" style="--d:2"><span class="num">01</span><strong>Month 1</strong><p>Comprehensive physician and nutrition assessments, both in depth.</p></li>
