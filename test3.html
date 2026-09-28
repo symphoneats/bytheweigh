@@ -297,6 +297,10 @@
      Calendly shown inside a native dialog, which the browser always centers
      in the window. */
   .booking {
+    /* Pin the window to the middle of the screen explicitly. Some browsers
+       (Safari in particular) otherwise place a popup based on where it sits
+       in the page, which in this layout is the bottom right. */
+    position: fixed; inset: 0; margin: auto; max-width: none; max-height: none;
     width: min(1040px, 94vw); height: min(780px, 90vh); height: min(780px, 90dvh);
     padding: 0; border: 0; border-radius: 20px; background: #fff; overflow: hidden;
     box-shadow: 0 24px 80px rgba(20,22,26,0.3);
