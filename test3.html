@@ -57,7 +57,7 @@
   a { color: var(--teal); }
   h1, h2, h3 { font-family: 'Fraunces', 'Figtree', serif; margin: 0; font-weight: 700; letter-spacing: -0.005em; }
 
-  .oval-border { position: absolute; inset: 0; border: 2px solid var(--teal); border-radius: 50%; z-index: 0; pointer-events: none; }
+  .oval-border { position: absolute; inset: 0; border: 2px solid var(--teal); border-radius: 50%; z-index: 0; pointer-events: none; background: var(--teal); box-shadow: 0 14px 30px rgba(14,110,134,0.18); }
   .quote-oval-text { position: relative; z-index: 1; max-width: 76%; margin: 0 auto; text-align: center; }
 
   .eyebrow { font-weight: 700; font-size: 12px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--teal); }
@@ -272,7 +272,10 @@
   /* each page's own paper texture and doodles (added by the script) */
   .page-deco { display: none; }
   body.panels .page-deco { display: block; position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; min-height: 100%; }
-  body.panels .page-deco.is-flipped { transform: scaleX(-1); }
+  /* alternate pages mirror the squiggles only, so the dabs never swing over the headings */
+  body.panels .page-deco.is-flipped .squiggle { transform: scaleX(-1); }
+  /* on the section pages, tuck the top dabs into the top-right corner, clear of the headings */
+  body.panels .section > .page-deco .dabs-tl { top: 14px; left: auto; right: 26px; }
   body.panels #stage > .panel > :not(.page-deco) { position: relative; z-index: 1; }
   body.panels .card > .squiggle, body.panels .card > .dabs { display: none; }
   body.panels #stage > .section { padding: 32px 80px 36px 56px; }
@@ -570,7 +573,7 @@
         </div>
         <div class="tile quote-tile">
           <div class="oval-border"></div>
-          <div class="quote-oval-text" style="font-size: 18px; line-height: 1.45; font-weight: 600; font-style: italic; color: var(--ink);">A GLP-1 medication is one option your endocrinologist may consider — and only when it's medically appropriate.</div>
+          <div class="quote-oval-text" style="font-size: 18px; line-height: 1.45; font-weight: 600; font-style: italic; color: #fff;">A GLP-1 medication is one option your endocrinologist may consider — and only when it's medically appropriate.</div>
         </div>
       </div>
 
@@ -582,7 +585,7 @@
         </div>
         <div class="tile quote-tile">
           <div class="oval-border"></div>
-          <div class="quote-oval-text" style="font-size: 18px; line-height: 1.45; font-weight: 600; font-style: italic; color: var(--ink);">The scale only tells you one piece of the puzzle. Your dietitian makes sure you're not losing the other pieces that keep you healthy.</div>
+          <div class="quote-oval-text" style="font-size: 18px; line-height: 1.45; font-weight: 600; font-style: italic; color: #fff;">The scale only tells you one piece of the puzzle. Your dietitian makes sure you're not losing the other pieces that keep you healthy.</div>
         </div>
       </div>
 
