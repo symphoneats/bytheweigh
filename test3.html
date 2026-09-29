@@ -226,15 +226,34 @@
   .team-card .eyebrow::before { content: none; }
   .team-card p { font-size: 13.5px; line-height: 1.6; color: var(--muted); margin: 0; }
 
-  .pricing-wrap { display: flex; justify-content: center; }
-  .pricing-card {
-    background: var(--teal-soft); border: 1px solid rgba(14,110,134,0.25); max-width: 480px; width: 100%; text-align: center;
+  /* Pricing: a full-screen teal band, modeled on the reference file */
+  .pricing { background: var(--teal); color: var(--cream); display: flex; flex-direction: column; padding: 0 !important; }
+  .price-body {
+    flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; gap: 22px; padding: 64px 56px;
   }
-  .pricing-card .eyebrow { margin-bottom: 10px; justify-content: center; }
-  .pricing-card .eyebrow::before { content: none; }
-  .pricing-amount { font-family: 'Fraunces', serif; font-size: 30px; font-weight: 800; color: var(--ink); margin-bottom: 14px; }
-  .pricing-card p { font-size: 13.5px; line-height: 1.6; color: var(--muted); margin-bottom: 26px; }
-  .pricing-card .btn-primary { justify-content: center; width: 100%; }
+  .pricing .eyebrow { color: var(--cream); font-size: 13px; letter-spacing: 0.14em; }
+  .pricing .eyebrow::before { content: none; }
+  .price { font-family: 'Fraunces', serif; font-weight: 400; font-size: clamp(80px, 9.5vw, 136px); line-height: 1; color: #fff; letter-spacing: -0.01em; }
+  .price-lead { color: var(--cream); max-width: 600px; font-size: 19px; line-height: 1.6; margin: 0; }
+  .btn-price {
+    display: inline-flex; align-items: center; justify-content: center; margin-top: 8px;
+    min-height: 60px; padding: 0 40px; border-radius: 8px; background: var(--cream); color: var(--ink);
+    font-family: 'Figtree', sans-serif; font-weight: 700; font-size: 17px; text-decoration: none;
+    transition: background 0.2s ease;
+  }
+  .btn-price:hover { background: #fff; }
+  .pricing :focus-visible { outline-color: var(--cream); }
+  .site-footer {
+    display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    padding: 22px 56px; border-top: 1px solid rgba(245,240,228,0.3); font-size: 14px; color: var(--cream);
+  }
+  .site-footer strong { font-weight: 700; }
+  @media (max-width: 640px) {
+    .price-body { padding: 48px 24px; }
+    .price-lead { font-size: 17px; }
+    .site-footer { padding: 18px 24px; justify-content: center; text-align: center; }
+  }
 
   /* ---------- ENTRANCE ANIMATION ----------
      Each section's pieces rise in with a short stagger whenever that section
@@ -282,7 +301,8 @@
   body.panels #stage > #fit { padding-top: 22px; padding-bottom: 24px; }
   body.panels #stage > .hero { padding: 36px 80px 44px 56px; }
   body.panels .hero-visual { height: min(480px, calc(100dvh - 250px)); }
-  body.panels #stage > #pricing { justify-content: center; grid-template-columns: minmax(0, 480px); }
+  body.panels #stage > #pricing { display: flex; background: var(--teal); }
+  #pricing .page-deco { display: none; }
 
   /* progress dots + arrows (one-screen mode only) */
   .dots { display: none; }
@@ -298,6 +318,10 @@
   .dots li { display: flex; }
   .dots .dot { width: 9px; height: 9px; border-radius: 999px; box-shadow: inset 0 0 0 1.5px var(--ink); transition: height 0.35s ease, background 0.35s ease, box-shadow 0.35s ease; }
   .dots .dot[aria-current="true"] { height: 26px; background: var(--teal); box-shadow: inset 0 0 0 1.5px var(--teal); }
+  /* on the teal pricing page the dots and arrows switch to cream */
+  body.dots-light .dots button { color: var(--cream); }
+  body.dots-light .dots .dot { box-shadow: inset 0 0 0 1.5px var(--cream); }
+  body.dots-light .dots .dot[aria-current="true"] { background: var(--cream); box-shadow: inset 0 0 0 1.5px var(--cream); }
 
   /* ---------- BOOKING POPUP ----------
      Calendly shown inside a native dialog, which the browser always centers
@@ -346,7 +370,7 @@
   }
   body:not(.panels) #stage > .panel.hero { display: grid; }
   body:not(.panels) #stage > .panel + .panel { border-top: 1px solid rgba(20,22,26,0.14); }
-  body:not(.panels) #stage > #pricing { align-items: center; }
+
 
   @media (max-width: 900px) {
     .main-nav { display: none; }
@@ -411,7 +435,7 @@
     .tile { padding: 18px; }
     .fit-grid { grid-template-columns: minmax(0, 1fr); }
     .fit-grid .span-2, .fit-grid .span-4 { grid-column: span 1; }
-    .pricing-card .btn-primary, .hero-copy .btn-shop { width: 100%; justify-content: center; }
+    .hero-copy .btn-shop { width: 100%; justify-content: center; }
   }
 
   @media (max-width: 480px) {
@@ -680,13 +704,17 @@
     </section>
 
     <!-- PRICING -->
-    <section class="section pricing-wrap" id="pricing" data-tab="pricing" aria-label="Pricing">
-      <div class="tile pricing-card">
+    <section class="section pricing" id="pricing" data-tab="pricing" aria-label="Pricing">
+      <div class="price-body">
         <div class="eyebrow">Six-month program</div>
-        <div class="pricing-amount">$5,000</div>
-        <p>Cash-pay, all-inclusive of physician visits, dietitian visits, and routine monitoring labs. Medication billed separately.</p>
-        <a href="https://calendly.com/k-symphoneats/30min" data-calendly class="btn-primary">Book a Discovery Call</a>
+        <div class="price">$5,000</div>
+        <p class="price-lead">Cash-pay, all-inclusive of physician visits, dietitian visits, and routine monitoring labs. Medication billed separately.</p>
+        <a href="https://calendly.com/k-symphoneats/30min" data-calendly class="btn-price">Book a Discovery Call</a>
       </div>
+      <footer class="site-footer">
+        <strong>By The Weigh</strong>
+        <span>Symphoneats &amp; Endocrine Specialty Consultants</span>
+      </footer>
     </section>
 
     </div>
@@ -751,8 +779,8 @@
     '.dot-rail', '.arch', '.badge',
     '.kicker', 'h1', '.hero-copy > p', '.hero-rule', '.btn-shop',
     ':scope > .eyebrow', ':scope > h2', '.section-intro',
-    '.tl-node', '.tile:not(.pricing-card)', '.model-divider',
-    '.pricing-card > *'
+    '.tl-node', '.tile', '.model-divider',
+    '.price-body > *', '.site-footer'
   ].join(',');
   panels.forEach(function (p) {
     var found = Array.prototype.slice.call(p.querySelectorAll(PIECES));
@@ -807,6 +835,7 @@
     });
     panels[i].scrollTop = 0;
     setTab(panels[i].getAttribute('data-tab'));
+    body.classList.toggle('dots-light', panels[i].id === 'pricing');
     dots.forEach(function (d, k) { d.setAttribute('aria-current', k === i ? 'true' : 'false'); });
     arrows[0].disabled = i === 0;
     arrows[1].disabled = i === panels.length - 1;
@@ -946,6 +975,7 @@
       show(cur, true);
     } else {
       body.classList.remove('panels');
+      body.classList.remove('dots-light');
       panels.forEach(function (p) {
         p.classList.remove('is-active');
         p.removeAttribute('aria-hidden');
