@@ -10,7 +10,7 @@
 <meta name="theme-color" content="#0a7c95">
 <script>document.documentElement.className += ' js';</script>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800&family=Figtree:wght@400;500;600;700;800&family=Lustria&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800&family=Barlow:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;0,800;1,600&family=Lustria&display=swap');
 
   :root {
     --ink: #14161A;
@@ -28,7 +28,7 @@
   :focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; border-radius: 6px; }
 
   body {
-    margin: 0; background: #EEF5F4; font-family: 'Figtree', system-ui, sans-serif; color: var(--ink);
+    margin: 0; background: #EEF5F4; font-family: 'Barlow', system-ui, sans-serif; letter-spacing: 0.03em; color: var(--ink);
     transition: opacity 0.6s ease;
   }
 
@@ -62,7 +62,7 @@
   .dab { position: absolute; background: var(--teal); border-radius: 50%; opacity: 0.85; }
 
   a { color: var(--teal); }
-  h1, h2, h3 { font-family: 'Fraunces', 'Figtree', serif; margin: 0; font-weight: 700; letter-spacing: -0.005em; }
+  h1, h2, h3 { font-family: 'Fraunces', 'Barlow', serif; margin: 0; font-weight: 700; letter-spacing: -0.005em; }
 
   .oval-border { position: absolute; inset: 0; border: 2px solid var(--teal); border-radius: 50%; z-index: 0; pointer-events: none; background: var(--teal); box-shadow: 0 14px 30px rgba(10,124,149,0.18); }
   .quote-oval-text { position: relative; z-index: 1; max-width: 76%; margin: 0 auto; text-align: center; }
@@ -75,6 +75,20 @@
     padding: 16px 30px; border-radius: 8px; font-weight: 700; font-size: 15px; cursor: pointer; font-family: 'Figtree', sans-serif;
     text-decoration: none;
   }
+
+
+  /* Figtree for the short, punchy text: buttons, small labels, and the bold
+     statements inside the panels. Barlow stays on the longer reading text. */
+  .btn-primary, .btn-shop, .nav-cta, .btn-price, .map-open,
+  .eyebrow, .model-divider span,
+  .fact-grid .fact-value,
+  .fit-grid .tile.included p,
+  .fit-grid .span-4, .fit-grid .span-4 .big, .fit-grid .span-4 .small,
+  .quote-oval-text, .price-lead {
+    font-family: 'Figtree', system-ui, sans-serif;
+  }
+  .btn-primary, .btn-shop, .nav-cta, .btn-price, .map-open,
+  .fact-grid .fact-value, .fit-grid .tile.included p, .fit-grid .span-4, .quote-oval-text, .price-lead { letter-spacing: 0; }
 
   /* ---------- HEADER ---------- */
   .site-header {
