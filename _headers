@@ -1,0 +1,4 @@
+# Keep Cloudflare's backup .pages.dev address out of Google,
+# so only bytheweigh.com shows up in search results.
+https://:project.pages.dev/*
+  X-Robots-Tag: noindex

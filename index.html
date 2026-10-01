@@ -1,59 +1,1157 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>By The Weigh</title>
+<title>By The Weigh | Executive Metabolic Care</title>
+<meta name="description" content="By The Weigh pairs a board-certified endocrinologist with a registered dietitian for six months of coordinated weight and metabolic care in Burbank, CA.">
+<link rel="canonical" href="https://bytheweigh.com/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0a7c95">
+<script>document.documentElement.className += ' js';</script>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Lora:ital,wght@1,500;1,600;1,700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800&family=Figtree:wght@400;500;600;700;800&family=Lustria&display=swap');
+
   :root {
-    --bg: #FFFFFF;
-    --ink: #1C1C1C;
-    --ink-soft: #4A4A44;
-    --muted: #767066;
-    --line: #E3E0D8;
-    --accent: #1F4B3F;
-    --navy: #1B2A4A;
-    padding-top: env(safe-area-inset-top, 0px);
-    padding-bottom: env(safe-area-inset-bottom, 0px);
+    --ink: #14161A;
+    --teal: #0A7C95;
+    --teal-dark: #08667B;
+    --aqua: #3DB9C6;
+    --teal-soft: rgba(10,124,149,0.08);
+    --cream: #FBF8F1;
+    --line: #A6DCE1;
+    --muted: #4F555C;
   }
+
   * { box-sizing: border-box; }
-  html { height: 100%; }
+  html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+  :focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; border-radius: 6px; }
+
   body {
-    height: 100%; margin: 0; background: var(--bg); color: var(--ink);
-    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    margin: 0; background: #EEF5F4; font-family: 'Figtree', system-ui, sans-serif; color: var(--ink);
+    transition: opacity 0.6s ease;
+  }
+
+  html.js body { opacity: 0; }
+  html.js body.is-loaded { opacity: 1; }
+
+
+  .page-wrap { max-width: 1400px; margin: 40px auto; padding: 0 20px; }
+
+  .card {
+    position: relative; overflow: hidden; overflow: clip; background: var(--cream);
+    border-radius: 18px; box-shadow: 0 30px 70px rgba(20,22,26,0.22);
+  }
+
+  /* subtle linen/canvas texture, layered over the cream card */
+  .texture {
+    position: absolute; inset: 0; z-index: 0; opacity: 0.5; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Cpath d='M0 0h6M0 6h6M0 0v6M6 0v6' stroke='%2314161A' stroke-opacity='0.035'/%3E%3C/svg%3E");
+  }
+
+  /* decorative wavy lines */
+  .squiggle { position: absolute; z-index: 0; pointer-events: none; opacity: 0.55; }
+  .squiggle-tl { top: -20px; left: 140px; width: 220px; height: 520px; }
+  .squiggle-br { bottom: -30px; right: 160px; width: 260px; height: 480px; }
+
+  /* organic doodle dabs */
+  .dabs { position: absolute; z-index: 0; pointer-events: none; }
+  .dab:nth-child(even) { background: var(--aqua) !important; }
+  .dabs-tl { top: 70px; left: 40px; width: 130px; height: 100px; }
+  .dabs-br { bottom: 60px; right: 40px; width: 190px; height: 140px; }
+  .dab { position: absolute; background: var(--teal); border-radius: 50%; opacity: 0.85; }
+
+  a { color: var(--teal); }
+  h1, h2, h3 { font-family: 'Fraunces', 'Figtree', serif; margin: 0; font-weight: 700; letter-spacing: -0.005em; }
+
+  .oval-border { position: absolute; inset: 0; border: 2px solid var(--teal); border-radius: 50%; z-index: 0; pointer-events: none; background: var(--teal); box-shadow: 0 14px 30px rgba(10,124,149,0.18); }
+  .quote-oval-text { position: relative; z-index: 1; max-width: 76%; margin: 0 auto; text-align: center; }
+
+  .eyebrow { font-weight: 700; font-size: 12px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--teal); }
+  .tile { background: #FFFFFF; border: 1px solid rgba(20,22,26,0.09); border-radius: 14px; padding: 24px; min-width: 0; }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 10px; background: var(--teal); color: #fff !important; border: none;
+    padding: 16px 30px; border-radius: 8px; font-weight: 700; font-size: 15px; cursor: pointer; font-family: 'Figtree', sans-serif;
+    text-decoration: none;
+  }
+
+  /* ---------- HEADER ---------- */
+  .site-header {
+    position: sticky; top: 0; z-index: 30; display: flex; align-items: center; justify-content: space-between;
+    gap: 24px; padding: 30px 56px; border-bottom: 1px solid rgba(20,22,26,0.18); background: var(--cream);
+  }
+  .wordmark {
+    font-family: 'Fraunces', serif; font-weight: 700; font-size: 20px; letter-spacing: -0.01em; white-space: nowrap;
+  }
+  .main-nav { display: flex; align-items: center; gap: 34px; flex: 1; justify-content: center; }
+  .main-nav a {
+    position: relative; color: var(--ink); text-decoration: none; font-size: 15.5px; font-weight: 400; font-family: 'Lustria', 'Fraunces', Georgia, serif; letter-spacing: 0.01em;
+    padding: 4px 0;
+  }
+  .main-nav a::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: -6px; height: 2px; background: var(--teal);
+    transform: scaleX(0); transform-origin: left center; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .main-nav a:hover::after, .main-nav a:focus::after, .main-nav a.is-active::after { transform: scaleX(1); }
+  .nav-cta {
+    display: inline-flex; align-items: center; gap: 8px; background: var(--teal); color: #fff; border: none;
+    padding: 11px 20px; border-radius: 999px; font-weight: 700; font-size: 13.5px; cursor: pointer; white-space: nowrap;
+    font-family: 'Figtree', sans-serif; text-decoration: none;
+  }
+
+
+  /* ---------- HERO ---------- */
+  .hero {
+    position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 1fr; align-items: center;
+    gap: 30px; padding: 70px 56px 90px;
+  }
+
+  .hero-visual { position: relative; height: 480px; }
+
+  .dot-rail { position: absolute; left: -6px; top: 90px; display: flex; flex-direction: column; gap: 14px; z-index: 3; }
+  .dot-rail span { width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--ink); display: block; }
+  .dot-rail span.filled { background: var(--ink); }
+
+  .arch {
+    position: absolute; border: 1.5px dashed rgba(10,124,149,0.4); background: var(--teal-soft);
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal);
+    padding: 10px;
+  }
+  .arch-main {
+    width: 62%; height: 87.5%; left: 34px; bottom: 0;
+    border-radius: 210px 210px 14px 14px;
+  }
+  .arch-accent {
+    width: 44%; height: 54%; right: 0; top: 0;
+    border-radius: 140px 140px 14px 14px;
+    box-shadow: 0 0 0 10px var(--cream);
+  }
+
+  .arch.has-photo { padding: 0; border: 0; overflow: hidden; background: var(--teal-soft); }
+  .arch.has-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; display: block; }
+  .arch-main.has-photo img { object-position: 100% 50%; }
+
+  .badge {
+    /* sits on the right edge of the large arch */
+    position: absolute; left: calc(34px + 62% - 75px); bottom: 26px; z-index: 4;
+    filter: drop-shadow(0 10px 18px rgba(20,22,26,0.25));
+  }
+
+  .hero-copy .kicker {
+    font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--teal);
+    margin-bottom: 16px; display: flex; align-items: center; gap: 10px;
+  }
+  .hero-copy .kicker::before { content: ''; width: 22px; height: 1px; background: var(--teal); }
+
+  .hero-copy h1 {
+    font-family: 'Fraunces', serif; font-weight: 700; margin: 0; letter-spacing: -0.01em; color: var(--ink);
+  }
+  .hero-copy h1 .line1 { display: block; font-size: clamp(38px, 4vw, 54px); line-height: 1.08; }
+  .hero-copy h1 .line2 { display: block; font-size: clamp(24px, 2.6vw, 34px); font-weight: 500; font-style: italic; color: var(--muted); margin-top: 6px; }
+
+  .hero-copy p {
+    font-size: 16px; line-height: 1.7; color: var(--muted); max-width: 440px; margin: 26px 0 0;
+  }
+
+  .hero-rule { border: none; border-top: 1px solid rgba(20,22,26,0.25); max-width: 440px; margin: 30px 0; }
+
+  .btn-shop {
+    display: inline-flex; align-items: center; gap: 10px; background: var(--teal); color: #fff; border: none;
+    padding: 16px 30px; border-radius: 8px; font-weight: 700; font-size: 15px; cursor: pointer; font-family: 'Figtree', sans-serif;
+    text-decoration: none;
+  }
+
+  .fact-grid { display: grid; grid-template-columns: 0.85fr 1.3fr 1.05fr; gap: 14px; margin-top: 40px; }
+  .fact-grid .tile { padding: 20px 18px; }
+  .fact-grid .tile.dark { background: var(--teal); border: none; }
+  .fact-grid .tile.dark .eyebrow { color: rgba(255,255,255,0.75); }
+  .fact-grid .tile .fact-value { font-size: clamp(15px, 1.2vw, 18px); font-weight: 800; margin-top: 8px; line-height: 1.3; overflow-wrap: normal; word-break: normal; hyphens: none; }
+  .fact-grid .tile.dark .fact-value { color: #fff; }
+  /* smaller laptops: two tiles side by side, investment tile full width below */
+  @media (min-width: 901px) and (max-width: 1240px) {
+    .fact-grid { grid-template-columns: 1fr 1fr; margin-top: 30px; }
+    .fact-grid .tile.dark { grid-column: 1 / -1; }
+  }
+
+  /* ---------- CONTENT SECTIONS ---------- */
+  .section { position: relative; z-index: 2; padding: 24px 56px 56px; }
+  .section .eyebrow { margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+  .section .eyebrow::before { content: ''; width: 22px; height: 1px; background: var(--teal); }
+  .section h2 { font-size: 27px; line-height: 1.25; margin-bottom: 16px; max-width: 640px; }
+  .section-intro { font-size: 15px; line-height: 1.65; color: var(--muted); max-width: 680px; margin-bottom: 28px; }
+
+  .model-top { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .model-top .tile h3 { font-size: 21px; margin-bottom: 14px; line-height: 1.3; }
+  .model-top .tile .eyebrow { margin-bottom: 14px; }
+  .model-top .tile p { font-size: 15px; line-height: 1.65; color: var(--muted); margin: 0; }
+  .quote-tile { background: transparent; border: none; display: flex; align-items: center; justify-content: center; position: relative; padding: 34px 38px; }
+
+  .model-compare { display: grid; grid-template-columns: 1fr 48px 1fr; gap: 0; align-items: stretch; }
+  .model-compare .tile .eyebrow { margin-bottom: 14px; }
+  .model-compare .tile .visit-line { font-size: 14.5px; line-height: 1.55; padding-bottom: 12px; border-bottom: 1px solid rgba(20,22,26,0.08); margin-bottom: 12px; }
+  .model-compare .tile .visit-line:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .model-divider { display: flex; align-items: center; justify-content: center; }
+  .model-divider span { writing-mode: vertical-rl; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; color: #9AA0A7; text-transform: uppercase; }
+
+  .visit-format-tile { margin-top: 16px; display: flex; align-items: center; gap: 16px; }
+  .visit-format-tile .eyebrow { flex: 0 0 140px; margin-bottom: 0; }
+  .visit-format-tile p { font-size: 14.5px; line-height: 1.6; color: var(--muted); margin: 0; }
+
+  .timeline-line { position: absolute; left: 0; right: 0; top: 54px; height: 2px; background: rgba(20,22,26,0.12); }
+  .timeline-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .tl-node .tl-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--teal); margin-bottom: 92px; }
+  .tl-node.offset { margin-top: 44px; }
+  .tl-node.offset .tl-dot { margin-bottom: 48px; }
+  .tl-node .tile .eyebrow { margin-bottom: 8px; }
+  .tl-node .tile p { font-size: 13.5px; line-height: 1.55; color: var(--muted); margin: 0; }
+
+  .fit-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .fit-grid .tile .eyebrow { margin-bottom: 8px; color: #9AA0A7; }
+  .fit-grid .tile.included .eyebrow { color: var(--teal); }
+  .fit-grid .tile p { font-size: 13.5px; line-height: 1.55; margin: 0; }
+  .fit-grid .span-2 { grid-column: span 2; }
+  .fit-grid .span-4 { grid-column: span 4; background: var(--teal); border: none; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .fit-grid .span-4 .big { font-size: 15px; font-weight: 700; color: #FFFFFF; }
+  .fit-grid .span-4 .small { font-size: 13px; color: rgba(255,255,255,0.85); }
+
+  .team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .team-card { display: flex; gap: 28px; align-items: center; padding: 28px; }
+  .avatar {
+    /* one third of the full card width, padding included */
+    flex: 0 0 calc((100% + 56px) / 3); height: auto; aspect-ratio: 1 / 1; border-radius: 50%; border: 1.5px dashed rgba(10,124,149,0.35);
+    background: rgba(10,124,149,0.06); display: flex; align-items: center; justify-content: center;
+    font-size: 10px; color: var(--teal); text-align: center;
+  }
+  .avatar.has-photo { border: 0; overflow: hidden; background: none; }
+  .avatar.has-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .team-location {
+    display: flex; align-items: center; gap: 14px; margin-top: 18px; padding: 16px 22px;
+    border: 1.5px solid rgba(10,124,149,0.35); border-radius: 14px; background: rgba(255,255,255,0.55);
+  }
+  .team-location .pin { flex: none; width: 26px; height: 26px; fill: none; stroke: var(--teal); stroke-width: 1.8; stroke-linejoin: round; }
+  .team-location p { margin: 0; font-size: 15px; line-height: 1.55; display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; }
+  .team-location strong { font-family: 'Fraunces', serif; font-weight: 600; font-size: 17px; }
+  .team-location a { color: var(--teal); text-decoration: underline; text-decoration-color: rgba(10,124,149,0.4); text-underline-offset: 3px; }
+  .team-location a:hover { text-decoration-color: var(--teal); }
+  .team-card h3 { font-size: 21px; margin-bottom: 4px; }
+  .team-card .eyebrow { margin-bottom: 10px; display: block; }
+  .team-card .eyebrow::before { content: none; }
+  .team-card p { font-size: 13.5px; line-height: 1.6; color: var(--muted); margin: 0; }
+
+  /* Pricing: a full-screen teal band, modeled on the reference file */
+  .pricing { background: var(--teal); color: var(--cream); display: flex; flex-direction: column; padding: 0 !important; }
+  .price-body {
+    flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; gap: 22px; padding: 64px 56px;
+  }
+  .pricing .eyebrow { color: var(--cream); font-size: 13px; letter-spacing: 0.14em; }
+  .pricing .eyebrow::before { content: none; }
+  .price { font-family: 'Fraunces', serif; font-weight: 400; font-size: clamp(80px, 9.5vw, 136px); line-height: 1; color: #fff; letter-spacing: -0.01em; }
+  .price-lead { color: var(--cream); max-width: 600px; font-size: 19px; line-height: 1.6; margin: 0; }
+  .btn-price {
+    display: inline-flex; align-items: center; justify-content: center; margin-top: 8px;
+    min-height: 60px; padding: 0 40px; border-radius: 8px; background: var(--cream); color: var(--ink);
+    font-family: 'Figtree', sans-serif; font-weight: 700; font-size: 17px; text-decoration: none;
+    transition: background 0.2s ease;
+  }
+  .btn-price:hover { background: #fff; }
+  .pricing :focus-visible { outline-color: var(--cream); }
+  .site-footer {
+    display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    padding: 22px 56px; border-top: 1px solid rgba(251,248,241,0.3); font-size: 14px; color: var(--cream);
+  }
+  .site-footer strong { font-weight: 700; }
+  .site-footer address { font-style: normal; }
+  .site-footer a { color: var(--cream); text-decoration: underline; text-decoration-color: rgba(251,248,241,0.45); text-underline-offset: 3px; }
+  .site-footer a:hover { text-decoration-color: var(--cream); }
+  @media (max-height: 720px) {
+    .price-body { padding-top: 32px; padding-bottom: 32px; gap: 16px; }
+    .price { font-size: clamp(64px, 8vw, 110px); }
+    .site-footer { padding-top: 14px; padding-bottom: 14px; }
+  }
+  @media (max-width: 640px) {
+    .price-body { padding: 48px 24px; }
+    .price-lead { font-size: 17px; }
+    .site-footer { padding: 18px 24px; justify-content: center; text-align: center; }
+  }
+
+  /* ---------- ENTRANCE ANIMATION ----------
+     Each section's pieces rise in with a short stagger whenever that section
+     becomes the current one (one-screen mode) or scrolls into view (stacked
+     mode). Content stays visible if JS never runs. */
+  @keyframes rise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+  html.rv-ready .rv { opacity: 0; }
+  .panel.is-active .rv { animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(var(--d, 0) * 0.12s); }
+
+  /* ---------- ONE-SCREEN MODE (large screens) ----------
+     The page is locked to the window height. Every section sits stacked in
+     the same spot and they crossfade, so nothing about the page's height or
+     scroll position changes during a swap (that was the source of the jumpy
+     feel). A section that is taller than the window scrolls on its own, with
+     its scrollbar hidden, before the wheel moves on to the next section. */
+  body.panels { height: 100vh; height: 100dvh; overflow: hidden; display: flex; flex-direction: column; }
+  body.panels .page-wrap { flex: 1; min-height: 0; width: 100%; margin: 16px auto; }
+  body.panels .card { height: 100%; display: flex; flex-direction: column; }
+  body.panels .site-header { flex: none; padding-top: 22px; padding-bottom: 22px; }
+  body.panels #stage { flex: 1; min-height: 0; position: relative; }
+  body.panels #stage > .panel {
+    position: absolute; inset: 0; z-index: 2; overflow-y: auto; overscroll-behavior: contain;
+    scrollbar-width: none; display: grid; align-content: start; align-content: safe center;
+    background: var(--cream);
+    /* the page being left stays put underneath until the new one has fully
+       landed on top of it, then disappears */
+    opacity: 0; visibility: hidden; transition: opacity 0s linear 0.5s, visibility 0s linear 0.5s;
+  }
+  body.panels #stage > .panel::-webkit-scrollbar { display: none; }
+  body.panels #stage > .panel.is-active {
+    z-index: 3; opacity: 1; visibility: visible; transition: opacity 0.5s ease;
+    box-shadow: 0 -18px 40px rgba(20,22,26,0.06);
+  }
+
+  /* each page's own paper texture and doodles (added by the script) */
+  .page-deco { display: none; }
+  body.panels .page-deco { display: block; position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; min-height: 100%; }
+  /* alternate pages mirror the squiggles only, so the dabs never swing over the headings */
+  body.panels .page-deco.is-flipped .squiggle { transform: scaleX(-1); }
+  /* on the section pages, tuck the top dabs into the top-right corner, clear of the headings */
+  body.panels .section > .page-deco .dabs-tl { top: 14px; left: auto; right: 26px; }
+  body.panels #stage > .panel > :not(.page-deco) { position: relative; z-index: 1; }
+  body.panels .card > .squiggle, body.panels .card > .dabs { display: none; }
+  body.panels #stage > .section { padding: 32px 80px 36px 56px; }
+  body.panels #stage > #fit { padding-top: 22px; padding-bottom: 24px; }
+  body.panels #stage > .hero { padding: 36px 80px 44px 56px; }
+  body.panels .hero-visual { height: min(480px, calc(100dvh - 250px)); }
+  body.panels #stage > #pricing { display: flex; background: var(--teal); }
+  #pricing .page-deco { display: none; }
+
+  /* progress dots + arrows (one-screen mode only) */
+  .dots { display: none; }
+  body.panels .dots {
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    position: fixed; right: clamp(6px, 1.4vw, 26px); top: 50%; transform: translateY(-50%); z-index: 35;
+  }
+  .dots button { background: none; border: 0; padding: 0; cursor: pointer; color: var(--ink); }
+  .dots .arrow { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
+  .dots .arrow svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .dots .arrow[disabled] { opacity: 0.25; cursor: default; }
+  .dots ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .dots li { display: flex; }
+  .dots .dot { width: 9px; height: 9px; border-radius: 999px; box-shadow: inset 0 0 0 1.5px var(--ink); transition: height 0.35s ease, background 0.35s ease, box-shadow 0.35s ease; }
+  .dots .dot[aria-current="true"] { height: 26px; background: var(--teal); box-shadow: inset 0 0 0 1.5px var(--teal); }
+  /* on the teal pricing page the dots and arrows switch to cream */
+  body.dots-light .dots button { color: var(--cream); }
+  body.dots-light .dots .dot { box-shadow: inset 0 0 0 1.5px var(--cream); }
+  body.dots-light .dots .dot[aria-current="true"] { background: var(--cream); box-shadow: inset 0 0 0 1.5px var(--cream); }
+
+  /* ---------- BOOKING POPUP ----------
+     Calendly shown inside a native dialog, which the browser always centers
+     in the window. */
+  .booking {
+    /* Pin the window to the middle of the screen explicitly. Some browsers
+       (Safari in particular) otherwise place a popup based on where it sits
+       in the page, which in this layout is the bottom right. */
+    position: fixed; inset: 0; margin: auto; max-width: none; max-height: none;
+    width: min(1040px, 94vw); height: min(780px, 90vh); height: min(780px, 90dvh);
+    padding: 0; border: 0; border-radius: 20px; background: #fff; overflow: hidden;
+    box-shadow: 0 24px 80px rgba(20,22,26,0.3);
+  }
+  .booking::backdrop { background: rgba(20,22,26,0.55); }
+  .booking[open] { animation: bookIn 0.35s cubic-bezier(0.2, 0.7, 0.2, 1); }
+  @keyframes bookIn { from { opacity: 0; transform: translateY(16px) scale(0.98); } to { opacity: 1; transform: none; } }
+  .booking-inner { position: relative; width: 100%; height: 100%; }
+  .booking iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: transparent; }
+  .booking-loading { position: absolute; inset: 0; margin: 0; display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--muted); }
+  .booking-close {
+    position: absolute; top: 12px; right: 12px; z-index: 2; width: 44px; height: 44px; border-radius: 50%;
+    border: 1.5px solid var(--ink); background: var(--cream); color: var(--ink); cursor: pointer;
     display: flex; align-items: center; justify-content: center;
   }
-  .wrap { max-width: 620px; margin: 0 auto; padding: 48px 24px; text-align: center; }
-  .kicker { font-size: 14px; font-weight: 500; letter-spacing: 0.01em; color: var(--muted); margin-bottom: 16px; }
-  h1 {
-    font-family: 'Lora', Georgia, 'Times New Roman', serif;
-    font-style: italic;
-    font-weight: 600;
-    font-size: 50px;
-    color: var(--navy);
-    margin: 0 0 20px;
-    line-height: 1.1;
+  .booking-close:hover { background: #fff; }
+  .booking-close svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+  @media (max-width: 640px) {
+    .booking { width: 100vw; height: 100vh; height: 100dvh; max-width: none; max-height: none; border-radius: 0; }
   }
-  p.lead { font-size: 17px; color: var(--ink-soft); line-height: 1.65; margin: 0 auto 32px; max-width: 460px; }
-  .cta-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
-  .btn { display: inline-block; background: var(--accent); color: var(--bg); padding: 13px 26px; border-radius: 6px; text-decoration: none; font-size: 15px; font-weight: 600; }
-  .btn-outline { display: inline-block; background: transparent; color: var(--accent); border: 1.5px solid var(--accent); padding: 11.5px 24px; border-radius: 6px; text-decoration: none; font-size: 15px; font-weight: 600; }
-  .credit { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; font-size: 13px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 20px; margin-top: 24px; }
+
+
+  /* ---------- MAP POPUP ---------- */
+  .map-dialog {
+    position: fixed; inset: 0; margin: auto; max-width: none; max-height: none;
+    width: min(920px, 94vw); height: min(640px, 86vh); height: min(640px, 86dvh);
+    padding: 0; border: 0; border-radius: 20px; background: var(--cream); overflow: hidden;
+    box-shadow: 0 24px 80px rgba(20,22,26,0.3);
+  }
+  .map-dialog::backdrop { background: rgba(20,22,26,0.55); }
+  .map-dialog[open] { animation: bookIn 0.35s cubic-bezier(0.2, 0.7, 0.2, 1); }
+  .map-inner { display: flex; flex-direction: column; width: 100%; height: 100%; }
+  .map-bar {
+    display: flex; align-items: center; gap: 14px; padding: 14px 14px 14px 22px;
+    border-bottom: 1px solid rgba(20,22,26,0.14); flex: none;
+  }
+  .map-where { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+  .map-where strong { font-family: 'Fraunces', serif; font-size: 17px; }
+  .map-where span { font-size: 14px; color: var(--muted); }
+  .map-open {
+    display: inline-flex; align-items: center; gap: 8px; white-space: nowrap;
+    background: var(--teal); color: #fff; text-decoration: none; font-weight: 700; font-size: 14px;
+    padding: 11px 18px; border-radius: 999px;
+  }
+  .map-open:hover { background: var(--teal-dark); }
+  .map-open svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .map-close {
+    flex: none; width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid var(--ink);
+    background: var(--cream); color: var(--ink); cursor: pointer; display: flex; align-items: center; justify-content: center;
+  }
+  .map-close:hover { background: #fff; }
+  .map-close svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+  .map-frame { position: relative; flex: 1; min-height: 0; background: #e9e4d8; }
+  .map-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  @media (max-width: 640px) {
+    .map-dialog { width: 100vw; height: 100vh; height: 100dvh; border-radius: 0; }
+    .map-bar { flex-wrap: wrap; padding: 14px 14px 14px 18px; }
+    .map-where { order: 1; flex-basis: calc(100% - 60px); }
+    .map-close { order: 2; }
+    .map-open { order: 3; width: 100%; justify-content: center; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    html.js body { opacity: 1; }
+    .rv, .panel.is-active .rv { opacity: 1 !important; animation: none !important; }
+    body.panels #stage > .panel, body.panels #stage > .panel.is-active { transition: none; }
+    .booking[open], .map-dialog[open] { animation: none; }
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  /* Stacked mode (phones, tablets, short windows): each section gets at
+     least a full screen and a rule between it and the next, so it still reads
+     as its own page while you scroll. */
+  body:not(.panels) #stage > .panel {
+    min-height: calc(100vh - 90px); min-height: calc(100svh - 90px);
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  body:not(.panels) #stage > .panel.hero { display: grid; }
+  body:not(.panels) #stage > .panel + .panel { border-top: 1px solid rgba(20,22,26,0.14); }
+
+
+  @media (max-width: 900px) {
+    /* Section tabs drop to their own full-width row under the logo and
+       button, as a strip you can swipe sideways (like the reference file). */
+    .site-header { flex-wrap: wrap; padding: 16px 24px 0; gap: 12px 16px; }
+    .main-nav {
+      order: 3; flex: none; width: calc(100% + 48px); margin: 0 -24px; padding: 0 24px; position: relative;
+      justify-content: flex-start; gap: 26px; overflow-x: auto; scrollbar-width: none;
+      border-top: 1px solid rgba(20,22,26,0.12); -webkit-overflow-scrolling: touch;
+    }
+    .main-nav::-webkit-scrollbar { display: none; }
+    .main-nav a { padding: 13px 0 12px; white-space: nowrap; font-size: 15px; }
+    .main-nav a::after { bottom: 0; height: 2.5px; }
+
+    .hero { grid-template-columns: 1fr; padding: 40px 24px 60px; }
+    .hero-visual { height: 380px; order: 2; margin-top: 40px; }
+    .hero-copy { order: 1; }
+    .hero-copy p, .hero-rule { max-width: 100%; }
+    .squiggle-tl, .squiggle-br, .dabs-tl, .dabs-br { display: none; }
+
+    .fact-grid { grid-template-columns: 1fr; }
+
+    .section { padding: 20px 24px 40px; }
+    .section h2 { font-size: 22px; }
+    .model-top, .model-compare, .team-grid, .timeline-grid { grid-template-columns: minmax(0, 1fr) !important; }
+    .model-divider { display: none !important; }
+    .model-compare { gap: 14px; }
+    .quote-tile { padding: 30px 24px; }
+
+    .timeline-line { display: none; }
+    .tl-node, .tl-node.offset { margin-top: 0 !important; }
+    .tl-node .tl-dot, .tl-node.offset .tl-dot { margin-bottom: 10px !important; }
+    .timeline-grid { gap: 14px; }
+
+    .fit-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    .fit-grid .span-2, .fit-grid .span-4 { grid-column: span 2; }
+
+    .visit-format-tile { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .visit-format-tile .eyebrow { flex: none; }
+
+  }
+
+  @media (max-width: 900px) {
+    body.panels .page-wrap { margin: 10px auto; padding: 0 10px; }
+    body.panels .site-header { padding-top: 14px; padding-bottom: 0; }
+    body.panels #stage > .section { padding: 28px 24px 36px; }
+    body.panels #stage > .hero { padding: 28px 24px 40px; }
+    body.panels .hero-visual { height: 340px; }
+    .badge { bottom: 0; }
+    body.panels .dots { display: none; }
+  }
+
+  @media (max-width: 560px) {
+    body.panels #stage > .section, body.panels #stage > .hero { padding-left: 18px; padding-right: 18px; }
+    .section { padding: 18px 18px 36px; }
+    .section h2 { font-size: 20px; }
+    .tile { padding: 18px; }
+    .fit-grid { grid-template-columns: minmax(0, 1fr); }
+    .fit-grid .span-2, .fit-grid .span-4 { grid-column: span 1; }
+    .hero-copy .btn-shop { width: 100%; justify-content: center; }
+  }
+
+  @media (max-width: 480px) {
+    .team-card { flex-direction: column; align-items: flex-start; gap: 16px; padding: 22px; }
+    .avatar { flex: 0 0 auto; width: 130px; height: 130px; }
+  }
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MedicalBusiness",
+  "name": "By The Weigh",
+  "description": "Six-month executive metabolic care program pairing a board-certified endocrinologist with a registered dietitian.",
+  "url": "https://bytheweigh.com",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "421 E. Angeleno Ave, Ste 102",
+    "addressLocality": "Burbank",
+    "addressRegion": "CA",
+    "postalCode": "91501",
+    "addressCountry": "US"
+  }
+}
+</script>
 </head>
 <body>
-  <div class="wrap">
-    <div class="kicker">An executive metabolic care program</div>
-    <h1>By The Weigh</h1>
-    <p class="lead">Six months of integrated endocrinologist and dietitian care, built for people who are serious about their weight and health goals and want sustainable results.</p>
-    <div class="cta-row">
-      <a class="btn" href="https://calendly.com/k-symphoneats/30min" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/k-symphoneats/30min'}); return false;">Schedule a Call</a>
-    </div>
-  </div>
 
-<!-- Calendly popup widget (no floating badge) -->
-<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+
+<div class="page-wrap">
+  <div class="card">
+    <div class="texture"></div>
+
+    <!-- decorative wavy lines -->
+    <svg class="squiggle squiggle-tl" viewBox="0 0 220 520" fill="none">
+      <path d="M110,0 C40,60 180,120 110,180 C40,240 180,300 110,360 C40,420 180,460 130,520" stroke="var(--line)" stroke-width="2"/>
+    </svg>
+    <svg class="squiggle squiggle-br" viewBox="0 0 260 480" fill="none">
+      <path d="M150,480 C220,420 80,360 150,300 C220,240 80,180 150,120 C210,70 90,30 130,0" stroke="var(--line)" stroke-width="2"/>
+    </svg>
+
+    <!-- decorative doodle dabs -->
+    <div class="dabs dabs-tl">
+      <div class="dab" style="width:12px;height:26px;left:0;top:10px;transform:rotate(-20deg);"></div>
+      <div class="dab" style="width:10px;height:22px;left:34px;top:0;transform:rotate(10deg);"></div>
+      <div class="dab" style="width:11px;height:24px;left:66px;top:26px;transform:rotate(-8deg);"></div>
+      <div class="dab" style="width:9px;height:20px;left:20px;top:52px;transform:rotate(24deg);"></div>
+      <div class="dab" style="width:9px;height:19px;left:96px;top:8px;transform:rotate(-4deg);"></div>
+    </div>
+    <div class="dabs dabs-br">
+      <div class="dab" style="width:13px;height:28px;right:0;bottom:16px;transform:rotate(18deg);"></div>
+      <div class="dab" style="width:11px;height:24px;right:36px;bottom:0;transform:rotate(-14deg);"></div>
+      <div class="dab" style="width:12px;height:25px;right:74px;bottom:22px;transform:rotate(8deg);"></div>
+      <div class="dab" style="width:10px;height:22px;right:110px;bottom:4px;transform:rotate(-22deg);"></div>
+      <div class="dab" style="width:9px;height:20px;right:20px;bottom:52px;transform:rotate(30deg);"></div>
+      <div class="dab" style="width:9px;height:19px;right:140px;bottom:40px;transform:rotate(-6deg);"></div>
+    </div>
+
+    <!-- header -->
+    <header class="site-header">
+      <div class="wordmark">By The Weigh</div>
+      <nav class="main-nav" aria-label="Section navigation">
+        <a href="#program" data-section="program">Program</a>
+        <a href="#model" data-section="model">How it works</a>
+        <a href="#timeline" data-section="timeline">Timeline</a>
+        <a href="#fit" data-section="fit">Fit &amp; details</a>
+        <a href="#team" data-section="team">Care team</a>
+        <a href="#pricing" data-section="pricing">Pricing</a>
+      </nav>
+      <a href="https://calendly.com/k-symphoneats/30min" data-calendly class="nav-cta">Book a call</a>
+    </header>
+
+    <!-- STAGE: on large screens only one section shows at a time and they
+         crossfade in place. On phones, tablets and short windows it is a
+         normal scrolling page. Without JS it is always a normal page. -->
+    <div class="stage" id="stage">
+
+    <!-- hero / program -->
+    <section class="hero" id="program" data-tab="program" aria-label="Program">
+      <div class="hero-visual">
+        <div class="dot-rail">
+          <span class="filled"></span><span></span><span></span><span></span><span></span>
+        </div>
+
+        <div class="arch arch-main has-photo"><img src="images/dietitian-consult.jpg" alt="Dietitian reviewing a nutrition plan with a patient, holding out an apple"></div>
+        <div class="arch arch-accent has-photo"><img src="images/physician-consult.jpg" alt="Physician reviewing results on a tablet with a patient"></div>
+
+        <svg class="badge" width="150" height="150" viewBox="0 0 200 200">
+          <circle cx="100" cy="100" r="96" fill="#0A7C95"/>
+          <path id="arcTop" d="M 26,100 A 74,74 0 0,1 174,100" fill="none"/>
+          <path id="arcBottom" d="M 174,102 A 74,74 0 0,1 26,102" fill="none"/>
+          <text font-size="10.5" font-weight="700" letter-spacing="2" fill="#FBF8F1" font-family="Figtree, sans-serif">
+            <textPath href="#arcTop" startOffset="50%" text-anchor="middle">SIX-MONTH PROGRAM</textPath>
+          </text>
+          <text font-size="10.5" font-weight="700" letter-spacing="2" fill="#FBF8F1" font-family="Figtree, sans-serif">
+            <textPath href="#arcBottom" startOffset="50%" text-anchor="middle">COORDINATED CARE</textPath>
+          </text>
+          <text x="100" y="98" font-size="17" font-weight="700" letter-spacing="0.5" fill="#FBF8F1" text-anchor="middle" font-family="Figtree, sans-serif">PHYSICIAN</text>
+          <text x="100" y="118" font-size="17" font-weight="700" letter-spacing="0.5" fill="#FBF8F1" text-anchor="middle" font-family="Figtree, sans-serif">+ DIETITIAN</text>
+        </svg>
+      </div>
+
+      <div class="hero-copy">
+        <h1>
+          <span class="line1">Executive metabolic care,</span>
+          <span class="line2">coordinated end to end.</span>
+        </h1>
+        <p>Six months of integrated physician and dietitian care, built for people who are serious about their weight and health goals and want sustainable results, not a quick fix.</p>
+        <hr class="hero-rule">
+        <a href="https://calendly.com/k-symphoneats/30min" data-calendly class="btn-shop">Schedule Your Discovery Call</a>
+
+        <div class="fact-grid">
+          <div class="tile">
+            <div class="eyebrow">Duration</div>
+            <div class="fact-value">Six months</div>
+          </div>
+          <div class="tile">
+            <div class="eyebrow">Your team</div>
+            <div class="fact-value">Endocrinologist + Dietitian</div>
+          </div>
+          <div class="tile dark">
+            <div class="eyebrow">Investment</div>
+            <div class="fact-value">$5,000 all&#8209;inclusive</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="section" id="model" data-tab="model" aria-label="How it works">
+      <h2>True integration, not just a referral.</h2>
+      <p class="section-intro">Most patients are left to coordinate their own care, going between a prescriber and a dietitian who rarely speak to each other directly. By The Weigh closes that gap. Weight is a medical, metabolic, and nutritional question, so we pair a board-certified endocrinologist with a Registered Dietitian in one coordinated plan.</p>
+
+      <div class="model-compare">
+        <div class="tile">
+          <div class="eyebrow">Your physician</div>
+          <div class="visit-line">Comprehensive initial assessment of your hormonal and metabolic drivers</div>
+          <div class="visit-line">Follow-up visits approximately every three months to reassess labs, hormones, and progress</div>
+          <div class="visit-line">Additional visits if you're experiencing moderate to severe side effects</div>
+        </div>
+        <div class="model-divider"><span>Coordinated</span></div>
+        <div class="tile">
+          <div class="eyebrow">Your dietitian</div>
+          <div class="visit-line">Comprehensive nutrition assessment of your eating habits, lifestyle, and goals</div>
+          <div class="visit-line">Monthly follow-ups to fine-tune your eating plan and protect muscle, nutrients, and energy</div>
+          <div class="visit-line">Guidance on dietary side effects like nausea, low appetite, and GI changes, with a 2-week check-in after any new medication</div>
+        </div>
+      </div>
+
+      <div class="tile visit-format-tile">
+        <div class="eyebrow">Visit format</div>
+        <p>Available in person and by telehealth. Unlike most programs, which are largely telehealth-only, you'll always have access to an in-person appointment at our practice.</p>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS, continued: the specialists -->
+    <section class="section" id="specialists" data-tab="model" aria-label="The specialists">
+      <div class="model-top">
+        <div class="tile">
+          <div class="eyebrow">The hormone specialists</div>
+          <h3>Weight has as much to do with hormones as it does with willpower.</h3>
+          <p>Endocrinologists specialize specifically in the body's hormone systems, the same systems that regulate metabolism, appetite, and blood sugar. Your endocrinologist can assess whether a thyroid disorder, hormonal imbalance, or pituitary issue is contributing to your weight — and GLP-1 medications, which mimic a hormone the body already produces, sit squarely in the territory endocrinology has specialized in for decades.</p>
+        </div>
+        <div class="tile quote-tile">
+          <div class="oval-border"></div>
+          <div class="quote-oval-text" style="font-size: 18px; line-height: 1.45; font-weight: 600; font-style: italic; color: #fff;">A GLP-1 medication is one option your endocrinologist may consider — and only when it's medically appropriate.</div>
+        </div>
+      </div>
+
+      <div class="model-top">
+        <div class="tile">
+          <div class="eyebrow">The nutrition specialists</div>
+          <h3>Losing weight and losing your health are not the same thing.</h3>
+          <p>Registered Dietitians are the clinicians trained specifically in medical nutrition therapy, assessing protein needs, micronutrient status, and how your metabolism shifts as intake drops, not just building meal plans. Appetite falls faster than the body's need for protein, vitamins, and minerals, and left unaddressed, that gap can show up in ways that go beyond the scale, things like hair loss, excessive muscle loss, low energy, and long-term bone loss such as osteopenia or osteoporosis, to name a few. Your dietitian works closely with you throughout the program to keep that gap from becoming severe.</p>
+        </div>
+        <div class="tile quote-tile">
+          <div class="oval-border"></div>
+          <div class="quote-oval-text" style="font-size: 18px; line-height: 1.45; font-weight: 600; font-style: italic; color: #fff;">The scale only tells you one piece of the puzzle. Your dietitian makes sure you're not losing the other pieces that keep you healthy.</div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- TIMELINE -->
+    <section class="section" id="timeline" data-tab="timeline" aria-label="Timeline">
+      <h2>Your six months.</h2>
+      <div style="position: relative;">
+        <div class="timeline-line"></div>
+        <div class="timeline-grid">
+          <div class="tl-node">
+            <div class="tl-dot"></div>
+            <div class="tile">
+              <div class="eyebrow">Month 1</div>
+              <p>Comprehensive physician and nutrition assessments, both in depth.</p>
+            </div>
+          </div>
+          <div class="tl-node offset">
+            <div class="tl-dot"></div>
+            <div class="tile">
+              <div class="eyebrow">Every 3 months</div>
+              <p>Physician follow-up to reassess labs, hormones, and progress.</p>
+            </div>
+          </div>
+          <div class="tl-node">
+            <div class="tl-dot"></div>
+            <div class="tile">
+              <div class="eyebrow">Every month</div>
+              <p>Dietitian follow-up to adjust your plan and keep things moving.</p>
+            </div>
+          </div>
+          <div class="tl-node offset">
+            <div class="tl-dot"></div>
+            <div class="tile">
+              <div class="eyebrow">As needed</div>
+              <p>2-week check-in on a new medication, plus visits for side effects.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FIT + LABS + INCLUDED -->
+    <section class="section" id="fit" data-tab="fit" aria-label="Fit and details">
+      <h2>Fit, fine print, and value — at a glance.</h2>
+      <div class="fit-grid">
+        <div class="tile"><div class="eyebrow">Fit</div><p>You want coordinated care, not two providers you stitch together yourself</p></div>
+        <div class="tile"><div class="eyebrow">Fit</div><p>You're on, or considering, a GLP-1 and want nutrition built around it</p></div>
+        <div class="tile"><div class="eyebrow">Fit</div><p>You've felt the disconnect between separate medical and dietitian care</p></div>
+        <div class="tile"><div class="eyebrow">Fit</div><p>You're investing in your own care directly, instead of letting insurance decide for you</p></div>
+
+        <div class="tile span-2"><div class="eyebrow">Routine labs, included</div><p>Cortisol, TSH, lipid panel, A1c, CBC, and metabolic panel (including liver and kidney function) at no extra cost. Drawn at the start, at the midpoint, and as needed to track progress and watch for side effects.</p></div>
+        <div class="tile span-2"><div class="eyebrow">Additional labs, if needed</div><p>Advanced labs (such as 24-hour urine cortisol, tumor markers, or pancreatic labs) only if clinically indicated, and may carry an additional charge.</p></div>
+
+        <div class="tile included"><div class="eyebrow">Included</div><p style="font-weight: 600;">A coordinated team, not a solo provider</p></div>
+        <div class="tile included"><div class="eyebrow">Included</div><p style="font-weight: 600;">All visits, no surprise billing</p></div>
+        <div class="tile included"><div class="eyebrow">Included</div><p style="font-weight: 600;">Always available in person, not virtual-only</p></div>
+        <div class="tile included"><div class="eyebrow">Included</div><p><span style="font-weight: 600;">A prescription for FDA-approved medication, never a compounded version.</span> Your physician will pursue insurance coverage for it where possible, though coverage isn't guaranteed.</p></div>
+
+        <div class="tile span-4">
+          <div class="big">A defined six-month bridge, not an open-ended subscription.</div>
+          <div class="small">Medication billed separately</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CARE TEAM -->
+    <section class="section" id="team" data-tab="team" aria-label="Care team">
+      <h2>Two clinicians. One plan.</h2>
+      <div class="team-grid">
+        <div class="tile team-card">
+          <div class="avatar has-photo"><img src="images/minh-mach.jpg" alt="Minh Mach, MD"></div>
+          <div>
+            <h3>Minh Mach, MD</h3>
+            <div class="eyebrow">Endocrinology</div>
+            <p>Board certified in Endocrinology, Internal Medicine, and Geriatrics, of Endocrine Specialty Consultants. Oversees your medical assessment, hormone and metabolic workup, and medication plan.</p>
+          </div>
+        </div>
+        <div class="tile team-card">
+          <div class="avatar has-photo"><img src="images/katherine-chen.jpg" alt="Katherine Chen, MS, RD, CDCES"></div>
+          <div>
+            <h3>Katherine Chen, MS, RD, CDCES</h3>
+            <div class="eyebrow">Nutrition</div>
+            <p>Registered Dietitian and Certified Diabetes Care &amp; Education Specialist, founder of Symphoneats. Leads your ongoing nutrition strategy.</p>
+          </div>
+        </div>
+      </div>
+      <div class="team-location">
+        <svg class="pin" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.6"/></svg>
+        <p><strong>Conveniently located in the San Fernando Valley.</strong>
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=421+E+Angeleno+Ave+Ste+102+Burbank+CA+91501" target="_blank" rel="noopener" data-map>421 E. Angeleno Ave, Ste 102, Burbank, CA 91501</a></p>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="section pricing" id="pricing" data-tab="pricing" aria-label="Pricing">
+      <div class="price-body">
+        <div class="eyebrow">Six-month program</div>
+        <div class="price">$5,000</div>
+        <p class="price-lead">Private-pay and all-inclusive: physician visits, dietitian visits, and routine monitoring labs. Medication billed separately.</p>
+        <a href="https://calendly.com/k-symphoneats/30min" data-calendly class="btn-price">Book a Discovery Call</a>
+      </div>
+      <footer class="site-footer">
+        <strong>By The Weigh</strong>
+        <address><a href="https://www.google.com/maps/search/?api=1&amp;query=421+E+Angeleno+Ave+Ste+102+Burbank+CA+91501" target="_blank" rel="noopener" data-map>421 E. Angeleno Ave, Ste 102, Burbank, CA 91501</a></address>
+        <span>Symphoneats &amp; Endocrine Specialty Consultants</span>
+      </footer>
+    </section>
+
+    </div>
+    <!-- /stage -->
+
+  </div>
+</div>
+
+<nav class="dots" aria-label="Section progress">
+  <button class="arrow" type="button" data-step="-1" aria-label="Previous section"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg></button>
+  <ul></ul>
+  <button class="arrow" type="button" data-step="1" aria-label="Next section"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+</nav>
+
+<dialog class="booking" id="booking" aria-label="Book a discovery call">
+  <div class="booking-inner">
+    <button class="booking-close" type="button" aria-label="Close booking"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <p class="booking-loading">Loading calendar…</p>
+  </div>
+</dialog>
+
+<dialog class="map-dialog" id="mapDialog" aria-label="Map to By The Weigh">
+  <div class="map-inner">
+    <div class="map-bar">
+      <div class="map-where">
+        <strong>By The Weigh</strong>
+        <span>421 E. Angeleno Ave, Ste 102, Burbank, CA 91501</span>
+      </div>
+      <a class="map-open" href="https://www.google.com/maps/search/?api=1&amp;query=421+E+Angeleno+Ave+Ste+102+Burbank+CA+91501" target="_blank" rel="noopener">Open in Google Maps
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 5h5v5M19 5l-8 8M18 14v5H5V6h5"/></svg></a>
+      <button class="map-close" type="button" aria-label="Close map"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="map-frame"><p class="booking-loading">Loading map…</p></div>
+  </div>
+</dialog>
+
+<script>
+  // Whole-page fade-in on load (page is visible by default if JS never runs).
+  document.addEventListener('DOMContentLoaded', function () {
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { document.body.classList.add('is-loaded'); });
+    });
+  });
+
+(function () {
+  var body = document.body;
+  var stage = document.getElementById('stage');
+  if (!stage) return;
+  var panels = Array.prototype.slice.call(stage.children).filter(function (el) { return el.tagName === 'SECTION'; });
+  if (!panels.length) return;
+  panels.forEach(function (p) { p.classList.add('panel'); });
+
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('a[data-section]'));
+  var dotList = document.querySelector('.dots ul');
+  var arrows = document.querySelectorAll('.dots .arrow');
+  var booking = document.getElementById('booking');
+  var mapDialog = document.getElementById('mapDialog');
+  function popupOpen() { return booking.open || (mapDialog && mapDialog.open); }
+  var cur = 0;
+
+  // Timing. LOCK_MS is the minimum time between section changes. QUIET_MS is
+  // how long the wheel has to go quiet before the next change is allowed, so
+  // one trackpad flick (which keeps firing "momentum" wheel events for a
+  // second or more) moves exactly one section instead of skipping ahead.
+  var LOCK_MS = 900;
+  var QUIET_MS = 200;
+  var locked = false, stepAt = 0, releaseTimer = null, lastInside = 0;
+
+  // One-page-at-a-time mode on every screen size (the long scrolling page is
+  // only used for printing, or if JavaScript is off).
+  var bigScreen = window.matchMedia('screen');
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  function isPanels() { return body.classList.contains('panels'); }
+
+  // Tag the individual pieces of each page for the staggered entrance, the
+  // same way the reference file does it: headings, each card, each timeline
+  // step and each button rise in one after another, rather than whole blocks.
+  var PIECES = [
+    '.dot-rail', '.arch', '.badge',
+    '.kicker', 'h1', '.hero-copy > p', '.hero-rule', '.btn-shop',
+    ':scope > .eyebrow', ':scope > h2', '.section-intro',
+    '.tl-node', '.tile', '.team-location', '.model-divider',
+    '.price-body > *', '.site-footer'
+  ].join(',');
+  panels.forEach(function (p) {
+    var found = Array.prototype.slice.call(p.querySelectorAll(PIECES));
+    var items = found.filter(function (el) {
+      for (var n = el.parentElement; n && n !== p; n = n.parentElement) {
+        if (found.indexOf(n) !== -1) return false; // parent already animates
+      }
+      return true;
+    });
+    items.forEach(function (el, i) { el.classList.add('rv'); el.style.setProperty('--d', Math.min(i, 7)); });
+  });
+
+  // Give every page its own paper and doodles, so each section reads as a
+  // separate page laid over the last, rather than content swapping inside
+  // one fixed frame. Doodles alternate sides from page to page.
+  var decoSource = Array.prototype.slice.call(document.querySelectorAll('.card > .squiggle, .card > .dabs'));
+  panels.forEach(function (p, i) {
+    var deco = document.createElement('div');
+    deco.className = 'page-deco' + (i % 2 ? ' is-flipped' : '');
+    deco.setAttribute('aria-hidden', 'true');
+    deco.innerHTML = '<div class="texture"></div>';
+    decoSource.forEach(function (d) { deco.appendChild(d.cloneNode(true)); });
+    p.insertBefore(deco, p.firstChild);
+  });
+  document.documentElement.classList.add('rv-ready');
+
+  // Progress dots
+  var dots = panels.map(function (p, i) {
+    var li = document.createElement('li');
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'dot';
+    b.setAttribute('aria-label', 'Go to ' + (p.getAttribute('aria-label') || p.id));
+    b.addEventListener('click', function () { show(i); });
+    li.appendChild(b);
+    dotList.appendChild(li);
+    return b;
+  });
+
+  var navStrip = document.querySelector('.main-nav');
+  function setTab(tabId) {
+    navLinks.forEach(function (l) { l.classList.toggle('is-active', l.getAttribute('data-section') === tabId); });
+    // On phones the tabs are a sideways strip; slide the current tab into view.
+    var active = navStrip && navStrip.querySelector('a.is-active');
+    if (active && navStrip.scrollWidth > navStrip.clientWidth + 2) {
+      var target = active.offsetLeft - (navStrip.clientWidth - active.offsetWidth) / 2;
+      navStrip.scrollTo({ left: Math.max(0, target), behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+    }
+  }
+
+  function show(i, fromHash) {
+    i = Math.max(0, Math.min(panels.length - 1, i));
+    cur = i;
+    panels.forEach(function (p, k) {
+      var on = k === i;
+      p.classList.toggle('is-active', on);
+      p.setAttribute('aria-hidden', on ? 'false' : 'true');
+      p.inert = !on;
+    });
+    panels[i].scrollTop = 0;
+    setTab(panels[i].getAttribute('data-tab'));
+    body.classList.toggle('dots-light', panels[i].id === 'pricing');
+    dots.forEach(function (d, k) { d.setAttribute('aria-current', k === i ? 'true' : 'false'); });
+    arrows[0].disabled = i === 0;
+    arrows[1].disabled = i === panels.length - 1;
+    if (!fromHash && history.replaceState) history.replaceState(null, '', '#' + panels[i].id);
+  }
+
+  function scheduleRelease() {
+    clearTimeout(releaseTimer);
+    var minLock = reduceMotion.matches ? 300 : LOCK_MS;
+    var wait = Math.max(QUIET_MS, minLock - (Date.now() - stepAt));
+    releaseTimer = setTimeout(function () { locked = false; }, wait);
+  }
+  function step(dir) {
+    var next = cur + dir;
+    if (next < 0 || next >= panels.length) return;
+    show(next);
+    locked = true;
+    stepAt = Date.now();
+    scheduleRelease();
+  }
+
+  // If the current section is taller than the window, let it scroll first.
+  function canScrollInside(dir) {
+    var p = panels[cur];
+    if (p.scrollHeight <= p.clientHeight + 2) return false;
+    if (dir > 0) return p.scrollTop + p.clientHeight < p.scrollHeight - 2;
+    return p.scrollTop > 0;
+  }
+
+  // Wheel / trackpad
+  window.addEventListener('wheel', function (e) {
+    if (!isPanels() || popupOpen() || e.ctrlKey) return;
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+    var dir = e.deltaY > 0 ? 1 : (e.deltaY < 0 ? -1 : 0);
+    if (!dir) return;
+    if (locked) { e.preventDefault(); scheduleRelease(); return; }
+    if (canScrollInside(dir)) { lastInside = Date.now(); return; }
+    e.preventDefault();
+    // The same flick that just carried a long section to its end shouldn't
+    // also flip to the next one; wait for a fresh scroll.
+    if (Date.now() - lastInside < QUIET_MS) { lastInside = Date.now(); return; }
+    if (Math.abs(e.deltaY) < 8) return;
+    step(dir);
+  }, { passive: false });
+
+  // Touch swipe (large touch screens in one-screen mode)
+  var touchY = null;
+  // A swipe only turns the page if the page was already at its top/bottom
+  // when the finger went down, so the swipe that scrolls a long page to its
+  // end doesn't also flip to the next one.
+  var startEdge = { down: false, up: false };
+  function touchStartAtEdge(dir) { return dir > 0 ? startEdge.down : startEdge.up; }
+  stage.addEventListener('touchstart', function (e) {
+    touchY = e.touches.length === 1 ? e.touches[0].clientY : null;
+    startEdge.down = !canScrollInside(1);
+    startEdge.up = !canScrollInside(-1);
+  }, { passive: true });
+  stage.addEventListener('touchend', function (e) {
+    if (!isPanels() || touchY === null || locked) { touchY = null; return; }
+    var d = touchY - e.changedTouches[0].clientY;
+    touchY = null;
+    if (Math.abs(d) < 50) return;
+    var dir = d > 0 ? 1 : -1;
+    if (canScrollInside(dir) || !touchStartAtEdge(dir)) return;
+    step(dir);
+  }, { passive: true });
+
+  // Keyboard
+  document.addEventListener('keydown', function (e) {
+    if (!isPanels() || popupOpen()) return;
+    var tag = (e.target.tagName || '').toLowerCase();
+    if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
+    var k = e.key;
+    if (k === 'ArrowDown' || k === 'PageDown' || (k === ' ' && tag !== 'button' && tag !== 'a')) {
+      if (canScrollInside(1)) return;
+      e.preventDefault(); if (!locked) step(1);
+    } else if (k === 'ArrowUp' || k === 'PageUp') {
+      if (canScrollInside(-1)) return;
+      e.preventDefault(); if (!locked) step(-1);
+    } else if (k === 'Home') { e.preventDefault(); show(0); }
+    else if (k === 'End') { e.preventDefault(); show(panels.length - 1); }
+  });
+
+  arrows.forEach(function (b) {
+    b.addEventListener('click', function () { show(cur + parseInt(b.getAttribute('data-step'), 10)); });
+  });
+
+  // Mobile menu
+  var mobilePanel = document.querySelector('.mobile-nav-panel');
+  var mobileBtn = document.querySelector('.mobile-nav-toggle');
+  function closeMobileNav() {
+    if (mobilePanel) mobilePanel.classList.remove('open');
+    if (mobileBtn) mobileBtn.setAttribute('aria-expanded', 'false');
+  }
+  if (mobileBtn) mobileBtn.addEventListener('click', function () {
+    var isOpen = mobilePanel.classList.toggle('open');
+    mobileBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  window.addEventListener('resize', function () { if (window.innerWidth > 900) closeMobileNav(); });
+
+  // Nav links: in one-screen mode switch sections; in stacked mode they are
+  // normal anchor links that scroll smoothly to the section.
+  function indexOfId(id) {
+    for (var i = 0; i < panels.length; i++) if (panels[i].id === id) return i;
+    return -1;
+  }
+  navLinks.forEach(function (link) {
+    var idx = indexOfId(link.getAttribute('data-section'));
+    link.addEventListener('click', function (e) {
+      closeMobileNav();
+      if (!isPanels()) return;
+      e.preventDefault();
+      show(idx);
+    });
+  });
+
+  // Stacked mode: reveal each section as it scrolls into view, and track the active tab.
+  var revealObserver = new IntersectionObserver(function (entries) {
+    if (isPanels()) return;
+    entries.forEach(function (en) { if (en.isIntersecting) en.target.classList.add('is-active'); });
+  }, { threshold: 0, rootMargin: '0px 0px -12% 0px' });
+  var tabObserver = new IntersectionObserver(function (entries) {
+    if (isPanels()) return;
+    entries.forEach(function (en) { if (en.isIntersecting) setTab(en.target.getAttribute('data-tab')); });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+
+  function indexFromHash() {
+    var i = indexOfId((location.hash || '').replace('#', ''));
+    return i < 0 ? 0 : i;
+  }
+
+  function applyMode() {
+    revealObserver.disconnect();
+    tabObserver.disconnect();
+    if (bigScreen.matches) {
+      body.classList.add('panels');
+      show(cur, true);
+    } else {
+      body.classList.remove('panels');
+      body.classList.remove('dots-light');
+      panels.forEach(function (p) {
+        p.classList.remove('is-active');
+        p.removeAttribute('aria-hidden');
+        p.inert = false;
+        revealObserver.observe(p);
+        tabObserver.observe(p);
+      });
+    }
+  }
+
+  cur = indexFromHash();
+  applyMode();
+  if (!bigScreen.matches && location.hash) {
+    var target = document.getElementById(location.hash.slice(1));
+    if (target) target.scrollIntoView();
+  }
+  if (bigScreen.addEventListener) bigScreen.addEventListener('change', applyMode);
+  else if (bigScreen.addListener) bigScreen.addListener(applyMode);
+
+  window.addEventListener('hashchange', function () {
+    if (isPanels()) show(indexFromHash(), true);
+  });
+
+  // ---------- Booking popup: your Calendly page inside a centered window ----------
+  var CAL_URL = 'https://calendly.com/k-symphoneats/30min';
+  var bookingInner = booking.querySelector('.booking-inner');
+  var lastFocus = null;
+  function openBooking(fallbackHref) {
+    if (typeof booking.showModal !== 'function') { window.open(fallbackHref, '_blank'); return; }
+    if (!bookingInner.querySelector('iframe')) {
+      var f = document.createElement('iframe');
+      f.title = 'Book a discovery call with By The Weigh';
+      f.src = CAL_URL + '?' + (location.hostname ? 'embed_domain=' + encodeURIComponent(location.hostname) + '&' : '') +
+              'embed_type=Inline&hide_gdpr_banner=1&primary_color=0a7c95';
+      f.addEventListener('load', function () {
+        var l = bookingInner.querySelector('.booking-loading');
+        if (l) l.remove();
+      });
+      bookingInner.appendChild(f);
+    }
+    closeMobileNav();
+    lastFocus = document.activeElement;
+    booking.showModal();
+    booking.querySelector('.booking-close').focus();
+  }
+  booking.addEventListener('close', function () { if (lastFocus) lastFocus.focus(); });
+  booking.querySelector('.booking-close').addEventListener('click', function () { booking.close(); });
+  // Clicking the dimmed area outside the window closes it
+  booking.addEventListener('click', function (e) { if (e.target === booking) booking.close(); });
+  // ---------- Map popup: Google Maps in a centered window, with an
+  // "Open in Google Maps" button for a full new tab ----------
+  var MAP_EMBED = 'https://www.google.com/maps?q=' + encodeURIComponent('421 E Angeleno Ave Ste 102, Burbank, CA 91501') + '&z=16&output=embed';
+  var mapFrameWrap = mapDialog.querySelector('.map-frame');
+  var mapLastFocus = null;
+  function openMap(fallbackHref) {
+    if (typeof mapDialog.showModal !== 'function') { window.open(fallbackHref, '_blank'); return; }
+    if (!mapFrameWrap.querySelector('iframe')) {
+      var mf = document.createElement('iframe');
+      mf.title = 'Map showing By The Weigh at 421 E. Angeleno Ave, Burbank';
+      mf.loading = 'lazy';
+      mf.referrerPolicy = 'no-referrer-when-downgrade';
+      mf.src = MAP_EMBED;
+      mf.addEventListener('load', function () {
+        var l = mapFrameWrap.querySelector('.booking-loading');
+        if (l) l.remove();
+      });
+      mapFrameWrap.appendChild(mf);
+    }
+    mapLastFocus = document.activeElement;
+    mapDialog.showModal();
+    mapDialog.querySelector('.map-close').focus();
+  }
+  mapDialog.addEventListener('close', function () { if (mapLastFocus) mapLastFocus.focus(); });
+  mapDialog.querySelector('.map-close').addEventListener('click', function () { mapDialog.close(); });
+  mapDialog.addEventListener('click', function (e) { if (e.target === mapDialog) mapDialog.close(); });
+  document.querySelectorAll('[data-map]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      // let Cmd/Ctrl-click still open a new tab directly
+      if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+      e.preventDefault();
+      openMap(a.href);
+    });
+  });
+  document.querySelectorAll('[data-calendly]').forEach(function (a) {
+    a.addEventListener('click', function (e) { e.preventDefault(); openBooking(a.href); });
+  });
+})();
+</script>
+
 </body>
 </html>
