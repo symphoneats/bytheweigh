@@ -14,7 +14,6 @@
   /* Now Alt by Alfredo Marco Pradil, SIL Open Font License (see fonts/OFL.txt).
      Original, unmodified font files served from this site. */
   @font-face { font-family: 'Now Alt'; src: url('fonts/NowAlt-Regular.otf') format('opentype'); font-weight: 400; font-style: normal; font-display: swap; }
-  @font-face { font-family: 'Now Alt'; src: url('fonts/NowAlt-Medium.otf') format('opentype'); font-weight: 500 600; font-style: normal; font-display: swap; }
   @font-face { font-family: 'Now Alt'; src: url('fonts/NowAlt-Bold.otf') format('opentype'); font-weight: 700 900; font-style: normal; font-display: swap; }
 
   :root {
@@ -33,7 +32,10 @@
   :focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; border-radius: 6px; }
 
   body {
-    margin: 0; background: #EEF5F4; font-family: 'Now Alt', system-ui, sans-serif; letter-spacing: 0.01em; color: var(--ink);
+    margin: 0; background: #EEF5F4; font-family: 'Now Alt', system-ui, sans-serif; letter-spacing: 0.01em;
+    /* Draw text on desktop the way phones and iPads do. Macs otherwise thicken
+       text slightly, which made it look heavier on desktop than on mobile. */
+    -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; color: var(--ink);
     transition: opacity 0.6s ease;
   }
 
@@ -94,6 +96,19 @@
   }
   .btn-primary, .btn-shop, .nav-cta, .btn-price, .map-open,
   .fact-grid .fact-value, .fit-grid .tile.included p, .fit-grid .span-4, .quote-oval-text, .price-lead { letter-spacing: 0; }
+  .price-lead { font-weight: 400; }
+
+
+  /* Desktop only (mouse/trackpad screens): desktop browsers draw text a bit
+     heavier than phones and iPads, so open the spacing slightly and soften
+     the text color. Phones and tablets are unaffected. */
+  @media (hover: hover) and (pointer: fine) and (min-width: 1024px) {
+    body { letter-spacing: 0.02em; }
+    body .hero-copy > p, body .section-intro, body .model-top .tile p, body .visit-format-tile p,
+    body .tl-node .tile p, body .team-card p { color: #5E646B; }
+    body .model-compare .tile .visit-line,
+    body .fit-grid .tile:not(.included):not(.span-4) p { color: #363B41; }
+  }
 
   /* ---------- HEADER ---------- */
   .site-header {
