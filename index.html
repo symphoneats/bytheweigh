@@ -338,6 +338,24 @@
   html.rv-ready .rv { opacity: 0; }
   .panel.is-active .rv { animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(var(--d, 0) * 0.12s); }
 
+  /* First page choreography:
+     1. the dietitian photo glides up from below and the physician photo down from above,
+     2. the round badge fades in once they've landed,
+     3. the three info panels slide in from the side, one after another.
+     The headline, text, and button still rise in as before. */
+  @keyframes inFromLeft  { from { opacity: 0; transform: translateX(-80px); } to { opacity: 1; transform: none; } }
+  @keyframes inFromRight { from { opacity: 0; transform: translateX(80px); }  to { opacity: 1; transform: none; } }
+  @keyframes inFromBottom { from { opacity: 0; transform: translateY(80px); } to { opacity: 1; transform: none; } }
+  @keyframes inFromTop    { from { opacity: 0; transform: translateY(-80px); } to { opacity: 1; transform: none; } }
+  @keyframes badgeIn     { from { opacity: 0; transform: scale(0.85) rotate(-8deg); } to { opacity: 1; transform: none; } }
+  .hero.panel.is-active .arch-main.rv   { animation: inFromBottom 1s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: 0.1s; }
+  .hero.panel.is-active .arch-accent.rv { animation: inFromTop 1s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: 0.3s; }
+  .hero.panel.is-active .badge.rv       { animation: badgeIn 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: 1.15s; }
+  .hero.panel.is-active .fact-grid .tile.rv { animation: inFromRight 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+  .hero.panel.is-active .fact-grid .tile.rv:nth-child(1) { animation-delay: 1.6s; }
+  .hero.panel.is-active .fact-grid .tile.rv:nth-child(2) { animation-delay: 1.75s; }
+  .hero.panel.is-active .fact-grid .tile.rv:nth-child(3) { animation-delay: 1.9s; }
+
   /* ---------- ONE-SCREEN MODE (large screens) ----------
      The page is locked to the window height. Every section sits stacked in
      the same spot and they crossfade, so nothing about the page's height or
