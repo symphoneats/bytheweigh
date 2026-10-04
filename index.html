@@ -309,7 +309,6 @@
     font-family: 'Figtree', sans-serif; font-weight: 700; font-size: 17px; text-decoration: none;
     transition: background 0.2s ease;
   }
-  .btn-price:hover { background: #fff; }
   .pricing :focus-visible { outline-color: var(--cream); }
   .site-footer {
     display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
@@ -468,7 +467,17 @@
     background: var(--teal); color: #fff; text-decoration: none; font-weight: 700; font-size: 14px;
     padding: 11px 18px; border-radius: 999px;
   }
-  .map-open:hover { background: var(--teal-dark); }
+  /* Outline buttons: transparent with a teal border, filling in with teal on hover */
+  .btn-shop, .nav-cta, .map-open {
+    background: transparent; color: var(--teal); border: 1.5px solid var(--teal);
+    transition: background 0.25s ease, color 0.25s ease;
+  }
+  .btn-shop:hover, .nav-cta:hover, .map-open:hover,
+  .btn-shop:focus-visible, .nav-cta:focus-visible, .map-open:focus-visible,
+  .btn-shop:active, .nav-cta:active, .map-open:active { background: var(--teal); color: #fff; }
+  /* On the teal Pricing page: cream outline that fills with cream on hover */
+  .btn-price { background: transparent; color: var(--cream); border: 1.5px solid var(--cream); transition: background 0.25s ease, color 0.25s ease; }
+  .btn-price:hover, .btn-price:focus-visible, .btn-price:active { background: var(--cream); color: var(--ink); }
   .map-open svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
   .map-close {
     flex: none; width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid var(--ink);
